@@ -1,19 +1,26 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "KH",
-  "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.5.1",
-    "cookie-session": "^2.0.0-beta.3",
-    "express": "^4.16.3",
-    "mongoose": "^5.0.10"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/khmy2010/YouForm.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "push": "git push -u origin"
+    },
+    "keywords": [],
+    "author": "KH",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "concurrently": "^3.5.1",
+        "cookie-session": "^2.0.0-beta.3",
+        "express": "^4.16.3",
+        "mongoose": "^5.0.10",
+        "passport": "^0.4.0",
+        "passport-google-oauth20": "^1.0.0"
+    }
 }
