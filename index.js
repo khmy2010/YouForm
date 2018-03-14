@@ -31,6 +31,20 @@ app.use(passport.session());
 //routes handler
 require('./routes/auth')(app);
 
+//only in production
+if (process.env.NODE_ENV === 'production') {
+    //order of operation is important here.
+
+    //express will serve up production asset (main.js / main.css)
+    app.use(express.static('client/build'));
+
+    //express will serve up the index.html if it doesn't recognise the route.
+    const path = require('path');
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
