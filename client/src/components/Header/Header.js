@@ -37,6 +37,9 @@ const header = ({ auth }) => {
                     <NavItem link="/" exact>
                         Home
                     </NavItem>
+                    <NavItem link="/discovery" exact>
+                        Discovery
+                    </NavItem>
                     {renderedContent}
                 </ul>
             </nav>
