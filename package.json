@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "engine": {
+        "npm": "5.7.x"
+    },
     "repository": {
         "type": "git",
         "url": "git://github.com/khmy2010/YouForm.git"
