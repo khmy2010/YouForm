@@ -5,5 +5,3 @@ module.exports = {
     cookieKey: process.env.COOKIE_KEY,
     cookieBackupKey: process.env.COOKIE_BACKUP_KEY
 };
-
-//mongodb://kehan:tupperware@ds113749.mlab.com:13749/youform-prod
