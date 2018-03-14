@@ -33,6 +33,7 @@ require('./routes/auth')(app);
 
 //only in production
 if (process.env.NODE_ENV === 'production') {
+    console.log('PRODUCTION MESSAGE!!!!!!');
     //order of operation is important here.
 
     //express will serve up production asset (main.js / main.css)
