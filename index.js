@@ -33,7 +33,6 @@ require('./routes/auth')(app);
 
 //only in production
 if (process.env.NODE_ENV === 'production') {
-    console.log('PRODUCTION MESSAGE!!!!!!');
     //order of operation is important here.
 
     //express will serve up production asset (main.js / main.css)
@@ -42,7 +41,6 @@ if (process.env.NODE_ENV === 'production') {
     //express will serve up the index.html if it doesn't recognise the route.
     const path = require('path');
     app.get('*', (req, res) => {
-        console.log('WHY!!!!!!!', req.path);
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
