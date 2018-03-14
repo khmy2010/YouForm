@@ -9,7 +9,13 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "push": "git push -u origin"
+        "push-git": "git push -u origin",
+        "push-heroku": "git push heroku master",
+        "push-all-complete":
+            "echo \"DONE: App has been pushed to GitHub and deployed to Heroku.\"",
+        "deploy":
+            "npm run push-git && npm run push-heroku && npm run push-all-complete",
+        "start": "node index.js"
     },
     "keywords": [],
     "author": "KH",
