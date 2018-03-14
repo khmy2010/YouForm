@@ -1,6 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reduxThunk from 'redux-thunk';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './containers/App';
+import reducers from './reducers';
+
+let composeEnhancers;
+
+if (process.env.NODE_ENV === 'production') {
+    composeEnhancers = compose;
+} else {
+    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
+
+const store = createStore(
+    reducers,
+    {},
+    composeEnhancers(applyMiddleware(reduxThunk))
+);
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.querySelector('#root')
+);
