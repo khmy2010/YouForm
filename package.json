@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "engine": {
-        "npm": "5.7.x"
+        "npm": "5.7.1"
     },
     "repository": {
         "type": "git",
@@ -18,7 +18,7 @@
             "echo \"DONE: App has been pushed to GitHub and deployed to Heroku.\"",
         "deploy":
             "npm run push-git && npm run push-heroku && npm run push-all-complete",
-        "server": "nodemon index.js",
+        "server": "nodemon --ignore 'client/' index.js",
         "client": "npm run start --prefix client",
         "dev":
             "concurrently  --kill-others-on-fail \"npm run server\" \"npm run client\"",
