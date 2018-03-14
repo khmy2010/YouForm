@@ -1,11 +1,16 @@
 import React from 'react';
 
 import NavItem from './NavItem';
+import './Header.css';
 
 const header = ({ auth }) => {
     let renderedContent = null;
+    console.log(auth);
 
     switch (auth) {
+        case null:
+            renderedContent = null;
+            break;
         case false:
             renderedContent = (
                 <li>
@@ -15,20 +20,27 @@ const header = ({ auth }) => {
             break;
         default:
             renderedContent = (
-                <NavItem link="/app/dashboard" exact>
-                    Go to Dashboard
-                </NavItem>
+                <React.Fragment>
+                    <NavItem link="/app/dashboard" exact>
+                        Dashboard
+                    </NavItem>
+                    <li>Welcome, {auth.name}</li>
+                </React.Fragment>
             );
             break;
     }
 
     return (
-        <div>
-            <NavItem link="/" exact>
-                Home
-            </NavItem>
-            {renderedContent}
-        </div>
+        <React.Fragment>
+            <nav className="navbar navbar-light bg-light">
+                <ul className="Header-Nav">
+                    <NavItem link="/" exact>
+                        Home
+                    </NavItem>
+                    {renderedContent}
+                </ul>
+            </nav>
+        </React.Fragment>
     );
 };
 

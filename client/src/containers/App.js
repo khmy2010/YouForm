@@ -16,7 +16,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <div class="container">
+                <div className="container">
                     <Header auth={this.props.auth} />
                     <Route path="/" exact component={Landing} />
                     <Route path="/app/dashboard" exact component={Dashboard} />

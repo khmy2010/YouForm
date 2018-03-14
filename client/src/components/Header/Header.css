@@ -1,0 +1,11 @@
+.Header-Active {
+    border-top: 3px solid #00313c;
+    color: #e31c79;
+}
+
+.Header-Nav li {
+    display: inline-block;
+    list-style: none;
+    padding: 10px;
+    text-align: center;
+}
