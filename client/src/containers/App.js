@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import * as authActions from '../actions/auth';
 import Header from '../components/Header/Header';
+import Dash from './Dash';
 
 const Landing = () => <h1>Landing Page</h1>;
-const Dashboard = () => <h1>Dashboard Page</h1>;
 const Discovery = () => <h1>Discovery Page</h1>;
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
                     <Header auth={this.props.auth} />
                     <Route path="/" exact component={Landing} />
                     <Route path="/discovery" exact component={Discovery} />
-                    <Route path="/app/dashboard" exact component={Dashboard} />
+                    <Route path="/app/dashboard" exact component={Dash} />
                 </div>
             </BrowserRouter>
         );
