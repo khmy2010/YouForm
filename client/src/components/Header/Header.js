@@ -5,7 +5,6 @@ import './Header.css';
 
 const header = ({ auth }) => {
     let renderedContent = null;
-    console.log(auth);
 
     switch (auth) {
         case null:

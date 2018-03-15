@@ -8,6 +8,7 @@ const keys = require('./config/keys');
 
 //load database model before anything else
 require('./models/User');
+require('./models/Form');
 
 //load services after database model
 require('./services/mongoose');
@@ -29,7 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes handler
-require('./routes/auth')(app);
+require('./routes/authRoutes')(app);
+require('./routes/formRoutes')(app);
 
 //only in production
 if (process.env.NODE_ENV === 'production') {

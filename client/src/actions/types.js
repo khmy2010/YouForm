@@ -1,1 +1,8 @@
-export const FETCH_USER = 'fetch_user';
+//user related
+export const FETCH_USER = 'FETCH_USER';
+
+//form related
+export const CREATE_NEW_FORM = 'CREATE_NEW_FORM';
+export const CREATE_NEW_FORM_START = 'CREATE_NEW_FORM_START';
+export const CREATE_NEW_FORM_SUCCESS = 'CREATE_NEW_FORM_SUCCESS';
+export const CREATE_NEW_FORM_FAILED = 'CREATE_NEW_FORM_FAILED';
