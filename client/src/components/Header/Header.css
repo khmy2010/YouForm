@@ -8,6 +8,9 @@
     padding: 0 5px;
     text-align: center;
 }
+.Header-Nav-Nav {
+    width: 100%;
+}
 
 /* .Header-Nav {
     display: flex;

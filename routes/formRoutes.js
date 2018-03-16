@@ -9,7 +9,8 @@ module.exports = app => {
         const body = req.body;
 
         const form = new Form({
-            name: body.name
+            name: body.name,
+            owner: req.user.id
         });
 
         try {

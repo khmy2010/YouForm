@@ -5,10 +5,6 @@ import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/form';
 
 class Dash extends Component {
-    componentDidMount() {
-        console.log(this.props);
-    }
-
     render() {
         return (
             <div>

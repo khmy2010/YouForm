@@ -12,9 +12,9 @@ const header = ({ auth }) => {
             break;
         case false:
             renderedContent = (
-                <li>
-                    <a href="/auth/google">Login with Google</a>
-                </li>
+                <NavItem link="/app/login" exact>
+                    Login
+                </NavItem>
             );
             break;
         default:
@@ -24,6 +24,9 @@ const header = ({ auth }) => {
                         Dashboard
                     </NavItem>
                     <li>Welcome, {auth.name}</li>
+                    <li>
+                        <a href="/api/logout">Logout</a>
+                    </li>
                 </React.Fragment>
             );
             break;
@@ -31,7 +34,7 @@ const header = ({ auth }) => {
 
     return (
         <React.Fragment>
-            <nav className="navbar navbar-light bg-light">
+            <nav className="Header-Nav-Nav">
                 <ul className="Header-Nav">
                     <NavItem link="/" exact>
                         Home

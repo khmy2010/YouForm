@@ -8,7 +8,7 @@ const formSchema = new Schema({
     name: String,
     startTime: Date,
     endTime: Date,
-    status: Boolean,
+    status: { type: Boolean, default: true },
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
     collabs: [CollabsSchema],
     questions: [QuestionSchema],
