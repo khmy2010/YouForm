@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, NavLink } from 'react-router-dom';
+
+import './FormNavi.css';
 
 /*
     Current Routes: (Form Owner and Collas (Edit))
@@ -22,6 +24,16 @@ import { Switch, Route } from 'react-router-dom';
 const OPS = ['build', 'preview', 'responses', 'share'];
 
 const formRoutes = props => {
+    const renderedNavi = OPS.map(operation => {
+        return (
+            <li key={operation}>
+                <NavLink to={`${props.match.url}/${operation}`}>
+                    {operation[0].toUpperCase() + operation.substring(1)}
+                </NavLink>
+            </li>
+        );
+    });
+
     const renderedRoutes = OPS.map(operation => {
         return (
             <Route
@@ -33,7 +45,12 @@ const formRoutes = props => {
         );
     });
 
-    return <Switch>{renderedRoutes}</Switch>;
+    return (
+        <React.Fragment>
+            <ul className={'Bar'}>{renderedNavi}</ul>
+            <Switch>{renderedRoutes}</Switch>
+        </React.Fragment>
+    );
 };
 
 export default formRoutes;
