@@ -26,6 +26,13 @@ const formAdminReducer = (state = initialState, action) => {
                 dataLoaded: true,
                 loading: false
             };
+        case actionTypes.FETCH_FORM_ADMIN_SUCCESS:
+            return {
+                ...state,
+                ...action.res.data,
+                dataLoaded: true,
+                loading: false
+            };
         default:
             return state;
     }

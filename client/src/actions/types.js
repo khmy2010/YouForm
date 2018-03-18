@@ -1,8 +1,14 @@
 //user related
 export const FETCH_USER = 'FETCH_USER';
 
-//form related
+//create form related
 export const CREATE_NEW_FORM = 'CREATE_NEW_FORM';
 export const CREATE_NEW_FORM_START = 'CREATE_NEW_FORM_START';
 export const CREATE_NEW_FORM_SUCCESS = 'CREATE_NEW_FORM_SUCCESS';
 export const CREATE_NEW_FORM_FAILED = 'CREATE_NEW_FORM_FAILED';
+
+//fetch form related
+export const FETCH_FORM_ADMIN = 'FETCH_FORM_ADMIN';
+export const FETCH_FORM_ADMIN_START = 'FETCH_FETCH_FORM_ADMIN_STARTFORM_START';
+export const FETCH_FORM_ADMIN_SUCCESS = 'FETCH_FORM_ADMIN_SUCCESS';
+export const FETCH_FORM_ADMIN_FAILED = 'FETCH_FORM_ADMIN_FAILED';
