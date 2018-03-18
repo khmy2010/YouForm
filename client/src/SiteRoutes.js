@@ -3,7 +3,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 //component imports
-import Dash from './containers/Dash';
+import Dash from './containers/Dash/Dash';
 import FormAdmin from './containers/FormAdmin/FormAdmin';
 import NotFound from './components/NotFound/NotFound';
 import Login from './components/Login/Login';
@@ -23,7 +23,7 @@ const siteRoutes = () => {
             <Route path="/app/dashboard" exact component={Dash} />
             <Route path="/app/login" exact component={Login} />
             <Route path="/app/test" exact component={Test} />
-            <Route path="/app/edit/:fid" component={FormAdmin} />
+            <Route path="/app/admin/:fid" component={FormAdmin} />
             <Route component={NotFound} />
         </Switch>
     );

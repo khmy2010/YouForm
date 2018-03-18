@@ -42,4 +42,18 @@ module.exports = app => {
             res.status(400).send('ERR_01: Invalid ObjectID.');
         }
     });
+
+    app.get('/api/forms', requireLogin, async (req, res) => {
+        try {
+            const forms = await Form.find({ owner: req.user._id })
+                .skip(parseInt(req.query.skipCount))
+                .limit(10)
+                .sort('name')
+                .exec();
+
+            res.send(forms);
+        } catch (err) {
+            res.status(400).send(err);
+        }
+    });
 };

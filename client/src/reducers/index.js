@@ -2,8 +2,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import formAdminReducer from './formAdminReducer';
+import dashReducer from './dashReducer';
 
 export default combineReducers({
     auth: authReducer,
-    formAdmin: formAdminReducer
+    formAdmin: formAdminReducer,
+    dash: dashReducer
 });
