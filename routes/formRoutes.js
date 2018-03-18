@@ -46,7 +46,6 @@ module.exports = app => {
     app.get('/api/forms', requireLogin, async (req, res) => {
         try {
             const forms = await Form.find({ owner: req.user._id })
-                .skip(parseInt(req.query.skipCount))
                 .limit(10)
                 .sort('name')
                 .exec();
