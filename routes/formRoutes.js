@@ -24,6 +24,7 @@ module.exports = app => {
         }
     });
 
+    //fetch form admin interface
     app.get('/api/forms/admin/:fid', requireLogin, async (req, res) => {
         const body = req.body;
         const fid = req.params.fid;
@@ -43,16 +44,40 @@ module.exports = app => {
         }
     });
 
+    //fetch list of forms own by user
     app.get('/api/forms', requireLogin, async (req, res) => {
         try {
             const forms = await Form.find({ owner: req.user._id })
                 .limit(10)
                 .sort('name')
+                .select('name _id')
                 .exec();
 
             res.send(forms);
         } catch (err) {
             res.status(400).send(err);
+        }
+    });
+
+    //add a new question to the form
+    app.post('/api/forms/:fid/questions', requireLogin, async (req, res) => {
+        const body = req.body;
+        const fid = req.params.fid;
+
+        if (ObjectID.isValid(fid)) {
+            const form = await Form.findById(fid);
+            const questions = form.questions;
+
+            const question = {
+                sequence: 1,
+                type: 1,
+                title: body.title
+            };
+
+            questions.push(question);
+            const subdoc = questions[questions.length - 1];
+            await form.save();
+            res.send(subdoc);
         }
     });
 };
