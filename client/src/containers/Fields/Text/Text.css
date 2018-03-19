@@ -1,0 +1,13 @@
+._text {
+    width: 80%;
+    height: 40px;
+    font-size: 20px;
+    padding: 10px 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #b5b5b5;
+}
+
+._label {
+    font-size: 18px;
+}
