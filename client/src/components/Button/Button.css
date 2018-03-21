@@ -1,0 +1,27 @@
+.EleButton {
+    background-color: transparent;
+    border: 2px solid black;
+    color: black;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.EleButton:hover {
+    color: #fbb040;
+}
+
+.EleButton:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.Success {
+    color: #5c9210;
+}
+
+.Danger {
+    color: #944317;
+}

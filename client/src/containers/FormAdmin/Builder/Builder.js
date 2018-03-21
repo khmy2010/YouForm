@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../actions/form';
 import Text from '../../Fields/Text/Text';
+import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 
 class Builder extends Component {
@@ -43,7 +44,11 @@ class Builder extends Component {
 
         if (this.state.building) {
             questionBuilder = (
-                <QuestionBuilder onBackdropClick={this.toggleQuestionBuilder} />
+                <QuestionBuilder
+                    onBackdropClick={this.toggleQuestionBuilder}
+                    onSave={this.props.addQuestion}
+                    fid={this.props.fid}
+                />
             );
         }
 
@@ -51,9 +56,9 @@ class Builder extends Component {
             <div>
                 <h3>Form Builder</h3>
                 <div>
-                    <button onClick={this.toggleQuestionBuilder}>
+                    <Button clicked={this.toggleQuestionBuilder}>
                         Create New
-                    </button>
+                    </Button>
                     {questionBuilder}
                     <input
                         style={{ width: '200px', marginLeft: '30px' }}
