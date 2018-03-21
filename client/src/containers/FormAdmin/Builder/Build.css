@@ -1,0 +1,50 @@
+.QuestionBuilder {
+    --border-radius: 15px;
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    border: 1px solid #ccc;
+    /* box-shadow: 1px 1px 1px black; */
+    border-radius: var(--border-radius);
+    /* padding: 5px; */
+    left: 5%;
+    top: 5%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+}
+
+.EleBuilder {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    display: grid;
+    grid-template-rows: 35px auto;
+    grid-row-gap: 15px;
+    justify-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
+}
+
+.EleTitle {
+    color: #007ee5;
+    font-size: 22px;
+    font-weight: 700;
+    border-bottom: 3px solid black;
+}
+
+.ElePreview {
+    background-color: #efecea;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 35px auto;
+    justify-items: center;
+    justify-content: stretch;
+    align-content: stretch;
+}

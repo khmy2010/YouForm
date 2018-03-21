@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../actions/form';
 import Text from '../../Fields/Text/Text';
+import QuestionBuilder from './QuestionBuilder';
 
 class Builder extends Component {
     state = {
-        title: ''
+        title: '',
+        building: false
     };
 
     renderQuestions() {
@@ -23,22 +25,36 @@ class Builder extends Component {
         return transformedQuestions;
     }
 
-    addQuestionHandler = () => {
-        const question = {
-            title: this.state.title
-        };
-
-        this.props.addQuestion(question, this.props.fid);
+    toggleQuestionBuilder = () => {
+        // const question = {
+        //     title: this.state.title
+        // };
+        // this.props.addQuestion(question, this.props.fid);
+        this.setState((prevState, props) => {
+            console.log(prevState);
+            return {
+                building: !prevState.building
+            };
+        });
     };
 
     render() {
+        let questionBuilder = null;
+
+        if (this.state.building) {
+            questionBuilder = (
+                <QuestionBuilder onBackdropClick={this.toggleQuestionBuilder} />
+            );
+        }
+
         return (
             <div>
                 <h3>Form Builder</h3>
                 <div>
-                    <button onClick={this.addQuestionHandler}>
+                    <button onClick={this.toggleQuestionBuilder}>
                         Create New
                     </button>
+                    {questionBuilder}
                     <input
                         style={{ width: '200px', marginLeft: '30px' }}
                         type="text"
