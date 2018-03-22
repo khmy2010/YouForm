@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import './Text.css';
-
-class Text extends Component {
+class Email extends Component {
     state = {
         value: '',
         touched: false,
@@ -81,4 +78,4 @@ class Text extends Component {
     }
 }
 
-export default connect(null)(Text);
+export default Email;

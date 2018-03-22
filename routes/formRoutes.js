@@ -70,8 +70,7 @@ module.exports = app => {
 
             const question = {
                 sequence: 1,
-                type: 1,
-                title: body.title
+                ...body
             };
 
             questions.push(question);

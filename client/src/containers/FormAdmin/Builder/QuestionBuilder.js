@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
 import Text from '../../Fields/Text/Text';
+import Email from '../../Fields/Email/Email';
 
 import './Build.css';
 
@@ -10,13 +11,18 @@ class QuestionBuilder extends Component {
     state = {
         title: '',
         description: '',
-        isRequired: false
+        validation: {
+            isRequired: false
+        },
+        type: null
     };
 
     eventHandler = ({ target }) => {
         if (target.type === 'checkbox') {
+            const newValidation = { ...this.state.validation };
+            newValidation.isRequired = target.checked;
             this.setState({
-                [target.name]: target.checked
+                validation: newValidation
             });
         } else {
             this.setState({
@@ -27,7 +33,8 @@ class QuestionBuilder extends Component {
 
     saveQuestion = () => {
         const question = {
-            ...this.state
+            ...this.state,
+            validation: JSON.stringify(this.state.validation)
         };
         console.log(question);
         this.props.onSave(question, this.props.fid);
@@ -38,7 +45,23 @@ class QuestionBuilder extends Component {
         if (this.state.title === '') {
             return null;
         } else {
-            return <Text title={this.state.title} />;
+            if (this.state.type === 1) {
+                return (
+                    <Text
+                        title={this.state.title}
+                        description={this.state.description}
+                        validation={this.state.validation}
+                    />
+                );
+            } else {
+                return (
+                    <Email
+                        title={this.state.title}
+                        description={this.state.description}
+                        validation={this.state.validation}
+                    />
+                );
+            }
         }
     }
 

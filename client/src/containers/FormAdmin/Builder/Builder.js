@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../actions/form';
 import Text from '../../Fields/Text/Text';
+import Email from '../../Fields/Email/Email';
 import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 
@@ -20,7 +21,18 @@ class Builder extends Component {
         }
 
         const transformedQuestions = questions.map(question => {
-            return <Text title={question.title} key={question.title} />;
+            let validation;
+            if (question.validation) {
+                validation = JSON.parse(question.validation);
+            }
+            return (
+                <Text
+                    title={question.title}
+                    key={question.title}
+                    description={question.description}
+                    validation={validation}
+                />
+            );
         });
 
         return transformedQuestions;

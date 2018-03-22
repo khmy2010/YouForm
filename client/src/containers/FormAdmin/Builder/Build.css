@@ -14,7 +14,8 @@
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 10px;
+    grid-column-gap: 3px;
+    background-color: black;
 }
 
 .EleBuilder {
@@ -86,13 +87,13 @@
 }
 
 .ElePreview {
-    background-color: #efecea;
+    background-color: #fff;
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
-    padding: 10px;
+    padding: 13px;
     display: grid;
     grid-template-rows: 35px auto;
-    justify-items: center;
+    /* justify-items: center; */
     justify-content: stretch;
     align-content: stretch;
 }

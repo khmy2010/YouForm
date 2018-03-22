@@ -6,10 +6,7 @@ const questionSchema = new Schema({
     type: Number,
     title: String,
     description: String,
-    isRequired: {
-        type: Boolean,
-        default: false
-    }
+    validation: String
 });
 
 module.exports = questionSchema;
