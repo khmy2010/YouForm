@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Field from '../Field';
-import * as checker from '../Checker';
-import './Text.css';
 
-class Text extends Component {
+class Mock extends Component {
     state = {
         value: '',
         touched: false,
@@ -23,8 +21,14 @@ class Text extends Component {
 
         const validation = this.props.validation;
 
-        if (validation.isRequired) {
-            error = checker.required(this.state.value);
+        if (validation) {
+            if (validation.isRequired) {
+                if (this.state.value.trim().length === 0) {
+                    error = true;
+                } else {
+                    error = false;
+                }
+            }
         }
 
         this.setState({
@@ -35,13 +39,15 @@ class Text extends Component {
     render() {
         let classes = ['_text'];
         let errorMsg = '';
-
-        if (this.state.error) {
-            classes.push('Text-Error');
-            errorMsg = <p className="Text-ErrorMsg">This field is required.</p>;
-        }
+        let tooltip = null;
 
         classes = classes.join(' ');
+
+        const config = {
+            title: this.props.title,
+            description: this.props.description,
+            required: this.props.validation.isRequired
+        };
 
         return (
             <Field config={this.props}>
@@ -53,10 +59,9 @@ class Text extends Component {
                     onFocus={() => this.setState({ touched: true })}
                     onBlur={event => this.validate(event)}
                 />
-                {errorMsg}
             </Field>
         );
     }
 }
 
-export default connect(null)(Text);
+export default connect(null)(Mock);

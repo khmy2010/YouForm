@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../actions/form';
 import Text from '../../Fields/Text/Text';
-import Email from '../../Fields/Email/Email';
+// import Email from '../../Fields/Email/Email';
 import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 

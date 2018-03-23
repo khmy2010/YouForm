@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
 import Text from '../../Fields/Text/Text';
-import Email from '../../Fields/Email/Email';
+// import Email from '../../Fields/Email/Email';
+// import Mock from '../../Fields/Mock/Mock';
 
 import './Build.css';
 
@@ -55,7 +56,12 @@ class QuestionBuilder extends Component {
                 );
             } else {
                 return (
-                    <Email
+                    // <Email
+                    //     title={this.state.title}
+                    //     description={this.state.description}
+                    //     validation={this.state.validation}
+                    // />
+                    <Text
                         title={this.state.title}
                         description={this.state.description}
                         validation={this.state.validation}
