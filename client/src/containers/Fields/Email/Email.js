@@ -1,58 +1,29 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
-import Field from '../Field';
-import * as checker from '../Checker';
+//possible props:
+//1. value
+const email = props => {
+    //perform view logic such as errors and error message
 
-class Email extends Component {
-    state = {
-        value: '',
-        touched: false,
-        error: false
-    };
+    let classes = ['_text'];
+    let errorMsg = '';
 
-    handleChange = event => {
-        this.setState({
-            value: event.target.value
-        });
-        this.validate(event.target.value);
-    };
-
-    validate = value => {
-        let errors = [];
-
-        const validation = this.props.validation;
-
-        // if (validation.isRequired &&) {
-        //     error = checker.required(value);
-        // }
-    };
-
-    render() {
-        let classes = ['_text'];
-        let errorMsg = '';
-
-        if (this.state.error) {
-            classes.push('Text-Error');
-            errorMsg = <p className="Text-ErrorMsg">This field is required.</p>;
-        }
-
-        classes = classes.join(' ');
-
-        return (
-            <Field config={this.props}>
-                <input
-                    className={classes}
-                    type="text"
-                    value={this.state.value}
-                    onChange={event => this.handleChange(event)}
-                    onFocus={() => this.setState({ touched: true })}
-                    onBlur={event => this.validate(this.state.value)}
-                />
-                {errorMsg}
-            </Field>
-        );
+    if (props.errorStatus) {
+        classes.push('Text-Error');
+        errorMsg = <p className="Text-ErrorMsg">This field is required.</p>;
     }
-}
 
-export default connect(null)(Email);
+    classes = classes.join(' ');
+
+    return (
+        <input
+            className={classes}
+            value={props.value}
+            onChange={event => props.onChange(event.target.value)}
+            onFocus={props.onFocus}
+            onBlur={props.onBlur}
+        />
+    );
+};
+
+export default email;

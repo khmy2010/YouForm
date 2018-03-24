@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
 
+import Field2 from '../../Fields/Field2';
 import Render from '../../Fields/Render';
 
 import './Build.css';
@@ -96,8 +97,14 @@ class QuestionBuilder extends Component {
                         </div>
                     </div>
                     <div className="ElePreview">
-                        <Render
+                        {/* <Render
                             type={this.props.type}
+                            title={this.state.title}
+                            description={this.state.description}
+                            validation={this.state.validation}
+                        /> */}
+                        <Field2
+                            component={this.props.type}
                             title={this.state.title}
                             description={this.state.description}
                             validation={this.state.validation}

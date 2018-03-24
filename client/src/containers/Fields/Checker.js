@@ -1,6 +1,10 @@
+//RULES:
+//RETURN TRUE = PASS VALIDATION
+//RETURN FALSE = FAIL VALIDATION
+
 //because all fields need this validation
 //but not all fields will required key in to validate.
-export const required = value => value.trim().length === 0;
+export const required = value => value.trim().length !== 0;
 
 export const email = email => {
     //ignore Unncessary escape character warning

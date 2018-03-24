@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Field from '../Field';
-import * as checker from '../Checker';
+import * as checker from '../checker';
 import './Text.css';
 
 class Text extends Component {
