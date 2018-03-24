@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
 
-import Field2 from '../../Fields/Field2';
-import Render from '../../Fields/Render';
+import EleTitle from './EleTitle';
+import EleComp from './EleComp';
+import ElePreview from './ElePreview';
 
 import './Build.css';
 
@@ -14,22 +15,21 @@ class QuestionBuilder extends Component {
         description: '',
         validation: {
             isRequired: false
-        },
-        type: null
+        }
     };
 
-    eventHandler = ({ target }) => {
-        if (target.type === 'checkbox') {
-            const newValidation = { ...this.state.validation };
-            newValidation.isRequired = target.checked;
-            this.setState({
-                validation: newValidation
-            });
-        } else {
-            this.setState({
-                [target.name]: target.value
-            });
-        }
+    handleInputChange = ({ target }) => {
+        this.setState({
+            [target.name]: target.value
+        });
+    };
+
+    handleCheckboxChange = ({ target }) => {
+        const newValidation = { ...this.state.validation };
+        newValidation.isRequired = target.checked;
+        this.setState({
+            validation: newValidation
+        });
     };
 
     saveQuestion = () => {
@@ -53,40 +53,30 @@ class QuestionBuilder extends Component {
                     className="QuestionBuilder"
                 >
                     <div className="EleBuilder">
-                        <div className="EleTitle">
-                            1. New Short Text Question
-                        </div>
+                        <EleTitle type={this.props.type} />
                         <div className="EleBody">
-                            <div className="EleField">
-                                <label>Title</label>
-                                <input
-                                    name="title"
-                                    type="text"
-                                    value={this.state.title}
-                                    onChange={e => this.eventHandler(e)}
-                                />
-                            </div>
-                            <div className="EleField">
-                                <label>Description</label>
-                                <input
-                                    name="description"
-                                    type="text"
-                                    value={this.state.description}
-                                    onChange={e => this.eventHandler(e)}
-                                />
-                            </div>
-                            <div className="EleCheck">
-                                <input
-                                    id="required"
-                                    type="checkbox"
-                                    name="isRequired"
-                                    value={this.state.isRequired}
-                                    onChange={e => this.eventHandler(e)}
-                                />
-                                <label htmlFor="required">
-                                    <span />Required
-                                </label>
-                            </div>
+                            <EleComp
+                                type="input"
+                                name="title"
+                                displayName="Title"
+                                value={this.state.title}
+                                onInputChange={this.handleInputChange}
+                            />
+                            <EleComp
+                                type="input"
+                                name="description"
+                                displayName="Description"
+                                value={this.state.description}
+                                onInputChange={this.handleInputChange}
+                            />
+                            <EleComp
+                                type="checkbox"
+                                id="required"
+                                name="required"
+                                displayName="Required"
+                                value={this.state.validation.isRequired}
+                                onCheckboxChange={this.handleCheckboxChange}
+                            />
                         </div>
                         <div className="EleFooter">
                             <Button>Save to stencils</Button>
@@ -96,20 +86,12 @@ class QuestionBuilder extends Component {
                             <Button clicked={this.saveQuestion}>Save</Button>
                         </div>
                     </div>
-                    <div className="ElePreview">
-                        {/* <Render
-                            type={this.props.type}
-                            title={this.state.title}
-                            description={this.state.description}
-                            validation={this.state.validation}
-                        /> */}
-                        <Field2
-                            component={this.props.type}
-                            title={this.state.title}
-                            description={this.state.description}
-                            validation={this.state.validation}
-                        />
-                    </div>
+                    <ElePreview
+                        type={this.props.type}
+                        title={this.state.title}
+                        description={this.state.description}
+                        validation={this.state.validation}
+                    />
                 </div>
             </React.Fragment>
         );

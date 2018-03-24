@@ -8,7 +8,6 @@ import { CONSTS } from '../../../utils';
 import * as actions from '../../../actions/form';
 
 //import form components
-import Text from '../../Fields/Text/Text';
 import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 
@@ -27,18 +26,12 @@ class Builder extends Component {
         }
 
         const transformedQuestions = questions.map(question => {
+            // eslint-disable-next-line
             let validation;
             if (question.validation) {
                 validation = JSON.parse(question.validation);
             }
-            return (
-                <Text
-                    title={question.title}
-                    key={question.title}
-                    description={question.description}
-                    validation={validation}
-                />
-            );
+            return null;
         });
 
         return transformedQuestions;

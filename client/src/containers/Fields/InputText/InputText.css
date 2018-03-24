@@ -1,0 +1,30 @@
+._text {
+    width: 90%;
+    height: 40px;
+    font-size: 20px;
+    padding: 5px 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 0;
+    border-bottom: 1px solid #b5b5b5;
+}
+
+._text:focus {
+    outline: none;
+    border-bottom: 3px solid #52057f;
+}
+
+._label {
+    font-size: 18px;
+}
+
+.Text-Required {
+    color: #bf0c0c;
+    padding-left: 3px;
+}
+
+.Text-Description {
+    margin-top: -10px;
+    margin-bottom: 25px;
+    color: #0e2f44;
+}
