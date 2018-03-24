@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+//import consts
+import { CONSTS } from '../../../utils';
+
+//import redux actions
 import * as actions from '../../../actions/form';
+
+//import form components
 import Text from '../../Fields/Text/Text';
-// import Email from '../../Fields/Email/Email';
 import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 
 class Builder extends Component {
     state = {
         title: '',
-        building: false
+        building: false,
+        buildingType: null
     };
 
     renderQuestions() {
@@ -38,15 +44,11 @@ class Builder extends Component {
         return transformedQuestions;
     }
 
-    toggleQuestionBuilder = () => {
-        // const question = {
-        //     title: this.state.title
-        // };
-        // this.props.addQuestion(question, this.props.fid);
+    toggleQuestionBuilder = type => {
         this.setState((prevState, props) => {
-            console.log(prevState);
             return {
-                building: !prevState.building
+                building: !prevState.building,
+                buildingType: type
             };
         });
     };
@@ -60,6 +62,7 @@ class Builder extends Component {
                     onBackdropClick={this.toggleQuestionBuilder}
                     onSave={this.props.addQuestion}
                     fid={this.props.fid}
+                    type={this.state.buildingType}
                 />
             );
         }
@@ -68,18 +71,21 @@ class Builder extends Component {
             <div>
                 <h3>Form Builder</h3>
                 <div>
-                    <Button clicked={this.toggleQuestionBuilder}>
-                        Create New
+                    <Button
+                        clicked={() =>
+                            this.toggleQuestionBuilder(CONSTS.TYPE.SHORT_TEXT)
+                        }
+                    >
+                        Create New Short Text
+                    </Button>
+                    <Button
+                        clicked={() =>
+                            this.toggleQuestionBuilder(CONSTS.TYPE.EMAIL)
+                        }
+                    >
+                        Create New Email
                     </Button>
                     {questionBuilder}
-                    <input
-                        style={{ width: '200px', marginLeft: '30px' }}
-                        type="text"
-                        value={this.state.title}
-                        onChange={event =>
-                            this.setState({ title: event.target.value })
-                        }
-                    />
                 </div>
                 {this.renderQuestions()}
             </div>

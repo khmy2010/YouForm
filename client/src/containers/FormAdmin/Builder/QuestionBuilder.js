@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
-import Text from '../../Fields/Text/Text';
-// import Email from '../../Fields/Email/Email';
-// import Mock from '../../Fields/Mock/Mock';
+
+import Render from '../../Fields/Render';
 
 import './Build.css';
 
@@ -41,35 +40,6 @@ class QuestionBuilder extends Component {
         this.props.onSave(question, this.props.fid);
         this.props.onBackdropClick();
     };
-
-    renderPreview() {
-        if (this.state.title === '') {
-            return null;
-        } else {
-            if (this.state.type === 1) {
-                return (
-                    <Text
-                        title={this.state.title}
-                        description={this.state.description}
-                        validation={this.state.validation}
-                    />
-                );
-            } else {
-                return (
-                    // <Email
-                    //     title={this.state.title}
-                    //     description={this.state.description}
-                    //     validation={this.state.validation}
-                    // />
-                    <Text
-                        title={this.state.title}
-                        description={this.state.description}
-                        validation={this.state.validation}
-                    />
-                );
-            }
-        }
-    }
 
     render() {
         return (
@@ -125,7 +95,14 @@ class QuestionBuilder extends Component {
                             <Button clicked={this.saveQuestion}>Save</Button>
                         </div>
                     </div>
-                    <div className="ElePreview">{this.renderPreview()}</div>
+                    <div className="ElePreview">
+                        <Render
+                            type={this.props.type}
+                            title={this.state.title}
+                            description={this.state.description}
+                            validation={this.state.validation}
+                        />
+                    </div>
                 </div>
             </React.Fragment>
         );

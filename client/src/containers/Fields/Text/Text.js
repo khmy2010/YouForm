@@ -16,15 +16,16 @@ class Text extends Component {
         this.setState({
             value: event.target.value
         });
+        this.validate(event.target.value);
     };
 
-    validate = event => {
+    validate = value => {
         let error = false;
 
         const validation = this.props.validation;
 
         if (validation.isRequired) {
-            error = checker.required(this.state.value);
+            error = checker.required(value);
         }
 
         this.setState({
@@ -51,7 +52,7 @@ class Text extends Component {
                     value={this.state.value}
                     onChange={event => this.handleChange(event)}
                     onFocus={() => this.setState({ touched: true })}
-                    onBlur={event => this.validate(event)}
+                    onBlur={event => this.validate(this.state.value)}
                 />
                 {errorMsg}
             </Field>
