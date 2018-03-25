@@ -61,7 +61,7 @@ class Builder extends Component {
         }
 
         return (
-            <div>
+            <div className="Builder">
                 <h3>Form Builder</h3>
                 <div>
                     <Button

@@ -7,18 +7,17 @@ import Dash from './containers/Dash/Dash';
 import FormAdmin from './containers/FormAdmin/FormAdmin';
 import NotFound from './components/NotFound/NotFound';
 import Login from './components/Login/Login';
+import Landing from './components/Landing/Landing';
 import Test from './components/Test';
 
-const Landing = props => {
-    console.log(props);
-    return <h1>Landing Page</h1>;
-};
 const Discovery = () => <h1>Discovery Page</h1>;
 
-const siteRoutes = () => {
+const siteRoutes = props => {
+    const renderLanding = () => <Landing auth={props.auth} />;
+
     return (
         <Switch>
-            <Route path="/" exact component={Landing} />
+            <Route path="/" exact component={renderLanding} />
             <Route path="/discovery" exact component={Discovery} />
             <Route path="/app/dashboard" exact component={Dash} />
             <Route path="/app/login" exact component={Login} />

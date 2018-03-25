@@ -1,0 +1,14 @@
+.Landing {
+    color: #262627;
+}
+
+#Landing__Title {
+    background-color: #f1ece4;
+    height: 300px;
+    width: 100%;
+}
+
+#Landing__Intro {
+    text-align: center;
+    font-size: 40px;
+}

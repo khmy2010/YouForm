@@ -1,4 +1,4 @@
-.Header-Active {
+/* .Header-Active {
     border-top: 4px solid #00313c;
 }
 
@@ -10,10 +10,30 @@
 }
 .Header-Nav-Nav {
     width: 100%;
-}
+} */
 
 /* .Header-Nav {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
 } */
+
+.Header__Navigation {
+    list-style: none;
+    margin: 0;
+    background-color: #037ef3;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+}
+
+.Header__Navigation a {
+    text-decoration: none;
+    display: block;
+    padding: 1em;
+    color: white;
+}
+
+.Header__Navigation a:hover {
+    background: #0c3866;
+}

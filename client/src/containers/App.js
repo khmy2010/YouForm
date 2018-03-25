@@ -18,7 +18,6 @@ import '../global.css';
 
 class App extends Component {
     constructor(props) {
-        console.log('FETCH USER');
         super(props);
         this.props.fetchUser();
     }
@@ -26,10 +25,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <div className="container">
-                    <Header auth={this.props.auth} />
-                    <SiteRoutes auth={this.props.auth} />
-                </div>
+                <SiteRoutes auth={this.props.auth} />
             </BrowserRouter>
         );
     }

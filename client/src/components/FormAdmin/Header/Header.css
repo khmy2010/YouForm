@@ -1,0 +1,23 @@
+.FormAdmin__Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.FormAdmin__Name {
+    width: 300px;
+    height: 25px;
+    border: 1px solid transparent;
+    color: #303030;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 20px;
+    padding-left: 3px;
+}
+
+.FormAdmin__Name:focus {
+    outline: 0;
+    border: 2px solid #2196f3;
+    background-color: #fff;
+}

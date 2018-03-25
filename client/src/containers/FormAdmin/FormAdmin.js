@@ -5,20 +5,45 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/form';
 import './FormAdmin.css';
 
+import Header from '../../components/FormAdmin/Header/Header';
 import Builder from './Builder/Builder';
 import Preview from './Preview/Preview';
 import Responses from './Responses/Responses';
 import Share from './Share/Share';
 
-const MODE = ['build', 'preview', 'responses', 'share'];
+const MODE = ['build', 'preview', 'responses', 'feedbacks', 'share'];
 
 class FormAdmin extends Component {
+    state = {
+        fileName: ''
+    };
+
     componentDidMount() {
         const url = window.location.pathname.split('/');
         const fid = url.slice(3).shift();
 
         this.props.fetchFormAdmin(fid, this.props.history);
     }
+
+    componentWillReceiveProps(nextProps) {
+        const fileName = nextProps.formData.name;
+
+        if (fileName && this.state.fileName !== fileName) {
+            this.setState({
+                fileName
+            });
+        }
+    }
+
+    handleFileNameChange = event => {
+        this.setState({
+            fileName: event.target.value
+        });
+    };
+
+    saveFileName = fileName => {
+        console.log(fileName);
+    };
 
     renderNavigation() {
         return MODE.map(mode => {
@@ -34,7 +59,12 @@ class FormAdmin extends Component {
 
     render() {
         return (
-            <div>
+            <div className="FormAdmin">
+                <Header
+                    fileName={this.state.fileName}
+                    onChange={this.handleFileNameChange}
+                    onSaveFileName={this.saveFileName}
+                />
                 <ul className="Bar">{this.renderNavigation()}</ul>
                 <Switch>
                     <Route
@@ -58,8 +88,6 @@ class FormAdmin extends Component {
                         component={Share}
                     />
                 </Switch>
-                <h3>Document Name: {this.props.formData.name}</h3>
-                <h3>Owned by: {this.props.formData.owner}</h3>
             </div>
         );
     }
