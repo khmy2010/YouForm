@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const questionSchema = new Schema({
     sequence: Number,
-    type: Number,
+    type: String,
     title: String,
     description: String,
     validation: String

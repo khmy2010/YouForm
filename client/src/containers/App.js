@@ -7,9 +7,6 @@ import * as authActions from '../actions/auth';
 //route imports
 import SiteRoutes from '../SiteRoutes';
 
-//component imports
-import Header from '../components/Header/Header';
-
 //css imports
 import '../global.css';
 

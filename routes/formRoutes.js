@@ -79,4 +79,17 @@ module.exports = app => {
             res.send(subdoc);
         }
     });
+
+    //changing form properties
+    app.patch('/api/forms/:fid', requireLogin, async (req, res) => {
+        const body = req.body;
+        const fid = req.params.fid;
+
+        if (ObjectID.isValid(fid)) {
+            await Form.update({ _id: fid }, { $set: body });
+            res.send();
+        } else {
+            res.status(400).send();
+        }
+    });
 };

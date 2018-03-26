@@ -14,6 +14,11 @@ const formAdminReducer = (state = initialState, action) => {
                 dataLoaded: true,
                 loading: false
             };
+        case actionTypes.MODIFY_FORM_PROPERTIES:
+            return {
+                ...state,
+                ...action.props
+            };
         default:
             return state;
     }

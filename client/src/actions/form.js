@@ -20,3 +20,10 @@ export const addQuestion = (question, fid) => async dispatch => {
         dispatch({ type: actionTypes.ADD_QUESTION, question });
     } catch (error) {}
 };
+
+export const changeFormProperties = (fid, props) => async dispatch => {
+    try {
+        await axios.patch(`/api/forms/${fid}`, props);
+        dispatch({ type: actionTypes.MODIFY_FORM_PROPERTIES, props });
+    } catch (error) {}
+};

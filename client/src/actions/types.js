@@ -14,3 +14,4 @@ export const FETCH_FORMS_FAILED = 'FETCH_FORMS_FAILED';
 //adding form questions related
 export const INIT_FORM = 'INIT_FORM';
 export const ADD_QUESTION = 'ADD_QUESTION';
+export const MODIFY_FORM_PROPERTIES = 'MODIFY_FORM_PROPERTIES';

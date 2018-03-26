@@ -1,3 +1,9 @@
+.Builder {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: 10px;
+}
+
 .QuestionBuilder {
     --border-radius: 15px;
     position: fixed;

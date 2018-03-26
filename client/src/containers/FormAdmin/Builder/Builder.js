@@ -10,6 +10,7 @@ import * as actions from '../../../actions/form';
 //import form components
 import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
+import QuestionsPreview from './Preview';
 
 class Builder extends Component {
     state = {
@@ -20,6 +21,7 @@ class Builder extends Component {
 
     renderQuestions() {
         const questions = this.props.questions;
+        console.log(questions);
 
         if (questions.length === 0) {
             return null;
@@ -62,8 +64,7 @@ class Builder extends Component {
 
         return (
             <div className="Builder">
-                <h3>Form Builder</h3>
-                <div>
+                <div className="Builder__Elements">
                     <Button
                         clicked={() =>
                             this.toggleQuestionBuilder(CONSTS.TYPE.SHORT_TEXT)
@@ -80,7 +81,7 @@ class Builder extends Component {
                     </Button>
                     {questionBuilder}
                 </div>
-                {this.renderQuestions()}
+                <QuestionsPreview />
             </div>
         );
     }
