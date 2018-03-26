@@ -4,28 +4,29 @@ import { connect } from 'react-redux';
 import Field from '../../Fields/Field';
 
 const preview = ({ questions }) => {
-    if (questions.length === 0) {
-        return null;
+    let transformedQuestions = null;
+
+    if (questions.length !== 0) {
+        transformedQuestions = questions.map((question, index) => {
+            let parsedValidation = {};
+
+            if (question.validation) {
+                parsedValidation = JSON.parse(question.validation);
+            }
+
+            return (
+                <Field
+                    key={index}
+                    component={question.type}
+                    title={question.title}
+                    description={question.description}
+                    validation={parsedValidation}
+                />
+            );
+        });
     }
 
-    const transformedQuestions = questions.map(question => {
-        let parsedValidation = {};
-
-        if (question.validation) {
-            parsedValidation = JSON.parse(question.validation);
-        }
-
-        return (
-            <Field
-                component={question.type}
-                title={question.title}
-                description={question.description}
-                validation={question.validation}
-            />
-        );
-    });
-
-    return <div />;
+    return <div className="Builder__Preview">{transformedQuestions}</div>;
 };
 
 const mapStateToProps = ({ form }) => {

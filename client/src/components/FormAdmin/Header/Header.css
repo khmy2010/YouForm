@@ -2,6 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    border-bottom: 2px solid #eee;
+    /* height: 65%; */
 }
 
 .FormAdmin__Name {

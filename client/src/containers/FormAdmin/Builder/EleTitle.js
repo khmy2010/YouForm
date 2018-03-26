@@ -16,6 +16,12 @@ const eleTitle = ({ type, sequence }) => {
         case CONSTS.TYPE.EMAIL:
             rendered = `${sequence}. New Email Question`;
             break;
+        case CONSTS.TYPE.NUMBER:
+            rendered = `${sequence}. New Number Question`;
+            break;
+        case CONSTS.TYPE.CURRENCY:
+            rendered = `${sequence}. New Currency Question`;
+            break;
         default:
             break;
     }

@@ -48,6 +48,8 @@ class Field extends Component {
     validate = value => {
         const rules = this.state.validation;
         const validationResults = [];
+        const component = this.props.component;
+        const { TYPE } = CONSTS;
 
         if (rules.isRequired) {
             validationResults.push({
@@ -56,10 +58,24 @@ class Field extends Component {
             });
         }
 
-        if (this.props.component === CONSTS.TYPE.EMAIL) {
+        if (component === TYPE.EMAIL) {
             validationResults.push({
                 status: checker.email(value),
                 message: 'This is an invalid email.'
+            });
+        }
+
+        if (component === TYPE.NUMBER || component === TYPE.CURRENCY) {
+            validationResults.push({
+                status: checker.numeric(value),
+                message: 'This field accepts only number.'
+            });
+        }
+
+        if (component === TYPE.CURRENCY) {
+            validationResults.push({
+                status: checker.currency(value),
+                message: 'This field accepts only number in two decimal places.'
             });
         }
 
@@ -83,6 +99,8 @@ class Field extends Component {
         switch (type) {
             case CONSTS.TYPE.SHORT_TEXT:
             case CONSTS.TYPE.EMAIL:
+            case CONSTS.TYPE.NUMBER:
+            case CONSTS.TYPE.CURRENCY:
                 return (
                     <InputText
                         value={this.state.value}

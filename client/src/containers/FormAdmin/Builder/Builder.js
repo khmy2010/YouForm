@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-//import consts
-import { CONSTS } from '../../../utils';
-
 //import redux actions
 import * as actions from '../../../actions/form';
 
+import Elements from '../../../components/FormAdmin/BuilderElement/Elements';
+
 //import form components
-import Button from '../../../components/Button/Button';
 import QuestionBuilder from './QuestionBuilder';
 import QuestionsPreview from './Preview';
 
@@ -64,7 +62,7 @@ class Builder extends Component {
 
         return (
             <div className="Builder">
-                <div className="Builder__Elements">
+                {/* <div className="Builder__Elements">
                     <Button
                         clicked={() =>
                             this.toggleQuestionBuilder(CONSTS.TYPE.SHORT_TEXT)
@@ -80,7 +78,10 @@ class Builder extends Component {
                         Create New Email
                     </Button>
                     {questionBuilder}
-                </div>
+                </div> */}
+                <Elements onEleClicked={this.toggleQuestionBuilder}>
+                    {questionBuilder}
+                </Elements>
                 <QuestionsPreview />
             </div>
         );

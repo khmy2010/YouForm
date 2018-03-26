@@ -35,9 +35,9 @@ class QuestionBuilder extends Component {
     saveQuestion = () => {
         const question = {
             ...this.state,
-            validation: JSON.stringify(this.state.validation)
+            validation: JSON.stringify(this.state.validation),
+            type: this.props.type
         };
-        console.log(question);
         this.props.onSave(question, this.props.fid);
         this.props.onBackdropClick();
     };

@@ -17,3 +17,16 @@ export const email = email => {
 export const minLength = (value, minLength) => value.trim().length >= minLength;
 
 export const maxLength = (value, maxLength) => value.trim().length <= minLength;
+
+//https://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric
+//this function will NOT do type check.
+//should this test pass, it is caller's responsibility to perform type check
+export const numeric = value => !isNaN(parseFloat(value)) && isFinite(value);
+
+export const currency = value => {
+    if (typeof value === 'string') {
+        value = parseFloat(value);
+    }
+    const regex = /^\d*(\.\d{0,2})?$/;
+    return regex.test(value);
+};

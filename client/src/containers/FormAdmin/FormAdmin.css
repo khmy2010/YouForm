@@ -32,7 +32,7 @@
 .FormAdmin {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr auto;
+    grid-template-rows: 50px 65px auto;
     grid-template-areas:
         'header'
         'navbar'

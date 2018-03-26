@@ -12,7 +12,7 @@ Possible Props:
 6. type
 */
 
-const email = props => {
+const inputText = props => {
     //perform view logic such as errors and error message
 
     let classes = ['_text'];
@@ -34,4 +34,4 @@ const email = props => {
     );
 };
 
-export default email;
+export default inputText;
