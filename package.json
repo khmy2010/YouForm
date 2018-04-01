@@ -11,20 +11,20 @@
         "url": "git://github.com/khmy2010/YouForm.git"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "push-git": "git push -u origin",
         "push-heroku": "git push heroku master",
         "push-all-complete":
             "echo \"DONE: App has been pushed to GitHub and deployed to Heroku.\"",
         "deploy":
             "npm run push-git && npm run push-heroku && npm run push-all-complete",
-        "server": "nodemon --ignore 'client/' index.js",
+        "server": "nodemon --ignore 'client/' --ignore 'tests/' index.js",
         "client": "npm run start --prefix client",
         "dev":
             "concurrently  --kill-others-on-fail \"npm run server\" \"npm run client\"",
         "heroku-postbuild":
             "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-        "start": "node index.js"
+        "start": "node index.js",
+        "test": "jest"
     },
     "keywords": [],
     "author": "Ke Han",
@@ -37,5 +37,9 @@
         "mongoose": "^5.0.10",
         "passport": "^0.4.0",
         "passport-google-oauth20": "^1.0.0"
+    },
+    "devDependencies": {
+        "jest": "^22.4.3",
+        "puppeteer": "^1.2.0"
     }
 }
