@@ -21,8 +21,9 @@
         "client": "npm run start --prefix client",
         "dev":
             "concurrently  --kill-others-on-fail \"npm run server\" \"npm run client\"",
-        "heroku-postbuild":
+        "build":
             "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+        "heroku-postbuild": "npm run build",
         "start": "node index.js",
         "test": "jest"
     },
