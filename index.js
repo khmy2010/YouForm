@@ -34,7 +34,7 @@ require('./routes/authRoutes')(app);
 require('./routes/formRoutes')(app);
 
 //only in production
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ci') {
+if (['production', 'ci'].includes(process.env.NODE_ENV)) {
     //order of operation is important here.
 
     //express will serve up production asset (main.js / main.css)
