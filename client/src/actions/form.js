@@ -16,8 +16,8 @@ export const fetchFormAdmin = (fid, history) => async dispatch => {
 
 export const addQuestion = (question, fid) => async dispatch => {
     try {
-        await axios.post(`/api/forms/${fid}/questions`, question);
-        dispatch({ type: actionTypes.ADD_QUESTION, question });
+        const res = await axios.post(`/api/forms/${fid}/questions`, question);
+        dispatch({ type: actionTypes.ADD_QUESTION, question, res });
     } catch (error) {}
 };
 

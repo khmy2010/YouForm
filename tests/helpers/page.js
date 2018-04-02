@@ -31,16 +31,23 @@ class SuperPage {
     }
 
     async login() {
-        this.page.setDefaultNavigationTimeout(30000000); //fuck my laptop :)
+        this.page.setDefaultNavigationTimeout(300000); //fuck my laptop :)
 
         this.user = await userFactory();
         const { session, sig } = sessionFactory(this.user);
+        console.log(session);
+        console.log(sig);
+        console.log(this.user);
 
         await this.page.setCookie({ name: 'session', value: session });
         await this.page.setCookie({ name: 'session.sig', value: sig });
-        await this.page.goto(`${BASE_LINK}/app/dashboard`, {
+        await console.log(await this.page.cookies());
+        await this.page.goto(`${BASE_LINK}`, {
             timeout: 0
         }); //refresh
+        await this.page.waitFor('a[href="/discovery"]');
+        await console.log('after refresh: ', await this.page.cookies());
+        await this.page.screenshot({ path: 'fuckme.png' });
     }
 
     async populateForms() {

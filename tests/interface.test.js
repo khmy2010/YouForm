@@ -40,6 +40,7 @@ describe('user has logged in', async () => {
 
     it('should sees logout button', async () => {
         await page.goto(`${BASE_LINK}`);
+        await page.screenshot({ path: 'fuck.png' });
         await page.waitFor('a[href="/api/logout"]');
         const text = await page.getSelectedContent('a[href="/api/logout"]');
         expect(text).toBe('Logout');
