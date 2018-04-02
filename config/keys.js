@@ -1,9 +1,3 @@
-if (process.env.NODE_ENV) {
-    console.log(
-        `DETECTED: Currently running at ${process.env.NODE_ENV} environment.`
-    );
-}
-
 switch (process.env.NODE_ENV) {
     case 'production':
         //production environment

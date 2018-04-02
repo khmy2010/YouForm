@@ -1,8 +1,10 @@
 const puppeteer = require('puppeteer');
 
-//require factories
 const sessionFactory = require('../factories/session');
 const userFactory = require('../factories/user');
+const formFactory = require('../factories/forms');
+
+const BASE_LINK = 'http://localhost:3000';
 
 class SuperPage {
     static async build() {
@@ -25,32 +27,56 @@ class SuperPage {
 
     constructor(page, browser) {
         this.page = page;
-    }
-
-    //path need to be started with /
-    url(path) {
-        const baseUrl = 'http://localhost:3000';
-        return path ? `${baseUrl + path}` : baseUrl;
-    }
-
-    async select(selector) {
-        return this.page.$eval(selector, el => el.innerHTML);
+        this.user = null;
     }
 
     async login() {
         this.page.setDefaultNavigationTimeout(30000000); //fuck my laptop :)
 
-        const user = await userFactory();
-        const { session, sig } = sessionFactory(user);
+        this.user = await userFactory();
+        const { session, sig } = sessionFactory(this.user);
 
         await this.page.setCookie({ name: 'session', value: session });
         await this.page.setCookie({ name: 'session.sig', value: sig });
-        await this.page.goto(this.url('/app/dashboard'), {
+        await this.page.goto(`${BASE_LINK}/app/dashboard`, {
             timeout: 0
         }); //refresh
+    }
 
-        //might wanna revise this
-        await this.page.waitFor('.Dash-Forms-Container'); //if failed you pandai pandai lah har
+    async populateForms() {
+        await formFactory(this.user);
+    }
+
+    async getSelectedContent(selector) {
+        return this.page.$eval(selector, el => el.innerHTML);
+    }
+
+    async getLocation() {
+        return this.page.evaluate('location.href');
+    }
+
+    async hello() {
+        console.log(hello);
+    }
+
+    //make an ajax request to the API server
+    async _ajax(type, path, data) {
+        return this.page.evaluate(
+            async (_type, _path, _data) => {
+                const result = await fetch(_path, {
+                    method: _type,
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(_data)
+                });
+                return result.json();
+            },
+            type,
+            path,
+            data
+        );
     }
 }
 
