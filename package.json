@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "jest": {
+        "setupTestFrameworkScriptFile": "./tests/setup.js"
+    },
     "engine": {
         "npm": "5.7.1"
     },
@@ -13,16 +16,12 @@
     "scripts": {
         "push-git": "git push -u origin",
         "push-heroku": "git push heroku master",
-        "push-all-complete":
-            "echo \"DONE: App has been pushed to GitHub and deployed to Heroku.\"",
-        "deploy":
-            "npm run push-git && npm run push-heroku && npm run push-all-complete",
+        "push-all-complete": "echo \"DONE: App has been pushed to GitHub and deployed to Heroku.\"",
+        "deploy": "npm run push-git && npm run push-heroku && npm run push-all-complete",
         "server": "nodemon --ignore 'client/' --ignore 'tests/' index.js",
         "client": "npm run start --prefix client",
-        "dev":
-            "concurrently  --kill-others-on-fail \"npm run server\" \"npm run client\"",
-        "build":
-            "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+        "dev": "concurrently  --kill-others-on-fail \"npm run server\" \"npm run client\"",
+        "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
         "heroku-postbuild": "npm run build",
         "start": "node index.js",
         "test": "jest"
@@ -41,6 +40,7 @@
     },
     "devDependencies": {
         "jest": "^22.4.3",
-        "puppeteer": "^1.2.0"
+        "puppeteer": "^1.2.0",
+        "uuid": "^3.2.1"
     }
 }
