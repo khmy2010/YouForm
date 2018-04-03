@@ -2,8 +2,10 @@
 
 Changing How People Collect Information
 
-##Project Timeline
+## Project Timeline
+
 Read project timeline [here](https://trello.com/b/gKFfZP6Z/building-an-mvp-youform)
 
-##Project Purpose
+## Project Purpose
+
 This project is part of the requirements for my Bachelor Degree. :)
