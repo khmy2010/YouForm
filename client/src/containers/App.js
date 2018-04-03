@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import * as authActions from '../actions/auth';
-import AuthWall from '../components/AuthWall/AuthWall';
 
 //route imports
 import SiteRoutes from '../SiteRoutes';
@@ -26,11 +25,10 @@ class App extends Component {
                 //pending for authentication, show loading screen
                 return null;
             case false:
-                //not authenticated, trying to access App route
-                //redirect to auth wall
-                return <AuthWall />;
+            //purposely fallthrough
+            //need to brain the AuthWall thingy
+            // eslint-disable-next-line
             default:
-                //user is authenticated
                 return (
                     <BrowserRouter>
                         <SiteRoutes auth={this.props.auth} />

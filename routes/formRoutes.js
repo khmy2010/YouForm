@@ -139,4 +139,16 @@ module.exports = app => {
             res.status(400).send();
         }
     });
+
+    //get form
+    app.get('/api/forms/:fid', validOID, async (req, res) => {
+        const fid = req.params.fid;
+
+        try {
+            // const form = Form.findById
+            res.send();
+        } catch (error) {
+            res.status(400).send();
+        }
+    });
 };

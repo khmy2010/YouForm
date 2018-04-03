@@ -12,9 +12,31 @@ afterEach(async () => {
     await page.close();
 });
 
+describe('user has not logged in', async () => {
+    it('should able to see the home page', async () => {
+        const text = await page.getSelected('#Landing__Intro');
+        expect(text.length).toBeGreaterThan(0);
+    });
+
+    it('should able to see the correct document title', async () => {
+        const text = await page.title();
+        expect(text).toEqual('YouForm');
+    });
+});
+
 describe('user has logged in', async () => {
     beforeEach(async () => {
         await page.login();
+    });
+
+    it('should able to see the home page', async () => {
+        const text = await page.getSelected('#Landing__Intro');
+        expect(text.length).toBeGreaterThan(0);
+    });
+
+    it('should able to see the correct document title', async () => {
+        const text = await page.title();
+        expect(text).toEqual('YouForm');
     });
 
     it('should able to see the logout button', async () => {
