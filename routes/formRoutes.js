@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 
 const requireLogin = require('../middlewares/requireLogin');
+const validOID = require('../middlewares/valid');
 
 const Form = mongoose.model('form');
 
@@ -80,26 +81,50 @@ module.exports = app => {
         }
     });
 
+    //delete question from the form
     app.delete(
         '/api/forms/:fid/questions/:qid',
         requireLogin,
+        validOID,
         async (req, res) => {
             const fid = req.params.fid;
             const qid = req.params.qid;
-            if (ObjectID.isValid(fid) && ObjectID.isValid(qid)) {
-                /* 
-                    Documentations:
-                    http://mongoosejs.com/docs/subdocs.html
-                    under "Removing subdocs" section
-                */
-                const form = await Form.findById(fid);
-                const questions = form.questions;
-                questions.id(qid).remove();
-                await form.save();
-                res.send();
-            } else {
-                res.status(400).send();
-            }
+
+            /* 
+                Documentations:
+                http://mongoosejs.com/docs/subdocs.html
+                under "Removing subdocs" section
+            */
+
+            const form = await Form.findById(fid);
+            const questions = form.questions;
+            questions.id(qid).remove();
+            await form.save();
+            res.send();
+        }
+    );
+
+    //modify question from the form
+    app.put(
+        '/api/forms/:fid/questions/:qid',
+        requireLogin,
+        validOID,
+        async (req, res) => {
+            const fid = req.params.fid;
+            const qid = req.params.qid;
+            const body = req.body;
+
+            // const form = await Form.findById(fid);
+            // console.log(form);
+            await Form.findOneAndUpdate(
+                { _id: fid, 'questions._id': qid },
+                {
+                    $set: {
+                        'questions.$': body
+                    }
+                }
+            );
+            res.send();
         }
     );
 

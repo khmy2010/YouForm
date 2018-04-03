@@ -22,10 +22,16 @@ export const addQuestion = (question, fid) => async dispatch => {
 };
 
 export const deleteQuestion = (fid, qid) => async dispatch => {
-    console.log(fid, qid);
     try {
         await axios.delete(`/api/forms/${fid}/questions/${qid}`);
         dispatch({ type: actionTypes.DELETE_QUESTION, qid });
+    } catch (error) {}
+};
+
+export const editQuestion = (question, fid, qid) => async dispatch => {
+    try {
+        await axios.put(`/api/forms/${fid}/questions/${qid}`, question);
+        dispatch({ type: actionTypes.EDIT_QUESTION, qid, question });
     } catch (error) {}
 };
 

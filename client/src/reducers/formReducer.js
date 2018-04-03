@@ -19,6 +19,18 @@ const formReducer = (state = initialState, action) => {
                 ...state,
                 questions: state.questions.concat(action.question)
             };
+        case actionTypes.EDIT_QUESTION:
+            const oldIndex = state.questions.findIndex(question => {
+                return question._id === action.qid;
+            });
+
+            const newQuestions = state.questions.slice();
+            newQuestions[oldIndex] = action.question;
+
+            return {
+                ...state,
+                questions: newQuestions
+            };
         case actionTypes.DELETE_QUESTION:
             const updatedQuestions = state.questions.filter(question => {
                 return question._id !== action.qid;

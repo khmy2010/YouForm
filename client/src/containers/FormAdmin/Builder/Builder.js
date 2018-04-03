@@ -10,11 +10,16 @@ import Elements from '../../../components/FormAdmin/BuilderElement/Elements';
 import QuestionBuilder from './QuestionBuilder';
 import QuestionsPreview from './Preview/Preview';
 
+const CREATING = 'CREATING';
+const EDITING = 'EDITING';
+
 class Builder extends Component {
     state = {
         title: '',
-        building: false,
-        buildingType: null
+        showBuilder: false,
+        buildingStatus: null,
+        buildingType: null,
+        buildingData: null
     };
 
     renderQuestions() {
@@ -36,13 +41,35 @@ class Builder extends Component {
         return transformedQuestions;
     }
 
-    toggleQuestionBuilder = type => {
+    //this function only turns on and turns off question builder
+    //without knowing whether it is editing or creating
+    toggleQuestionBuilder = () => {
         this.setState((prevState, props) => {
-            return {
-                building: !prevState.building,
-                buildingType: type
-            };
+            /*
+                1. It means that we are trying to turn off the builder
+                2. Therefore we need to reset the state
+            */
+            if (prevState.showBuilder === true) {
+                return {
+                    showBuilder: !prevState.showBuilder,
+                    buildingType: null,
+                    buildingData: null
+                };
+            } else {
+                return {
+                    showBuilder: !prevState.showBuilder
+                };
+            }
         });
+    };
+
+    createQuestion = type => {
+        this.setState({
+            buildingStatus: CREATING,
+            buildingType: type
+        });
+
+        this.toggleQuestionBuilder();
     };
 
     editQuestion = data => {
@@ -52,27 +79,58 @@ class Builder extends Component {
             2. Need 3 states: null, new, edit to specify for different needs
             3. Need a way for QuestionBuilder to absorb existing data
         */
-        console.log(data);
+
+        /*
+            Proposed new way:
+            1. Builder to have a building state of:
+                (i) - null (not building)
+                (ii) - creating (building new)
+                (iii) - editing (editing existing)
+
+            2. QuestionBuilder to have two modes:
+                (i) - creating mode 
+                (ii) - editing mode
+
+                where creating mode do what it is currently doing;
+                and editing mode have difference in:
+                (i) - data loaded
+                (ii) - preview loaded
+                (iii) - button text - "Update" instead of "Save"
+        */
+        this.setState({
+            buildingStatus: EDITING,
+            buildingType: data.type,
+            buildingData: data
+        });
+
+        this.toggleQuestionBuilder();
     };
 
     deleteQuestion = ({ _id }) => {
         this.props.deleteQuestion(this.props.fid, _id);
     };
 
-    render() {
+    renderQuestionBuilder() {
         let questionBuilder = null;
 
-        if (this.state.building) {
+        if (this.state.showBuilder) {
             questionBuilder = (
                 <QuestionBuilder
                     onBackdropClick={this.toggleQuestionBuilder}
                     onSave={this.props.addQuestion}
+                    onUpdate={this.props.editQuestion}
                     fid={this.props.fid}
                     type={this.state.buildingType}
+                    mode={this.state.buildingStatus}
+                    data={this.state.buildingData}
                 />
             );
         }
 
+        return questionBuilder;
+    }
+
+    render() {
         return (
             <div className="Builder">
                 {/* <div className="Builder__Elements">
@@ -92,8 +150,8 @@ class Builder extends Component {
                     </Button>
                     {questionBuilder}
                 </div> */}
-                <Elements onEleClicked={this.toggleQuestionBuilder}>
-                    {questionBuilder}
+                <Elements onEleClicked={this.createQuestion}>
+                    {this.renderQuestionBuilder()}
                 </Elements>
                 <QuestionsPreview
                     onEdit={this.editQuestion}

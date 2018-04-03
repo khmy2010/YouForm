@@ -22,6 +22,9 @@ const eleTitle = ({ type, sequence }) => {
         case CONSTS.TYPE.CURRENCY:
             rendered = `${sequence}. New Currency Question`;
             break;
+        case 'EDITING':
+            rendered = 'Edit Question';
+            break;
         default:
             break;
     }

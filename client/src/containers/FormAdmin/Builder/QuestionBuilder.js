@@ -9,14 +9,30 @@ import ElePreview from './ElePreview';
 
 import './Build.css';
 
+const CREATING = 'CREATING';
+
 class QuestionBuilder extends Component {
-    state = {
-        title: '',
-        description: '',
-        validation: {
-            isRequired: false
+    constructor(props) {
+        super(props);
+
+        if (this.props.mode === CREATING) {
+            this.state = {
+                title: '',
+                description: '',
+                validation: {
+                    isRequired: false
+                }
+            };
+        } else {
+            //populate with existing data
+            const data = this.props.data;
+            this.state = {
+                title: data.title,
+                description: data.description || '',
+                validation: JSON.parse(data.validation)
+            };
         }
-    };
+    }
 
     handleInputChange = ({ target }) => {
         this.setState({
@@ -38,8 +54,16 @@ class QuestionBuilder extends Component {
             validation: JSON.stringify(this.state.validation),
             type: this.props.type
         };
-        this.props.onSave(question, this.props.fid);
+
         this.props.onBackdropClick();
+
+        if (this.props.mode === CREATING) {
+            this.props.onSave(question, this.props.fid);
+        } else {
+            //restore question's object ID because we will override everything.
+            question._id = this.props.data._id;
+            this.props.onUpdate(question, this.props.fid, this.props.data._id);
+        }
     };
 
     render() {
@@ -53,7 +77,13 @@ class QuestionBuilder extends Component {
                     className="QuestionBuilder"
                 >
                     <div className="EleBuilder">
-                        <EleTitle type={this.props.type} />
+                        <EleTitle
+                            type={
+                                this.props.mode === CREATING
+                                    ? this.props.type
+                                    : 'EDITING'
+                            }
+                        />
                         <div className="EleBody">
                             <EleComp
                                 type="input"
@@ -83,7 +113,11 @@ class QuestionBuilder extends Component {
                             <Button clicked={this.props.onBackdropClick}>
                                 Cancel
                             </Button>
-                            <Button clicked={this.saveQuestion}>Save</Button>
+                            <Button clicked={this.saveQuestion}>
+                                {this.props.mode === CREATING
+                                    ? 'Save'
+                                    : 'Update'}
+                            </Button>
                         </div>
                     </div>
                     <ElePreview
