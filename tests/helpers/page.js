@@ -36,6 +36,10 @@ class SuperPage {
         await this.page.goto(BASE_URL);
     }
 
+    async getLocation() {
+        return this.page.evaluate('location.href');
+    }
+
     async getSelected(selector) {
         return this.page.$eval(selector, el => el.innerHTML);
     }
