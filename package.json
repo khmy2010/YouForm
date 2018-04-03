@@ -7,7 +7,7 @@
         "setupTestFrameworkScriptFile": "./tests/setup.js"
     },
     "engine": {
-        "npm": "5.7.1"
+        "npm": "5.8.0"
     },
     "repository": {
         "type": "git",
