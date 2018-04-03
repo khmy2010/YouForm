@@ -8,7 +8,7 @@ import Elements from '../../../components/FormAdmin/BuilderElement/Elements';
 
 //import form components
 import QuestionBuilder from './QuestionBuilder';
-import QuestionsPreview from './Preview';
+import QuestionsPreview from './Preview/Preview';
 
 class Builder extends Component {
     state = {
@@ -19,7 +19,6 @@ class Builder extends Component {
 
     renderQuestions() {
         const questions = this.props.questions;
-        console.log(questions);
 
         if (questions.length === 0) {
             return null;
@@ -44,6 +43,20 @@ class Builder extends Component {
                 buildingType: type
             };
         });
+    };
+
+    editQuestion = data => {
+        /*
+            Notes:
+            1. Currently Question Builder is not robust
+            2. Need 3 states: null, new, edit to specify for different needs
+            3. Need a way for QuestionBuilder to absorb existing data
+        */
+        console.log(data);
+    };
+
+    deleteQuestion = ({ _id }) => {
+        this.props.deleteQuestion(this.props.fid, _id);
     };
 
     render() {
@@ -82,7 +95,10 @@ class Builder extends Component {
                 <Elements onEleClicked={this.toggleQuestionBuilder}>
                     {questionBuilder}
                 </Elements>
-                <QuestionsPreview />
+                <QuestionsPreview
+                    onEdit={this.editQuestion}
+                    onDelete={this.deleteQuestion}
+                />
             </div>
         );
     }

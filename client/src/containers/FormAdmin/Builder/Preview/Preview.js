@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Field from '../../Fields/Field';
+import PreviewEditor from './PreviewEditor';
+import Field from '../../../Fields/Field';
 
-const preview = ({ questions }) => {
+const preview = ({ questions, onEdit, onDelete }) => {
     let transformedQuestions = null;
 
     if (questions.length !== 0) {
@@ -15,13 +16,18 @@ const preview = ({ questions }) => {
             }
 
             return (
-                <Field
+                <PreviewEditor
                     key={index}
-                    component={question.type}
-                    title={question.title}
-                    description={question.description}
-                    validation={parsedValidation}
-                />
+                    onEditQuestion={() => onEdit(question)}
+                    onDeleteQuestion={() => onDelete(question)}
+                >
+                    <Field
+                        component={question.type}
+                        title={question.title}
+                        description={question.description}
+                        validation={parsedValidation}
+                    />
+                </PreviewEditor>
             );
         });
     }

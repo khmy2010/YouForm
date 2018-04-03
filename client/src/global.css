@@ -16,6 +16,22 @@ html * {
     font-weight: 700;
 }
 
+.Green {
+    color: #009688 !important;
+}
+
+.GreenBackground {
+    background-color: #009688 !important;
+}
+
+.Red {
+    color: #f44336 !important;
+}
+
+.RedBackground {
+    background-color: #f44336 !important;
+}
+
 *,
 *:before,
 *:after {

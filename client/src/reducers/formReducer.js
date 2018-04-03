@@ -14,12 +14,18 @@ const formReducer = (state = initialState, action) => {
                 questions: action.res.data.questions
             };
         case actionTypes.ADD_QUESTION:
-            console.log(action.question);
-            console.log(action.res);
             action.question._id = action.res.data._id;
             return {
                 ...state,
                 questions: state.questions.concat(action.question)
+            };
+        case actionTypes.DELETE_QUESTION:
+            const updatedQuestions = state.questions.filter(question => {
+                return question._id !== action.qid;
+            });
+            return {
+                ...state,
+                questions: updatedQuestions
             };
         default:
             return state;

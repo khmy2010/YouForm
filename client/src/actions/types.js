@@ -11,7 +11,8 @@ export const FETCH_FORM_ADMIN_FAILED = 'FETCH_FORM_ADMIN_FAILED';
 export const FETCH_FORMS = 'FETCH_FORMS';
 export const FETCH_FORMS_FAILED = 'FETCH_FORMS_FAILED';
 
-//adding form questions related
+//form questions related
 export const INIT_FORM = 'INIT_FORM';
 export const ADD_QUESTION = 'ADD_QUESTION';
+export const DELETE_QUESTION = 'DELETE_QUESTION';
 export const MODIFY_FORM_PROPERTIES = 'MODIFY_FORM_PROPERTIES';

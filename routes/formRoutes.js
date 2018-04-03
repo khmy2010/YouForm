@@ -80,6 +80,29 @@ module.exports = app => {
         }
     });
 
+    app.delete(
+        '/api/forms/:fid/questions/:qid',
+        requireLogin,
+        async (req, res) => {
+            const fid = req.params.fid;
+            const qid = req.params.qid;
+            if (ObjectID.isValid(fid) && ObjectID.isValid(qid)) {
+                /* 
+                    Documentations:
+                    http://mongoosejs.com/docs/subdocs.html
+                    under "Removing subdocs" section
+                */
+                const form = await Form.findById(fid);
+                const questions = form.questions;
+                questions.id(qid).remove();
+                await form.save();
+                res.send();
+            } else {
+                res.status(400).send();
+            }
+        }
+    );
+
     //changing form properties
     app.patch('/api/forms/:fid', requireLogin, async (req, res) => {
         const body = req.body;

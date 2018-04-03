@@ -21,6 +21,14 @@ export const addQuestion = (question, fid) => async dispatch => {
     } catch (error) {}
 };
 
+export const deleteQuestion = (fid, qid) => async dispatch => {
+    console.log(fid, qid);
+    try {
+        await axios.delete(`/api/forms/${fid}/questions/${qid}`);
+        dispatch({ type: actionTypes.DELETE_QUESTION, qid });
+    } catch (error) {}
+};
+
 export const changeFormProperties = (fid, props) => async dispatch => {
     try {
         await axios.patch(`/api/forms/${fid}`, props);

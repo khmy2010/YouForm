@@ -42,7 +42,6 @@ class FormAdmin extends Component {
     };
 
     saveFileName = fileName => {
-        console.log(this.props.formData._id);
         this.props.changeFormProperties(this.props.formData._id, {
             name: fileName
         });

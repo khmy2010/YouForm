@@ -1,0 +1,48 @@
+.Builder__PreviewEditor {
+    display: grid;
+    grid-template-rows: auto 10%;
+    grid-row-gap: 15px;
+    margin-bottom: 20px;
+}
+
+.PreviewEditor__Button {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 28px;
+    width: 100px;
+    padding: 0 3px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: white;
+    font-size: 15px;
+    outline: none;
+}
+
+.PreviewEditor__Red {
+    background-color: #f44336;
+}
+.PreviewEditor__Green {
+    background-color: #009688;
+}
+
+.PreviewEditor__Red:hover {
+    background-color: #ce1d10;
+}
+
+.PreviewEditor__Green:hover {
+    background-color: #007062;
+}
+
+.PreviewEditor__Sequence {
+    font-size: 15px;
+    width: 50px;
+    text-align: center;
+    border: 1px solid #eee;
+    outline: none;
+}
+
+.PreviewEditor__Controls {
+    display: flex;
+    justify-content: space-evenly;
+}
