@@ -1,6 +1,9 @@
 jest.setTimeout(100000);
 
 require('../models/User');
+require('../models/Form');
+require('../models/Question');
+require('../models/Collabs');
 
 const mongoose = require('mongoose');
 const keys = require('../config/keys');

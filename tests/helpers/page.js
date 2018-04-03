@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const sessionFactory = require('../factories/session');
 const userFactory = require('../factories/user');
+const formFactory = require('../factories/form');
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -25,15 +26,20 @@ class SuperPage {
 
     constructor(page) {
         this.page = page;
+        this.user = null;
     }
 
     async login() {
-        const user = await userFactory();
-        const { session, sig } = sessionFactory(user);
+        this.user = await userFactory();
+        const { session, sig } = sessionFactory(this.user);
 
         await this.page.setCookie({ name: 'session', value: session });
         await this.page.setCookie({ name: 'session.sig', value: sig });
         await this.page.goto(BASE_URL);
+    }
+
+    async populateForm(name) {
+        return await formFactory.createForm(this.user, name);
     }
 
     async getLocation() {
@@ -42,6 +48,10 @@ class SuperPage {
 
     async getSelected(selector) {
         return this.page.$eval(selector, el => el.innerHTML);
+    }
+
+    async getInputTextValue(selector) {
+        return this.page.$eval(selector, el => el.value);
     }
 }
 
