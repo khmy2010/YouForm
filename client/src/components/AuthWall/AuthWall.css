@@ -1,0 +1,15 @@
+.AuthWall {
+    margin-right: auto; /* 1 */
+    margin-left: auto; /* 1 */
+    margin-top: 25vh;
+
+    max-width: 960px; /* 2 */
+
+    padding-right: 10px; /* 3 */
+    padding-left: 10px; /* 3 */
+    text-align: center;
+}
+
+.AuthWall__Help {
+    color: #00334e;
+}

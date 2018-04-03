@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import * as authActions from '../actions/auth';
+import AuthWall from '../components/AuthWall/AuthWall';
 
 //route imports
 import SiteRoutes from '../SiteRoutes';
@@ -19,12 +20,27 @@ class App extends Component {
         this.props.fetchUser();
     }
 
+    renderContent() {
+        switch (this.props.auth) {
+            case null:
+                //pending for authentication, show loading screen
+                return null;
+            case false:
+                //not authenticated, trying to access App route
+                //redirect to auth wall
+                return <AuthWall />;
+            default:
+                //user is authenticated
+                return (
+                    <BrowserRouter>
+                        <SiteRoutes auth={this.props.auth} />
+                    </BrowserRouter>
+                );
+        }
+    }
+
     render() {
-        return (
-            <BrowserRouter>
-                <SiteRoutes auth={this.props.auth} />
-            </BrowserRouter>
-        );
+        return <React.Fragment>{this.renderContent()}</React.Fragment>;
     }
 }
 
