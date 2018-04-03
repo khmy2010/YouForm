@@ -9,7 +9,8 @@ switch (process.env.NODE_ENV) {
         break;
     case 'test':
         //test environment
-        module.exports = require('./test_keys');
+        //somehow, it just want to use the same database with dev :(
+        module.exports = require('./dev');
         break;
     default:
         //process.env.NODE_ENV is undefined in development environment

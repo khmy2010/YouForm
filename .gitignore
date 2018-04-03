@@ -5,4 +5,3 @@ node_modules
 
 # secrets
 config/dev.js
-config/test.js

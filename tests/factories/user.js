@@ -5,9 +5,9 @@ const User = mongoose.model('user');
 
 //generate a new user with random googleId and fixed name
 module.exports = async () => {
-    await User.remove({}); //clean up users in test database before proceed
+    await User.remove({ name: 'Mr. Jest' }); //clean up users in test database before proceed
     return new User({
         googleId: uuidv4(),
-        name: 'Mr Test'
+        name: 'Jest: Mr Jest'
     }).save();
 };
