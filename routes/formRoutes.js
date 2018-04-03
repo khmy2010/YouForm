@@ -26,12 +26,13 @@ module.exports = app => {
     });
 
     //fetch form admin interface
-    app.get('/api/forms/admin/:fid', requireLogin, async (req, res) => {
-        const body = req.body;
-        const fid = req.params.fid;
+    app.get(
+        '/api/forms/admin/:fid',
+        requireLogin,
+        validOID,
+        async (req, res) => {
+            const fid = req.params.fid;
 
-        //check validity of ObjectID before proceed to avoid error in mongo side.
-        if (ObjectID.isValid(fid)) {
             //find form by id
             try {
                 const form = await Form.requireAuth(fid, req.user.id);
@@ -40,10 +41,8 @@ module.exports = app => {
             } catch (err) {
                 res.status(403).send(err);
             }
-        } else {
-            res.status(400).send('ERR_01: Invalid ObjectID.');
         }
-    });
+    );
 
     //fetch list of forms own by user
     app.get('/api/forms', requireLogin, async (req, res) => {

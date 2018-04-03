@@ -2,9 +2,9 @@ import React from 'react';
 
 import './Header.css';
 import Button from '../../Button/Button';
+import { NavLink } from 'react-router-dom';
 
 const header = props => {
-    console.log('FIX MEEEEEEEE!!!!!', props);
     let fileNameInput = null;
 
     const checkFileNameInput = ({ charCode, target }) => {
@@ -31,7 +31,9 @@ const header = props => {
 
             <div>
                 <Button>File</Button>
-                <Button>Go to Dashboard</Button>
+                <Button>
+                    <NavLink to="/app/dashboard">Go to Dashboard</NavLink>
+                </Button>
             </div>
         </div>
     );
