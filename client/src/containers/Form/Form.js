@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Splash from '../../components/Splash/Splash';
 import './Form.css';
 
 class Form extends Component {
@@ -13,7 +14,7 @@ class Form extends Component {
     render() {
         return (
             <div className="Form">
-                <h1>Alo Form</h1>
+                <Splash />
             </div>
         );
     }

@@ -1,0 +1,38 @@
+.Splash {
+    position: absolute;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0%;
+    text-align: center;
+    width: 100%;
+    padding-top: 130px;
+    background: url('../../assets/images/splash.svg');
+    vertical-align: middle;
+}
+
+.Splash__Header {
+    font-size: 110px;
+}
+
+.Splash__Msg {
+    font-size: 35px;
+    margin-top: -45px;
+    color: #323232;
+}
+
+.Splash__Tips {
+    font-size: 20px;
+    margin-top: -20px;
+    color: #666666;
+}
+
+.Splash__Button {
+    text-align: center;
+    color: white;
+    background-color: #05878a;
+    width: 230px;
+    height: 50px;
+    margin-top: 10px;
+    font-size: 20px;
+}

@@ -8,5 +8,10 @@ export const CONSTS = {
         DATE: 'DATE',
         NUMBER: 'NUMBER',
         CURRENCY: 'CURRENCY'
+    },
+
+    ERROR: {
+        ERR_FILE_NOT_EXIST: 'ERR_02: File does not exist.',
+        ERR_FORM_CLOSED: 'ERR_04: Form has been closed by the owner.'
     }
 };
