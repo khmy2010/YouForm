@@ -21,7 +21,7 @@ const siteRoutes = props => {
         <Switch>
             <Route path="/" exact component={renderLanding} />
             <Route path="/discovery" exact component={Discovery} />
-            <Route path="/form/:fid" exact component={Form} />
+            <Route path="/forms/:fid" exact component={Form} />
             <Route path="/app/dashboard" exact component={Dash} />
             <Route path="/app/login" exact component={Login} />
             <Route path="/app/test" exact component={Test} />
