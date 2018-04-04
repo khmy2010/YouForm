@@ -2,7 +2,9 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
     fid: null,
-    questions: []
+    questions: [],
+    error: false,
+    errorMsg: null
 };
 
 const formReducer = (state = initialState, action) => {
@@ -38,6 +40,12 @@ const formReducer = (state = initialState, action) => {
             return {
                 ...state,
                 questions: updatedQuestions
+            };
+        case actionTypes.FETCH_FORM_FAILED:
+            return {
+                ...state,
+                error: true,
+                errorMsg: action.response
             };
         default:
             return state;

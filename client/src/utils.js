@@ -11,6 +11,8 @@ export const CONSTS = {
     },
 
     ERROR: {
+        ERR_BAD_FID: 'ERR_00: Bad FID passed',
+        ERR_BAD_QID: 'ERR_01: Bad QID passed',
         ERR_FILE_NOT_EXIST: 'ERR_02: File does not exist.',
         ERR_FORM_CLOSED: 'ERR_04: Form has been closed by the owner.'
     }

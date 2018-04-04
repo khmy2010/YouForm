@@ -41,3 +41,12 @@ export const changeFormProperties = (fid, props) => async dispatch => {
         dispatch({ type: actionTypes.MODIFY_FORM_PROPERTIES, props });
     } catch (error) {}
 };
+
+export const fetchForm = fid => async dispatch => {
+    try {
+        const res = await axios.get(`/api/forms/${fid}`);
+        dispatch({ type: actionTypes.INIT_FORM, res });
+    } catch ({ response }) {
+        dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
+    }
+};

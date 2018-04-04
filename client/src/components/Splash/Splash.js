@@ -9,16 +9,17 @@ import './Splash.css';
     2. Tell user this form has been closed.
 */
 
-const splash = ({ status }) => {
+const splash = ({ error, history }) => {
     let errorMessage = null;
     let errorTips = null;
     let buttonCTA = null;
 
     document.title = 'Sorry!';
-    status = CONSTS.ERROR.ERR_FILE_NOT_EXIST;
 
-    switch (status) {
+    switch (error.data) {
         case CONSTS.ERROR.ERR_FILE_NOT_EXIST:
+        // eslint-disable-next-line
+        case CONSTS.ERROR.ERR_BAD_FID:
             errorMessage = 'Looks like this form is from Mars';
             errorTips =
                 'We could not find a matching record from our Big Yellow mango :(';
@@ -41,7 +42,12 @@ const splash = ({ status }) => {
             <h1 className="Splash__Header">Sorry.</h1>
             <p className="Splash__Msg">{errorMessage}</p>
             <p className="Splash__Tips">{errorTips}</p>
-            <button className="Splash__Button">{buttonCTA}</button>
+            <button
+                className="Splash__Button"
+                onClick={() => history.push('/')}
+            >
+                {buttonCTA}
+            </button>
         </div>
     );
 };
