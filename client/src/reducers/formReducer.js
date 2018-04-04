@@ -2,17 +2,22 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
     fid: null,
+    name: null,
     questions: [],
     error: false,
+    loading: true,
     errorMsg: null
 };
 
 const formReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.INIT_FORM:
+            console.log(action.res.data);
             return {
                 ...state,
+                loading: false,
                 fid: action.res.data._id,
+                name: action.res.data.name,
                 questions: action.res.data.questions
             };
         case actionTypes.ADD_QUESTION:
@@ -45,6 +50,7 @@ const formReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: true,
+                loading: false,
                 errorMsg: action.response
             };
         default:

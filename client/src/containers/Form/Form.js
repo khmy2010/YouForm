@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Splash from '../../components/Splash/Splash';
+import Preloading from '../../components/Preloading/Preloading';
 import * as actions from '../../actions/form';
 import './Form.css';
 
@@ -16,6 +17,14 @@ class Form extends Component {
         this.props.fetchForm(fid);
     }
 
+    renderWelcome() {
+        return (
+            <div className="Form__Welcome">
+                <h1>{this.props.form.name}</h1>
+            </div>
+        );
+    }
+
     renderContent() {
         if (this.props.error) {
             return (
@@ -26,7 +35,16 @@ class Form extends Component {
             );
         }
 
-        return <div className="Form">Alo Form</div>;
+        if (this.props.loading) {
+            return <Preloading show />;
+        }
+
+        return (
+            <div className="Form">
+                {this.renderWelcome()}
+                <div className="Form__Controls">Alo</div>
+            </div>
+        );
     }
 
     render() {
@@ -37,7 +55,9 @@ class Form extends Component {
 const mapStateToProps = state => {
     return {
         error: state.form.error,
-        errorMsg: state.form.errorMsg
+        errorMsg: state.form.errorMsg,
+        form: state.form,
+        loading: state.form.loading
     };
 };
 
