@@ -9,7 +9,8 @@ class SuperPage {
     static async build() {
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox']
+            args: ['--no-sandbox'],
+            timeout: 0
         });
 
         const page = await browser.newPage();
