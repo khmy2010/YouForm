@@ -30,7 +30,6 @@ describe('user has logged in', async () => {
     });
 
     it('should able to see the home page', async () => {
-        await page.screenshot({ path: 'fuck.png' });
         const text = await page.getSelected('#Landing__Intro');
         expect(text.length).toBeGreaterThan(0);
     });

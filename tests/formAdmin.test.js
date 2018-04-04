@@ -30,7 +30,6 @@ describe('user has logged in', async () => {
         await page.goto(`${BASE_URL}/app/admin/${form._id}`);
         await page.waitFor(selector);
         const text = await page.getInputTextValue(selector);
-        await page.screenshot({ path: 'fuck1.png' });
         expect(text).toEqual(name);
     });
 });
