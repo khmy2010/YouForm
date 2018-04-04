@@ -39,3 +39,8 @@ html * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+button {
+    outline: none;
+    text-align: center;
+}

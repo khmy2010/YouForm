@@ -12,3 +12,7 @@
 .Form__Welcome h1 {
     font-size: 50px;
 }
+
+.Form__Actions {
+    margin-top: 70px;
+}

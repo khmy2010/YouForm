@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import Splash from '../../components/Splash/Splash';
 import Preloading from '../../components/Preloading/Preloading';
+import Controls from './Controls/Controls';
+import Change from './Controls/Change/Change';
+
 import * as actions from '../../actions/form';
+
 import './Form.css';
 
 class Form extends Component {
@@ -25,6 +29,14 @@ class Form extends Component {
         );
     }
 
+    handleBack() {
+        console.log('back');
+    }
+
+    handleNext() {
+        console.log('next');
+    }
+
     renderContent() {
         if (this.props.error) {
             return (
@@ -42,7 +54,13 @@ class Form extends Component {
         return (
             <div className="Form">
                 {this.renderWelcome()}
-                <div className="Form__Controls">Alo</div>
+                <div className="Form__Actions">
+                    <Controls
+                        onBack={this.handleBack}
+                        onNext={this.handleNext}
+                    />
+                    <Change />
+                </div>
             </div>
         );
     }
