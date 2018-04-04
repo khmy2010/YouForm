@@ -53,7 +53,6 @@ formSchema.statics.getPublicForm = async function(fid) {
         .select('startTime endTime status')
         .exec();
 
-    console.log(res);
     //TODO: check for starting and ending time too
     if (res === null) {
         return Promise.reject(errors.ERR_FILE_NOT_EXIST);
