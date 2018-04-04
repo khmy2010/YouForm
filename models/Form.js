@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const QuestionSchema = require('./Question');
 const CollabsSchema = require('./Collabs');
+const errors = require('../errors');
 
 const formSchema = new Schema({
     name: String,
@@ -29,7 +30,7 @@ formSchema.statics.requireAuth = async function(fid, user) {
 
     //return immediately if file does not exist.
     if (res === null) {
-        return Promise.reject('ERR_02: File does not exist.');
+        return Promise.reject(errors.ERR_FILE_NOT_EXIST);
     }
 
     //return immediately if user does not have permission to access the file.
@@ -41,6 +42,29 @@ formSchema.statics.requireAuth = async function(fid, user) {
 
     //return form if file exist and user has access
     return res;
+};
+
+formSchema.statics.getPublicForm = async function(fid) {
+    var form = this;
+    let res;
+
+    res = await form
+        .findById(fid)
+        .select('startTime endTime status')
+        .exec();
+
+    console.log(res);
+    //TODO: check for starting and ending time too
+    if (res === null) {
+        return Promise.reject(errors.ERR_FILE_NOT_EXIST);
+    }
+
+    if (res.status === false) {
+        return Promise.reject(errors.ERR_FORM_CLOSED);
+    }
+
+    //pass all checks, this form is ready to return
+    return await form.findById(fid).select('name questions');
 };
 
 mongoose.model('form', formSchema);

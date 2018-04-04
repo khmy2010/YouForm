@@ -142,13 +142,10 @@ module.exports = app => {
 
     //get form
     app.get('/api/forms/:fid', validOID, async (req, res) => {
-        const fid = req.params.fid;
-
         try {
-            // const form = Form.findById
-            res.send();
-        } catch (error) {
-            res.status(400).send();
+            res.send(await Form.getPublicForm(req.params.fid));
+        } catch ({ code, msg }) {
+            res.status(code).send(msg);
         }
     });
 };
