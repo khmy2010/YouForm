@@ -39,6 +39,9 @@ const eleComp = props => {
                     <FlexInputs {...props} />
                 </div>
             );
+        case 'inlineInput':
+            return <div className="EleField">Alo</div>;
+
         default:
             return null;
     }

@@ -10,7 +10,7 @@ const Preloading = ({ show }) => {
             <div className="App-Preloading">
                 <div className="Loading-Content">
                     <div className="loader" />
-                    <h3 className="Loading-Text">Loading...</h3>
+                    <h1 className="Loading-Text">Loading...</h1>
                 </div>
             </div>
         );

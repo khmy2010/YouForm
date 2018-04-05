@@ -164,6 +164,11 @@ class QuestionBuilder extends Component {
                                 value={this.state.validation.isRequired}
                                 onCheckboxChange={this.handleCheckboxChange}
                             />
+                            <EleComp
+                                type="inlineInput"
+                                name="Minimum"
+                                displayName="Minimum Choice: "
+                            />
                         </div>
                         <div className="EleFooter">
                             <Button>Save to stencils</Button>
