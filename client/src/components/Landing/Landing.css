@@ -1,14 +1,32 @@
-.Landing {
-    color: #262627;
-}
-
-#Landing__Title {
-    background-color: #f1ece4;
-    height: 300px;
+.Landing__Wrapper {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0%;
+    padding: 3px;
 }
 
-#Landing__Intro {
-    text-align: center;
-    font-size: 40px;
+.Landing {
+    display: grid;
+    grid-template-columns: 350px auto;
+    justify-items: stretch;
+    align-items: center;
+    background: linear-gradient(135deg, #f1ece4 0%, #ccbb9e 100%);
+}
+
+.Landing__Text > h1 {
+    font-size: 50px;
+}
+
+.Landing__Text .Landing__Intro {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.Landing > img {
+    max-width: 100%;
 }

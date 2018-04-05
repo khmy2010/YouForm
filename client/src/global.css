@@ -44,3 +44,10 @@ button {
     outline: none;
     text-align: center;
 }
+
+html,
+body,
+ul {
+    margin: 0;
+    padding: 0;
+}
