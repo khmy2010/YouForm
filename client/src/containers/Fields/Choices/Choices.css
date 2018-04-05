@@ -1,0 +1,24 @@
+.Choice {
+    width: 95%;
+    background-color: #e1f5fe;
+    height: 40px;
+    padding: 5px 5px;
+    font-size: 20px;
+    border: 2px solid #01579b;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Choice:hover {
+    background-color: #b3e5fc;
+}
+
+.Selected {
+    border: 3px solid #01579b;
+    background-color: #81d4fa;
+}
+
+.Selected > img {
+    padding-left: 3px;
+}
