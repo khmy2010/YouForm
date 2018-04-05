@@ -16,6 +16,7 @@ afterEach(async () => {
 
 it('shows splash screen when FID is invalid.', async () => {
     await page.goto(`${BASE_URL}/forms/1234`);
+    await page.waitForSelector('.Splash');
     const splashHeader = await page.getSelected('h1');
     const title = await page.title();
     expect(title).toEqual('Sorry!');
@@ -24,6 +25,7 @@ it('shows splash screen when FID is invalid.', async () => {
 
 it('shows splash screen when FID is valid but does not exist.', async () => {
     await page.goto(`${BASE_URL}/forms/5aab7df2bce6de00148a1570`);
+    await page.waitForSelector('.Splash');
     const splashHeader = await page.getSelected('h1');
     const title = await page.title();
     expect(title).toEqual('Sorry!');
