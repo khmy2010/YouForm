@@ -59,6 +59,7 @@
 .EleField > label {
     display: block;
     margin-bottom: 5px;
+    font-size: 17px;
 }
 
 .EleField > input[type='text'] {
@@ -68,6 +69,24 @@
     font-size: 18px;
     padding: 3px 3px;
     outline: none;
+}
+
+.EleInline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EleInline > input[type='text'] {
+    width: 20%;
+    margin-right: 30px;
+    text-align: center;
+    height: 25px;
+    font-size: 18px;
+}
+
+.EleInline > label {
+    margin-bottom: 0;
 }
 
 .EleCheck > input[type='checkbox'] {

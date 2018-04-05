@@ -11,6 +11,10 @@ const Preloading = ({ show }) => {
                 <div className="Loading-Content">
                     <div className="loader" />
                     <h1 className="Loading-Text">Loading...</h1>
+                    <p className="Loading-Pun">
+                        Wait until destiny come, then it will load liao.
+                    </p>
+                    <p className="Loading-Message">- Your Friend at YouForm</p>
                 </div>
             </div>
         );

@@ -28,7 +28,9 @@ const eleComp = props => {
                         type="text"
                         name={props.name}
                         value={props.value}
-                        onChange={event => props.onInputChange(event)}
+                        onChange={event =>
+                            props.onInputChange(event, props.vbuild)
+                        }
                     />
                 </div>
             );
@@ -40,7 +42,23 @@ const eleComp = props => {
                 </div>
             );
         case 'inlineInput':
-            return <div className="EleField">Alo</div>;
+            return (
+                <div className="EleField EleInline">
+                    <label>{props.displayName}</label>
+                    <input
+                        name={props.name}
+                        type="text"
+                        value={props.value}
+                        onChange={event =>
+                            props.onInputChange(
+                                event,
+                                props.vbuild,
+                                props.vfield
+                            )
+                        }
+                    />
+                </div>
+            );
 
         default:
             return null;

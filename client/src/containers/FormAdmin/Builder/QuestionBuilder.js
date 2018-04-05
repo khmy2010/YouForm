@@ -7,6 +7,7 @@ import EleTitle from './EleTitle';
 import EleComp from './EleComp';
 import ElePreview from './ElePreview';
 import { CONSTS } from '../../../utils';
+import { VBUILD, validateBuild } from './Validate';
 
 import './Build.css';
 
@@ -28,6 +29,11 @@ class QuestionBuilder extends Component {
 
             if (this.props.type === CONSTS.TYPE.MULTIPLE_CHOICE) {
                 this.state.options = [''];
+                this.state.validation = {
+                    ...this.state.validation,
+                    minChoice: '',
+                    maxChoice: ''
+                };
             }
         } else {
             //populate with existing data
@@ -40,10 +46,52 @@ class QuestionBuilder extends Component {
         }
     }
 
-    handleInputChange = ({ target }) => {
+    _handleInputChange = ({ target }) => {
         this.setState({
             [target.name]: target.value
         });
+    };
+
+    handleInputChange = ({ target }, vbuild, vfield) => {
+        let fieldValidations = [];
+        let vbuildResult = null;
+
+        console.log('vbuild: ', vbuild);
+
+        //read vbuild property to find out if this field requires validation
+        if (vbuild) {
+            let payload = null;
+            fieldValidations = vbuild.split(' ');
+            if (this.props.type === CONSTS.TYPE.MULTIPLE_CHOICE) {
+                payload = {
+                    [VBUILD.MIN]: 1,
+                    [VBUILD.MAX]: this.state.options.length
+                };
+            }
+            vbuildResult = validateBuild(
+                fieldValidations,
+                target.value,
+                payload
+            );
+        }
+
+        if ((vbuild && vbuildResult && !vfield) || (!vbuild && !vfield)) {
+            this.setState({
+                [target.name]: target.value
+            });
+        }
+
+        if ((vbuild && vbuildResult && vfield) || (!vbuild && vfield)) {
+            const newValidation = { ...this.state.validation };
+            newValidation[target.name] = target.value;
+            this.setState({
+                validation: newValidation
+            });
+        }
+    };
+
+    _handleInputChange = ({ target }) => {
+        //read for v_field and v_build
     };
 
     handleCheckboxChange = ({ target }) => {
@@ -104,21 +152,41 @@ class QuestionBuilder extends Component {
         }
     };
 
-    renderFlexInput = () => {
+    renderFlexContent = () => {
         if (this.props.type !== CONSTS.TYPE.MULTIPLE_CHOICE) {
             return null;
         }
         return (
-            <EleComp
-                type="flexInput"
-                name="options"
-                displayName="Options"
-                options={this.state.options}
-                onAdd={this.addFlexInput}
-                onRemove={this.removeFlexInput}
-                onChange={this.changeFlexInput}
-                latestFlex={latestFlex}
-            />
+            <React.Fragment>
+                <EleComp
+                    type="flexInput"
+                    name="options"
+                    displayName="Options"
+                    options={this.state.options}
+                    onAdd={this.addFlexInput}
+                    onRemove={this.removeFlexInput}
+                    onChange={this.changeFlexInput}
+                    latestFlex={latestFlex}
+                />
+                <EleComp
+                    type="inlineInput"
+                    name="minChoice"
+                    displayName="Minimum Choices:"
+                    onInputChange={this.handleInputChange}
+                    value={this.state.validation.minChoice}
+                    vbuild={[VBUILD.MIN, VBUILD.NUM].join(' ')}
+                    vfield
+                />
+                <EleComp
+                    type="inlineInput"
+                    name="maxChoice"
+                    displayName="Maximum Choices:"
+                    onInputChange={this.handleInputChange}
+                    value={this.state.validation.maxChoice}
+                    vbuild={[VBUILD.MAX, VBUILD.NUM].join(' ')}
+                    vfield
+                />
+            </React.Fragment>
         );
     };
 
@@ -155,7 +223,7 @@ class QuestionBuilder extends Component {
                                 value={this.state.description}
                                 onInputChange={this.handleInputChange}
                             />
-                            {this.renderFlexInput()}
+                            {this.renderFlexContent()}
                             <EleComp
                                 type="checkbox"
                                 id="required"
@@ -163,11 +231,6 @@ class QuestionBuilder extends Component {
                                 displayName="Required"
                                 value={this.state.validation.isRequired}
                                 onCheckboxChange={this.handleCheckboxChange}
-                            />
-                            <EleComp
-                                type="inlineInput"
-                                name="Minimum"
-                                displayName="Minimum Choice: "
                             />
                         </div>
                         <div className="EleFooter">
