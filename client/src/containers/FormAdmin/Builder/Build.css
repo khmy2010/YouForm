@@ -36,6 +36,7 @@
     justify-items: stretch;
     justify-content: stretch;
     align-content: stretch;
+    overflow: auto;
 }
 
 .EleTitle {
@@ -62,8 +63,11 @@
 
 .EleField > input[type='text'] {
     width: 90%;
-    height: 30px;
+    height: 35px;
     border: 1px solid #00539f;
+    font-size: 18px;
+    padding: 3px 3px;
+    outline: none;
 }
 
 .EleCheck > input[type='checkbox'] {
@@ -102,4 +106,25 @@
     /* justify-items: center; */
     justify-content: stretch;
     align-content: stretch;
+}
+
+.EleField__FlexChoice {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.EleField__FlexInput {
+    width: 80%;
+    margin-right: 18px;
+    height: 30px;
+    border: 1px solid #00539f;
+    font-size: 16px;
+    padding: 3px 3px;
+    outline: none;
+}
+
+.EleField__FlexInput::-webkit-input-placeholder {
+    text-align: center;
+    font-style: italic;
 }

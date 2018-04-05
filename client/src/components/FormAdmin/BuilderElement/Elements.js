@@ -25,6 +25,11 @@ const ELEMENTS = [
         type: CONSTS.TYPE.CURRENCY,
         display: 'Currency',
         className: 'Element__Currency'
+    },
+    {
+        type: CONSTS.TYPE.MULTIPLE_CHOICE,
+        display: 'Multiple Choice',
+        className: 'Element__MC'
     }
 ];
 

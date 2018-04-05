@@ -1,5 +1,7 @@
 import React from 'react';
 
+import FlexInputs from './FlexInputs';
+
 const eleComp = props => {
     switch (props.type) {
         case 'checkbox':
@@ -28,6 +30,13 @@ const eleComp = props => {
                         value={props.value}
                         onChange={event => props.onInputChange(event)}
                     />
+                </div>
+            );
+        case 'flexInput':
+            return (
+                <div className="EleField">
+                    <label>{props.displayName}</label>
+                    <FlexInputs {...props} />
                 </div>
             );
         default:

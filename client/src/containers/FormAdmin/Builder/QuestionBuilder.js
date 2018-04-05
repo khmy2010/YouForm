@@ -6,10 +6,12 @@ import Button from '../../../components/Button/Button';
 import EleTitle from './EleTitle';
 import EleComp from './EleComp';
 import ElePreview from './ElePreview';
+import { CONSTS } from '../../../utils';
 
 import './Build.css';
 
 const CREATING = 'CREATING';
+let latestFlex = false;
 
 class QuestionBuilder extends Component {
     constructor(props) {
@@ -23,6 +25,10 @@ class QuestionBuilder extends Component {
                     isRequired: false
                 }
             };
+
+            if (this.props.type === CONSTS.TYPE.MULTIPLE_CHOICE) {
+                this.state.options = [''];
+            }
         } else {
             //populate with existing data
             const data = this.props.data;
@@ -48,6 +54,38 @@ class QuestionBuilder extends Component {
         });
     };
 
+    addFlexInput = () => {
+        latestFlex = true;
+        const newOptions = this.state.options.slice();
+        newOptions.push('');
+        this.setState({
+            options: newOptions
+        });
+    };
+
+    removeFlexInput = index => {
+        latestFlex = false;
+        const newOptions = this.state.options.slice();
+
+        if (index > -1) {
+            newOptions.splice(index, 1);
+        }
+
+        this.setState({
+            options: newOptions
+        });
+    };
+
+    changeFlexInput = (event, index) => {
+        latestFlex = false;
+        const newOptions = this.state.options.slice();
+        newOptions[index] = event.target.value;
+
+        this.setState({
+            options: newOptions
+        });
+    };
+
     saveQuestion = () => {
         const question = {
             ...this.state,
@@ -64,6 +102,24 @@ class QuestionBuilder extends Component {
             question._id = this.props.data._id;
             this.props.onUpdate(question, this.props.fid, this.props.data._id);
         }
+    };
+
+    renderFlexInput = () => {
+        if (this.props.type !== CONSTS.TYPE.MULTIPLE_CHOICE) {
+            return null;
+        }
+        return (
+            <EleComp
+                type="flexInput"
+                name="options"
+                displayName="Options"
+                options={this.state.options}
+                onAdd={this.addFlexInput}
+                onRemove={this.removeFlexInput}
+                onChange={this.changeFlexInput}
+                latestFlex={latestFlex}
+            />
+        );
     };
 
     render() {
@@ -99,6 +155,7 @@ class QuestionBuilder extends Component {
                                 value={this.state.description}
                                 onInputChange={this.handleInputChange}
                             />
+                            {this.renderFlexInput()}
                             <EleComp
                                 type="checkbox"
                                 id="required"
@@ -120,12 +177,7 @@ class QuestionBuilder extends Component {
                             </Button>
                         </div>
                     </div>
-                    <ElePreview
-                        type={this.props.type}
-                        title={this.state.title}
-                        description={this.state.description}
-                        validation={this.state.validation}
-                    />
+                    <ElePreview type={this.props.type} {...this.state} />
                 </div>
             </React.Fragment>
         );
