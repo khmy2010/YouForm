@@ -43,6 +43,10 @@ class QuestionBuilder extends Component {
                 description: data.description || '',
                 validation: JSON.parse(data.validation)
             };
+
+            if (this.props.type === CONSTS.TYPE.MULTIPLE_CHOICE) {
+                this.state.options = data.options;
+            }
         }
     }
 
@@ -142,6 +146,7 @@ class QuestionBuilder extends Component {
         };
 
         this.props.onBackdropClick();
+        console.log(question);
 
         if (this.props.mode === CREATING) {
             this.props.onSave(question, this.props.fid);

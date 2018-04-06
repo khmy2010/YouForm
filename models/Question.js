@@ -6,6 +6,7 @@ const questionSchema = new Schema({
     type: String,
     title: String,
     description: String,
+    options: [],
     validation: String
 });
 

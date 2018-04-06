@@ -148,6 +148,7 @@ class Field extends Component {
                     />
                 );
             case CONSTS.TYPE.MULTIPLE_CHOICE:
+                console.log(this.props);
                 return (
                     <Choices
                         options={this.props.options}
