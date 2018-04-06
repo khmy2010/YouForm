@@ -55,7 +55,7 @@ const choices = ({ options, selectedKeys, clicked, min, max, err }) => {
             }
         }
 
-        if (err) {
+        if (err || (options.length === 1 && options[0].trim().length === 0)) {
             helperText = null;
         }
         return <p className="Choices__Helper">{helperText}</p>;
