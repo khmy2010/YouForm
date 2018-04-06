@@ -9,7 +9,7 @@
 }
 
 html * {
-    font-family: 'Source Sans Pro', sans-serif !important;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .Bold {
@@ -38,6 +38,7 @@ html * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 button {
@@ -47,7 +48,9 @@ button {
 
 html,
 body,
-ul {
+div,
+ul,
+li {
     margin: 0;
     padding: 0;
 }

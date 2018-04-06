@@ -15,9 +15,14 @@ const landing = ({ auth }) => {
                         <h1>Because we are human.</h1>
                         <p className="Landing__Intro">
                             YouForm changes the way you ask by introducing forms
-                            that converse with human that makes the process more
-                            human.
+                            that makes the process more human.
                         </p>
+                        <div className="Landing__CTA">
+                            <button id="Landing__Blacky">
+                                Go to Dashboard
+                            </button>
+                            <button id="Landing__White">Discover More</button>
+                        </div>
                     </div>
                     <img
                         src={Connecting}
