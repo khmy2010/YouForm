@@ -50,12 +50,6 @@ class QuestionBuilder extends Component {
         }
     }
 
-    _handleInputChange = ({ target }) => {
-        this.setState({
-            [target.name]: target.value
-        });
-    };
-
     handleInputChange = ({ target }, vbuild, vfield) => {
         let fieldValidations = [];
         let vbuildResult = null;
@@ -92,10 +86,6 @@ class QuestionBuilder extends Component {
                 validation: newValidation
             });
         }
-    };
-
-    _handleInputChange = ({ target }) => {
-        //read for v_field and v_build
     };
 
     handleCheckboxChange = ({ target }) => {
@@ -139,14 +129,36 @@ class QuestionBuilder extends Component {
     };
 
     saveQuestion = () => {
-        const question = {
+        let question = {
             ...this.state,
-            validation: JSON.stringify(this.state.validation),
             type: this.props.type
         };
 
+        //for multiple choice, we need to sanitise the options
+        //because there might be empty one
+        if (this.props.type === CONSTS.TYPE.MULTIPLE_CHOICE) {
+            const options = question.options.filter(
+                option => option.trim().length !== 0
+            );
+            question.options = options;
+
+            const { minChoice, maxChoice } = question.validation;
+
+            if (minChoice === '') {
+                //if there is no validation apply
+                //set it to 0 (means undefined)
+                question.validation.minChoice = 0;
+            }
+
+            if (maxChoice === '') {
+                question.validation.maxChoice = 0;
+            }
+        }
+
+        //stringify the validation after it has been sanitised.
+        question.validation = JSON.stringify(this.state.validation);
+
         this.props.onBackdropClick();
-        console.log(question);
 
         if (this.props.mode === CREATING) {
             this.props.onSave(question, this.props.fid);

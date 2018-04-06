@@ -13,6 +13,9 @@ const previewEditor = props => {
                 >
                     Delete
                 </button>
+                <button className="PreviewEditor__Button PreviewEditor__Red">
+                    Duplicate
+                </button>
                 <button
                     className="PreviewEditor__Button PreviewEditor__Green"
                     onClick={props.onEditQuestion}

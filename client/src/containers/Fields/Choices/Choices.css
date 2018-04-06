@@ -1,5 +1,5 @@
 .Choice {
-    width: 95%;
+    width: 80%;
     background-color: #e1f5fe;
     height: 40px;
     padding: 5px 5px;
@@ -12,6 +12,11 @@
 
 .Choice:hover {
     background-color: #b3e5fc;
+}
+
+.Choices__Helper {
+    color: #666666;
+    font-style: italic;
 }
 
 .Selected {

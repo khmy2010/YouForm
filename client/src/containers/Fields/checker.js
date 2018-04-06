@@ -30,3 +30,15 @@ export const currency = value => {
     const regex = /^\d*(\.\d{0,2})?$/;
     return regex.test(value);
 };
+
+//make sure the min is an integer
+export const checkChoiceMin = (selected, min) => {
+    //if rule not defined, return true right away
+    return !min ? true : selected.length >= min;
+};
+
+//make sure the max is an integer
+export const checkChoiceMax = (selected, max) => {
+    //if rule not defined, return true right away
+    return !max ? true : selected.length <= max;
+};

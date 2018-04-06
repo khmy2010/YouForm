@@ -56,7 +56,6 @@ class Field extends Component {
     };
 
     handleSelection = index => {
-        console.log('current state: ', this.state.selected);
         const newSelected = this.state.selected.slice();
 
         //check if the selected value has been selected before
@@ -67,27 +66,25 @@ class Field extends Component {
                 return index === element;
             });
 
-            console.log('foundIndex: ', foundIndex);
-
             foundIndex > -1
                 ? newSelected.splice(foundIndex, 1)
                 : newSelected.push(index);
         }
 
-        console.log('handle selection: ', newSelected);
-
         this.setState({
             selected: newSelected
         });
+
+        this.validate(this.state.value, newSelected);
     };
 
-    validate = value => {
+    validate = (value, selected) => {
         const rules = this.state.validation;
         const validationResults = [];
         const component = this.props.component;
         const { TYPE } = CONSTS;
 
-        if (rules.isRequired) {
+        if (rules.isRequired && component !== TYPE.MULTIPLE_CHOICE) {
             validationResults.push({
                 status: checker.required(value),
                 message: 'This is a required field.'
@@ -112,6 +109,31 @@ class Field extends Component {
             validationResults.push({
                 status: checker.currency(value),
                 message: 'This field accepts only number in two decimal places.'
+            });
+        }
+
+        if (component === TYPE.MULTIPLE_CHOICE) {
+            const min = parseInt(this.state.validation.minChoice, 10);
+
+            //check for required (more than or equal to 1)
+            validationResults.push({
+                status: checker.checkChoiceMin(selected, 1),
+                message: `This is a required field.`
+            });
+
+            //TODO: check for MIN === MAX cases (after pristine imp.)
+
+            //TODO: NEED TO USE PRISTINE, CAN'T SIMPLY SHOW
+            validationResults.push({
+                status: checker.checkChoiceMin(selected, min),
+                message: `You will need to select ${min} or more.`
+            });
+
+            const max = parseInt(this.state.validation.maxChoice, 10);
+
+            validationResults.push({
+                status: checker.checkChoiceMax(selected, max),
+                message: `You only need to select ${max} or less.`
             });
         }
 
@@ -148,12 +170,13 @@ class Field extends Component {
                     />
                 );
             case CONSTS.TYPE.MULTIPLE_CHOICE:
-                console.log(this.props);
                 return (
                     <Choices
                         options={this.props.options}
                         clicked={this.handleSelection}
                         selectedKeys={this.state.selected}
+                        min={this.state.validation.minChoice}
+                        max={this.state.validation.maxChoice}
                     />
                 );
             default:
