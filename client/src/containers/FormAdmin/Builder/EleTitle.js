@@ -25,6 +25,18 @@ const eleTitle = ({ type, sequence }) => {
         case CONSTS.TYPE.MULTIPLE_CHOICE:
             rendered = `${sequence}. New Multiple Choice Question`;
             break;
+        case CONSTS.TYPE.SINGLE_CHOICE:
+            rendered = `${sequence}. New Single Choice Question`;
+            break;
+        case CONSTS.TYPE.YES_NO:
+            rendered = `${sequence}. New Yes/No Choice Question`;
+            break;
+        case CONSTS.TYPE.LONG_TEXT:
+            rendered = `${sequence}. New Long Text Question`;
+            break;
+        case CONSTS.TYPE.DATE:
+            rendered = `${sequence}. New Date Question`;
+            break;
         case 'EDITING':
             rendered = 'Edit Question';
             break;

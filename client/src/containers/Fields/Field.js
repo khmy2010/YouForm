@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import InputText from './InputText/InputText';
 import Choices from './Choices/Choices';
 import * as checker from './checker';
-import { CONSTS } from '../../utils';
+import { CONSTS, typeCheck } from '../../utils';
 import './Field.css';
 
 class Field extends Component {
@@ -56,9 +56,8 @@ class Field extends Component {
     };
 
     handleSelection = index => {
-        const newSelected = this.state.selected.slice();
+        let newSelected = this.state.selected.slice();
 
-        //check if the selected value has been selected before
         if (this.state.selected.length === 0) {
             newSelected.push(index);
         } else {
@@ -66,9 +65,14 @@ class Field extends Component {
                 return index === element;
             });
 
-            foundIndex > -1
-                ? newSelected.splice(foundIndex, 1)
-                : newSelected.push(index);
+            //if found
+            if (foundIndex > -1) newSelected.splice(foundIndex, 1);
+            else {
+                if (typeCheck.isSingleChoice(this.props.component)) {
+                    newSelected = [];
+                }
+                newSelected.push(index);
+            }
         }
 
         this.setState({
@@ -170,11 +174,13 @@ class Field extends Component {
                     />
                 );
             case CONSTS.TYPE.MULTIPLE_CHOICE:
+            case CONSTS.TYPE.SINGLE_CHOICE:
                 return (
                     <Choices
+                        type={type}
                         options={this.props.options}
                         clicked={this.handleSelection}
-                        selectedKeys={this.state.selected}
+                        keys={this.state.selected}
                         min={this.state.validation.minChoice}
                         max={this.state.validation.maxChoice}
                     />

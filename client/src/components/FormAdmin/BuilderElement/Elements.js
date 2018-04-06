@@ -12,9 +12,34 @@ const ELEMENTS = [
         className: 'Element__ShortText'
     },
     {
+        type: CONSTS.TYPE.LONG_TEXT,
+        display: 'Long Text',
+        className: 'Element__LongText'
+    },
+    {
         type: CONSTS.TYPE.EMAIL,
         display: 'Email',
         className: 'Element__Email'
+    },
+    {
+        type: CONSTS.TYPE.DATE,
+        display: 'Date',
+        className: 'Element__Date'
+    },
+    {
+        type: CONSTS.TYPE.SINGLE_CHOICE,
+        display: 'Single Choice',
+        className: 'Element__SC'
+    },
+    {
+        type: CONSTS.TYPE.MULTIPLE_CHOICE,
+        display: 'Multiple Choice',
+        className: 'Element__MC'
+    },
+    {
+        type: CONSTS.TYPE.YES_NO,
+        display: 'Yes / No',
+        className: 'Element__YN'
     },
     {
         type: CONSTS.TYPE.NUMBER,
@@ -25,11 +50,6 @@ const ELEMENTS = [
         type: CONSTS.TYPE.CURRENCY,
         display: 'Currency',
         className: 'Element__Currency'
-    },
-    {
-        type: CONSTS.TYPE.MULTIPLE_CHOICE,
-        display: 'Multiple Choice',
-        className: 'Element__MC'
     }
 ];
 

@@ -1,13 +1,10 @@
 import React from 'react';
 
 import './Choices.css';
+import { CONSTS } from '../../../utils';
 import Choice from './Choice';
 
-//possible props:
-//array of choices
-//min, max
-//
-const choices = ({ options, selectedKeys, clicked, min, max, err }) => {
+const choices = ({ type, options, keys, clicked, err, min, max }) => {
     if (options && options.length === 0) {
         return null;
     }
@@ -16,7 +13,7 @@ const choices = ({ options, selectedKeys, clicked, min, max, err }) => {
         if (choice.trim().length !== 0) {
             let selected = false;
 
-            if (selectedKeys.find(ele => ele === index) !== undefined) {
+            if (keys.find(ele => ele === index) !== undefined) {
                 selected = true;
             }
 
@@ -53,6 +50,10 @@ const choices = ({ options, selectedKeys, clicked, min, max, err }) => {
             } else {
                 helperText = `Choose between ${min} to ${max} options from the list.`;
             }
+        }
+
+        if (type === CONSTS.TYPE.SINGLE_CHOICE) {
+            helperText = 'Choose one from the list.';
         }
 
         if (err || (options.length === 1 && options[0].trim().length === 0)) {
