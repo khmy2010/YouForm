@@ -224,6 +224,10 @@ class QuestionBuilder extends Component {
         );
     };
 
+    renderDropDown = () => {
+        return <EleComp type="select" />;
+    };
+
     render() {
         return (
             <React.Fragment>
@@ -258,6 +262,7 @@ class QuestionBuilder extends Component {
                                 onInputChange={this.handleInputChange}
                             />
                             {this.renderChoices()}
+                            {this.renderDropDown()}
                             <EleComp
                                 type="checkbox"
                                 id="required"

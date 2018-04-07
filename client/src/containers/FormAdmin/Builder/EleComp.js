@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FlexInputs from './FlexInputs';
+import Select from '../../../components/Select/Select';
 
 const eleComp = props => {
     switch (props.type) {
@@ -60,6 +61,20 @@ const eleComp = props => {
                 </div>
             );
 
+        case 'select':
+            return (
+                <Select
+                    options={[
+                        { value: 'Alo', display: 'Fuck Select!' },
+                        { value: 'Miaw', display: 'Fuck Miaw!' },
+                        { value: 'Ter', display: 'Fuck Ter!' },
+                        { value: 'MShape', display: 'Fuck MShape!' },
+                        { value: 'Yous', display: 'Fuck Yous!' },
+                        { value: 'Magneto', display: 'Fuck Magneto!' },
+                        { value: 'Pacific', display: 'Fuck Pacific!' }
+                    ]}
+                />
+            );
         default:
             return null;
     }
