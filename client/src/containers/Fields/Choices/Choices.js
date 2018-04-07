@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Choices.css';
-import { CONSTS, typeCheck } from '../../../utils';
+import { typeCheck } from '../../../utils';
 import Choice from './Choice';
 
 const choices = ({ type, options, keys, clicked, err, min, max }) => {
