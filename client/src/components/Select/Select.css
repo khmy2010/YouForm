@@ -1,0 +1,86 @@
+.Y__Select {
+    position: relative;
+    font-family: inherit;
+}
+
+.Y__Select select {
+    display: none;
+}
+
+.Select__Selected {
+    background-color: #fff;
+    width: 90%;
+    padding: 8px 16px;
+    user-select: none;
+}
+
+.Select__Selected:after {
+    /* position: absolute; */
+    position: relative;
+    content: '';
+    top: 7px;
+    /* right: 50px; */
+    float: right;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #000 transparent transparent transparent;
+}
+
+.Select__Selected.Select__Active:after {
+    border-color: transparent transparent #000 transparent;
+    top: 1px;
+}
+
+.Select__Items,
+.Select__Selected {
+    color: #000;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    width: 90%;
+}
+
+.Select__Items {
+    position: absolute;
+    color: black;
+    background-color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 200px;
+    overflow: auto;
+    border-radius: 0 0 10px 10px;
+}
+
+.Select__Hide {
+    display: none;
+}
+
+.Select__Items li {
+    list-style-type: none;
+    padding: 8px 16px;
+    user-select: none;
+    z-index: 10;
+}
+
+.Select__Item__Selected {
+    background-color: #01579b;
+    color: white;
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* .Select__Items li:first-of-type {
+    border-radius: 1px 1px 0 0;
+}
+
+.Select__Items li:last-of-type {
+    border-radius: 0 0 1px 1px;
+} */
+
+.Select__Items li:hover {
+    background-color: #005e72;
+    color: white;
+}
