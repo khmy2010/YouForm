@@ -1,17 +1,35 @@
+.Header__Wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1ece4;
+}
+
+.Header__YouForm {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+.Header__YouForm li a {
+    font-size: 25px;
+}
+
 .Header__Navigation {
     list-style: none;
     display: flex;
     justify-content: flex-end;
-    background: #f1ece4;
     line-height: 60px;
     padding: 15px;
 }
 
-.Header__Navigation li {
+.Header__Navigation li,
+.Header__YouForm li {
     padding: 5px 20px 5px 20px;
 }
 
-.Header__Navigation a {
+.Header__Navigation a,
+.Header__YouForm a {
     text-decoration: none;
     display: block;
     padding-bottom: 5px;

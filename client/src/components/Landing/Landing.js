@@ -18,9 +18,7 @@ const landing = ({ auth }) => {
                             that makes the process more human.
                         </p>
                         <div className="Landing__CTA">
-                            <button id="Landing__Blacky">
-                                Go to Dashboard
-                            </button>
+                            <button id="Landing__Blacky">Try Demo</button>
                             <button id="Landing__White">Discover More</button>
                         </div>
                     </div>

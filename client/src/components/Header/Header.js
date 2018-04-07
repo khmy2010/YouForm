@@ -47,15 +47,19 @@ const header = ({ auth }) => {
     //     </React.Fragment>
     // );
     return (
-        <ul className="Header__Navigation">
-            <NavItem link="/" exact>
-                Home
-            </NavItem>
-            <NavItem link="/discovery" exact>
-                Discovery
-            </NavItem>
-            {renderedContent}
-        </ul>
+        <div className="Header__Wrapper">
+            <div className="Header__YouForm">
+                <NavItem link="/" exact>
+                    YouForm
+                </NavItem>
+            </div>
+            <ul className="Header__Navigation">
+                <NavItem link="/discovery" exact>
+                    Discovery
+                </NavItem>
+                {renderedContent}
+            </ul>
+        </div>
     );
 };
 
