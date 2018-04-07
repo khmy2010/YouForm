@@ -24,5 +24,10 @@ export const typeCheck = {
     isMultipleChoice: props => props === CONSTS.TYPE.MULTIPLE_CHOICE,
     isSingleChoice: props => props === CONSTS.TYPE.SINGLE_CHOICE,
     isChoice: props =>
-        typeCheck.isMultipleChoice(props) || typeCheck.isSingleChoice(props)
+        typeCheck.isMultipleChoice(props) || typeCheck.isSingleChoice(props),
+    isYesNo: props => props === CONSTS.TYPE.YES_NO,
+    isExtendedChoice: props =>
+        typeCheck.isChoice(props) || typeCheck.isYesNo(props),
+    isAloneChoice: props =>
+        typeCheck.isSingleChoice(props) || typeCheck.isYesNo(props)
 };

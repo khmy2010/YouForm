@@ -68,7 +68,7 @@ class Field extends Component {
             //if found
             if (foundIndex > -1) newSelected.splice(foundIndex, 1);
             else {
-                if (typeCheck.isSingleChoice(this.props.component)) {
+                if (typeCheck.isAloneChoice(this.props.component)) {
                     newSelected = [];
                 }
                 newSelected.push(index);
@@ -175,6 +175,7 @@ class Field extends Component {
                 );
             case CONSTS.TYPE.MULTIPLE_CHOICE:
             case CONSTS.TYPE.SINGLE_CHOICE:
+            case CONSTS.TYPE.YES_NO:
                 return (
                     <Choices
                         type={type}

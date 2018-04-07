@@ -147,3 +147,11 @@
     text-align: center;
     font-style: italic;
 }
+
+.EleField__Remove__Show {
+    display: block;
+}
+
+.EleField__Remove__Hide {
+    display: none;
+}

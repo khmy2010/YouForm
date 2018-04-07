@@ -22,13 +22,17 @@ class FlexInputs extends Component {
     }
 
     addField = event => {
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && this.props.editable) {
             this.props.onAdd();
         }
     };
 
     render() {
         const options = this.props.options;
+
+        let removeStyle = {};
+
+        removeStyle.display = this.props.editable ? 'block' : 'none';
 
         const flexInputs = options.map((option, index) => {
             const placeholder = `Option ${index + 1}`;
@@ -44,7 +48,10 @@ class FlexInputs extends Component {
                         onKeyDown={last ? this.addField : null}
                         onChange={event => this.props.onChange(event, index)}
                     />
-                    <span onClick={() => this.props.onRemove(index)}>
+                    <span
+                        style={removeStyle}
+                        onClick={() => this.props.onRemove(index)}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"

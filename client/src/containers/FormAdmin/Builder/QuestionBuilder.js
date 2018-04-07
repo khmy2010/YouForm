@@ -39,6 +39,10 @@ class QuestionBuilder extends Component {
             if (typeCheck.isSingleChoice(this.props.type)) {
                 this.state.options = [''];
             }
+
+            if (typeCheck.isYesNo(this.props.type)) {
+                this.state.options = ['Yes', 'No'];
+            }
         } else {
             //populate with existing data
             const data = this.props.data;
@@ -48,7 +52,7 @@ class QuestionBuilder extends Component {
                 validation: JSON.parse(data.validation)
             };
 
-            if (typeCheck.isChoice(this.props.type)) {
+            if (typeCheck.isExtendedChoice(this.props.type)) {
                 this.state.options = data.options;
             }
         }
@@ -172,7 +176,7 @@ class QuestionBuilder extends Component {
     };
 
     renderChoices = () => {
-        if (!typeCheck.isChoice(this.props.type)) {
+        if (!typeCheck.isExtendedChoice(this.props.type)) {
             return null;
         }
 
@@ -213,6 +217,7 @@ class QuestionBuilder extends Component {
                     onRemove={this.removeFlexInput}
                     onChange={this.changeFlexInput}
                     latestFlex={latestFlex}
+                    editable={typeCheck.isYesNo(this.props.type) ? false : true}
                 />
                 {minMaxValidation}
             </React.Fragment>

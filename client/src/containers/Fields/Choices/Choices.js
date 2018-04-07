@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Choices.css';
-import { CONSTS } from '../../../utils';
+import { CONSTS, typeCheck } from '../../../utils';
 import Choice from './Choice';
 
 const choices = ({ type, options, keys, clicked, err, min, max }) => {
@@ -52,7 +52,7 @@ const choices = ({ type, options, keys, clicked, err, min, max }) => {
             }
         }
 
-        if (type === CONSTS.TYPE.SINGLE_CHOICE) {
+        if (typeCheck.isAloneChoice(type)) {
             helperText = 'Choose one from the list.';
         }
 
