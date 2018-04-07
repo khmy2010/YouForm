@@ -58,8 +58,6 @@ class QuestionBuilder extends Component {
         let fieldValidations = [];
         let vbuildResult = null;
 
-        console.log('vbuild: ', vbuild);
-
         //read vbuild property to find out if this field requires validation
         if (vbuild) {
             let payload = null;

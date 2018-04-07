@@ -11,8 +11,6 @@ class FlexInputs extends Component {
         };
 
         this.focusLatestInput = () => {
-            console.log('mehhhhh');
-            console.log(this.latestInput);
             if (this.latestInput) this.latestInput.focus();
         };
     }
