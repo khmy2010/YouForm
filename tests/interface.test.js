@@ -20,6 +20,22 @@ it('should renders the home page without auth when not logged in', async () => {
 
     const discovery = await page.getSelected(discoverySel);
     expect(discovery).toEqual('Discovery');
-    const dashboard = await page.getSelected(loginSel);
-    expect(dashboard).toEqual('Login');
+    const login = await page.getSelected(loginSel);
+    expect(login).toEqual('Login');
+});
+
+it('should renders the home page with auth when logged in', async () => {
+    await page.login();
+    const nav = '.Header__Navigation';
+    const discoverySel = '.Header__Navigation li a';
+    const dashSel = '.Header__Navigation li:nth-child(2) a';
+    const logoutSel = '.Header__Navigation li:nth-child(3) a';
+    await page.waitFor(nav);
+
+    const discovery = await page.getSelected(discoverySel);
+    expect(discovery).toEqual('Discovery');
+    const dashboard = await page.getSelected(dashSel);
+    expect(dashboard).toEqual('Dashboard');
+    const logout = await page.getSelected(logoutSel);
+    expect(logout).toEqual('Logout');
 });
