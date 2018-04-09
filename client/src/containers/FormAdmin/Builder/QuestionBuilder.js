@@ -18,6 +18,8 @@ class QuestionBuilder extends Component {
     constructor(props) {
         super(props);
 
+        const type = this.props.type;
+
         if (this.props.mode === CREATING) {
             this.state = {
                 title: '',
@@ -27,7 +29,7 @@ class QuestionBuilder extends Component {
                 }
             };
 
-            if (typeCheck.isMultipleChoice(this.props.type)) {
+            if (typeCheck.isMultipleChoice(type)) {
                 this.state.options = [''];
                 this.state.validation = {
                     ...this.state.validation,
@@ -36,12 +38,16 @@ class QuestionBuilder extends Component {
                 };
             }
 
-            if (typeCheck.isSingleChoice(this.props.type)) {
+            if (typeCheck.isSingleChoice(type)) {
                 this.state.options = [''];
             }
 
-            if (typeCheck.isYesNo(this.props.type)) {
+            if (typeCheck.isYesNo(type)) {
                 this.state.options = ['Yes', 'No'];
+            }
+
+            if (typeCheck.isDate(type)) {
+                this.state.dateType = '';
             }
         } else {
             //populate with existing data
@@ -131,6 +137,12 @@ class QuestionBuilder extends Component {
 
         this.setState({
             options: newOptions
+        });
+    };
+
+    handleSelectionChange = data => {
+        this.setState({
+            dateType: data
         });
     };
 
@@ -224,8 +236,26 @@ class QuestionBuilder extends Component {
         );
     };
 
-    renderDropDown = () => {
-        return <EleComp type="select" />;
+    renderDate = () => {
+        if (!typeCheck.isDate(this.props.type)) {
+            return null;
+        }
+        const selectOptions = Object.keys(CONSTS.DATE_TYPE).map(key => {
+            return {
+                value: key,
+                display: CONSTS.DATE_TYPE[key]
+            };
+        });
+
+        return (
+            <EleComp
+                type="select"
+                name="format"
+                displayName="Date Format"
+                options={selectOptions}
+                onChange={this.handleSelectionChange}
+            />
+        );
     };
 
     render() {
@@ -262,7 +292,7 @@ class QuestionBuilder extends Component {
                                 onInputChange={this.handleInputChange}
                             />
                             {this.renderChoices()}
-                            {this.renderDropDown()}
+                            {this.renderDate()}
                             <EleComp
                                 type="checkbox"
                                 id="required"

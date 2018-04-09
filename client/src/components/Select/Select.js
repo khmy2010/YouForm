@@ -83,10 +83,12 @@ class Select extends Component {
     }
 
     handleClick = index => {
+        const value = this.props.options[index].display;
         this.setState({
-            value: this.props.options[index].display,
+            value,
             selectedIndex: index
         });
+        this.props.clicked(value);
         this.toggle();
     };
 

@@ -1,4 +1,4 @@
-._text {
+.Input__Text {
     width: 90%;
     height: 40px;
     font-size: 28px;
@@ -9,7 +9,7 @@
     border-bottom: 1px solid #b5b5b5;
 }
 
-._text:focus {
+.Input__Text:focus {
     outline: none;
     border-bottom: 3px solid #52057f;
 }

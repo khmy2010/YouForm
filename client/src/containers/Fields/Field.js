@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import InputText from './InputText/InputText';
 import Choices from './Choices/Choices';
+import Date from './Date/Date';
 import * as checker from './checker';
 import { CONSTS, typeCheck } from '../../utils';
 import './Field.css';
@@ -186,6 +187,8 @@ class Field extends Component {
                         max={this.state.validation.maxChoice}
                     />
                 );
+            case CONSTS.TYPE.DATE:
+                return <Date dateType={this.props.dateType} />;
             default:
                 return null;
         }

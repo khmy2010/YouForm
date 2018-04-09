@@ -63,17 +63,10 @@ const eleComp = props => {
 
         case 'select':
             return (
-                <Select
-                    options={[
-                        { value: 'Alo', display: 'Fuck Select!' },
-                        { value: 'Miaw', display: 'Fuck Miaw!' },
-                        { value: 'Ter', display: 'Fuck Ter!' },
-                        { value: 'MShape', display: 'Fuck MShape!' },
-                        { value: 'Yous', display: 'Fuck Yous!' },
-                        { value: 'Magneto', display: 'Fuck Magneto!' },
-                        { value: 'Pacific', display: 'Fuck Pacific!' }
-                    ]}
-                />
+                <div className="EleField">
+                    <label>{props.displayName}</label>
+                    <Select options={props.options} clicked={props.onChange} />
+                </div>
             );
         default:
             return null;

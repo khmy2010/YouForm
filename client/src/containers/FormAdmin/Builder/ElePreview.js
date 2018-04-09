@@ -2,7 +2,14 @@ import React from 'react';
 
 import Field from '../../Fields/Field';
 
-const elePreview = ({ type, title, description, validation, options }) => (
+const elePreview = ({
+    type,
+    title,
+    description,
+    validation,
+    options,
+    dateType
+}) => (
     <div className="ElePreview">
         <Field
             component={type}
@@ -10,6 +17,7 @@ const elePreview = ({ type, title, description, validation, options }) => (
             description={description}
             validation={validation}
             options={options}
+            dateType={dateType}
         />
     </div>
 );

@@ -11,7 +11,11 @@ export const CONSTS = {
         NUMBER: 'NUMBER',
         CURRENCY: 'CURRENCY'
     },
-
+    DATE_TYPE: {
+        LONG_MDY: 'MM/DD/YYYY',
+        LONG_DMY: 'DD/MM/YYYY',
+        LONG_YMD: 'YYYY/MM/DD'
+    },
     ERROR: {
         ERR_BAD_FID: 'ERR_00: Bad FID passed',
         ERR_BAD_QID: 'ERR_01: Bad QID passed',
@@ -29,5 +33,6 @@ export const typeCheck = {
     isExtendedChoice: props =>
         typeCheck.isChoice(props) || typeCheck.isYesNo(props),
     isAloneChoice: props =>
-        typeCheck.isSingleChoice(props) || typeCheck.isYesNo(props)
+        typeCheck.isSingleChoice(props) || typeCheck.isYesNo(props),
+    isDate: props => props === CONSTS.TYPE.DATE
 };

@@ -15,7 +15,7 @@ Possible Props:
 const inputText = props => {
     //perform view logic such as errors and error message
 
-    let classes = ['_text'];
+    let classes = ['Input__Text'];
 
     if (props.errorStatus) {
         classes.push('Text-Error');
