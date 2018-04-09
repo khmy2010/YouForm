@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import InputText from './InputText/InputText';
 import Choices from './Choices/Choices';
 import Date from './Date/Date';
+import Paragraph from './Paragraph/Paragraph';
 import * as checker from './checker';
 import { CONSTS, typeCheck } from '../../utils';
 import './Field.css';
@@ -193,6 +194,16 @@ class Field extends Component {
                         onFocus={this.handleInputFocus}
                         errorStatus={this.state.error}
                         type={type}
+                    />
+                );
+            case CONSTS.TYPE.LONG_TEXT:
+                return (
+                    <Paragraph
+                        value={this.state.value}
+                        onChange={this.handleInputChange}
+                        onBlur={this.handleInputBlur}
+                        onFocus={this.handleInputFocus}
+                        errorStatus={this.state.error}
                     />
                 );
             case CONSTS.TYPE.MULTIPLE_CHOICE:

@@ -34,5 +34,8 @@ export const typeCheck = {
         typeCheck.isChoice(props) || typeCheck.isYesNo(props),
     isAloneChoice: props =>
         typeCheck.isSingleChoice(props) || typeCheck.isYesNo(props),
-    isDate: props => props === CONSTS.TYPE.DATE
+    isDate: props => props === CONSTS.TYPE.DATE,
+    isShortText: props => props === CONSTS.TYPE.SHORT_TEXT,
+    isLongText: props => props === CONSTS.TYPE.LONG_TEXT,
+    isText: props => typeCheck.isShortText(props) || typeCheck.isLongText(props)
 };

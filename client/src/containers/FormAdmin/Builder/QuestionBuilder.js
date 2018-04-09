@@ -29,6 +29,14 @@ class QuestionBuilder extends Component {
                 }
             };
 
+            if (typeCheck.isText(type)) {
+                this.state.validation = {
+                    ...this.state.validation,
+                    minCharCount: '',
+                    maxCharCount: ''
+                };
+            }
+
             if (typeCheck.isMultipleChoice(type)) {
                 this.state.options = [''];
                 this.state.validation = {
@@ -80,6 +88,12 @@ class QuestionBuilder extends Component {
                 payload = {
                     [VBUILD.MIN]: 1,
                     [VBUILD.MAX]: this.state.options.length
+                };
+            }
+
+            if (typeCheck.isText(this.props.type)) {
+                payload = {
+                    [VBUILD.MAX_CHAR]: this.state.validation.minCharCount
                 };
             }
             vbuildResult = validateBuild(
@@ -191,6 +205,34 @@ class QuestionBuilder extends Component {
         }
     };
 
+    renderCharacterCount = () => {
+        if (!typeCheck.isText(this.props.type)) {
+            return null;
+        }
+        return (
+            <React.Fragment>
+                <EleComp
+                    type="inlineInput"
+                    name="minCharCount"
+                    displayName="Minimum Character Count:"
+                    onInputChange={this.handleInputChange}
+                    value={this.state.validation.minCharCount}
+                    vbuild={[VBUILD.MIN_CHAR, VBUILD.NUM].join(' ')}
+                    vfield
+                />
+                <EleComp
+                    type="inlineInput"
+                    name="maxCharCount"
+                    displayName="Maximum Character Count:"
+                    onInputChange={this.handleInputChange}
+                    value={this.state.validation.maxCharCount}
+                    vbuild={[VBUILD.MAX_CHAR, VBUILD.NUM].join(' ')}
+                    vfield
+                />
+            </React.Fragment>
+        );
+    };
+
     renderChoices = () => {
         if (!typeCheck.isExtendedChoice(this.props.type)) {
             return null;
@@ -298,6 +340,7 @@ class QuestionBuilder extends Component {
                             />
                             {this.renderChoices()}
                             {this.renderDate()}
+                            {this.renderCharacterCount()}
                             <EleComp
                                 type="checkbox"
                                 id="required"

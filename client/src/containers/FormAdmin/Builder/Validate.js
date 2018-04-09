@@ -4,14 +4,31 @@ export const VBUILD = {
     REQ: 'required',
     NUM: 'number',
     MIN: 'choice_min',
-    MAX: 'choice_max'
+    MAX: 'choice_max',
+    MIN_CHAR: 'minCharCount',
+    MAX_CHAR: 'maxCharCount'
 };
 
 //only care about PASS or FAIL
 //true = PASS
 //false = FAIL
+
 export const validateBuild = (vbuild, value, payload) => {
     const results = [];
+    const parsed = parseInt(value, 10);
+
+    //function to handle empty field, return false for further processing.
+    const handleEmpty = rule => {
+        if (isNaN(parsed)) {
+            results.push({
+                rule,
+                status: value === '' ? true : false
+            });
+            return true;
+        }
+
+        return false;
+    };
 
     vbuild.forEach(rule => {
         if (rule === VBUILD.NUM) {
@@ -21,38 +38,44 @@ export const validateBuild = (vbuild, value, payload) => {
             });
         }
 
-        if (rule === VBUILD.MIN) {
-            const parsed = parseInt(value, 10);
-
-            if (isNaN(parsed)) {
-                results.push({
-                    rule,
-                    status: value === '' ? true : false
-                });
-            } else {
-                results.push({
-                    rule,
-                    status:
-                        parsed >= payload[VBUILD.MIN] &&
-                        parsed <= payload[VBUILD.MAX]
-                });
-            }
+        if (rule === VBUILD.MIN && !handleEmpty(rule)) {
+            results.push({
+                rule,
+                status:
+                    parsed >= payload[VBUILD.MIN] &&
+                    parsed <= payload[VBUILD.MAX]
+            });
         }
 
-        if (rule === VBUILD.MAX) {
-            const parsed = parseInt(value, 10);
+        if (rule === VBUILD.MAX && !handleEmpty(rule)) {
+            results.push({
+                rule,
+                status: parsed <= payload[VBUILD.MAX]
+            });
+        }
 
-            if (isNaN(parsed)) {
-                results.push({
-                    rule,
-                    status: value === '' ? true : false
-                });
-            } else {
-                results.push({
-                    rule,
-                    status: parsed <= payload[VBUILD.MAX]
-                });
+        if (rule === VBUILD.MIN_CHAR && !handleEmpty(rule)) {
+            results.push({
+                rule,
+                status: parsed > 0
+            });
+        }
+
+        if (rule === VBUILD.MAX_CHAR && !handleEmpty(rule)) {
+            //todo: handle multiple digit cases
+            console.log(payload);
+            console.log(VBUILD.MAX_CHAR);
+            let parsedMinCharCount = parseInt(payload[VBUILD.MAX_CHAR], 10);
+
+            console.log(parsedMinCharCount);
+            if (isNaN(parsedMinCharCount)) {
+                parsedMinCharCount = 0;
             }
+
+            results.push({
+                rule,
+                status: parsed > parsedMinCharCount
+            });
         }
     });
 
