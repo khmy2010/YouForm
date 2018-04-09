@@ -61,6 +61,10 @@ class QuestionBuilder extends Component {
             if (typeCheck.isExtendedChoice(this.props.type)) {
                 this.state.options = data.options;
             }
+
+            if (typeCheck.isDate(type)) {
+                this.state.dateType = data.dateType;
+            }
         }
     }
 
@@ -254,6 +258,7 @@ class QuestionBuilder extends Component {
                 displayName="Date Format"
                 options={selectOptions}
                 onChange={this.handleSelectionChange}
+                init={this.state.dateType === '' ? null : this.state.dateType}
             />
         );
     };

@@ -69,6 +69,7 @@ const eleComp = props => {
                         options={props.options}
                         clicked={props.onChange}
                         default={true}
+                        init={props.init}
                     />
                 </div>
             );

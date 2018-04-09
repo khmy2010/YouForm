@@ -132,7 +132,6 @@ class DateInput extends Component {
     };
 
     renderInputs() {
-        console.log(this.props.dateType);
         const dateType = this.props.dateType || CONSTS.DATE_TYPE.LONG_DMY;
 
         let fields;

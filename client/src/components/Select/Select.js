@@ -10,11 +10,19 @@ class Select extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            value: this.props.default ? this.props.options[0].display : '',
+            value: '',
             selectedIndex: this.props.default ? 0 : null
         };
 
-        if (this.props.default) {
+        //if there is init value, prioritise that first
+        if (this.props.default && this.props.init) {
+            this.state.value = this.props.init;
+        }
+
+        if (this.props.default && !this.props.init) {
+            console.log('alo?');
+            this.state.value = this.props.options[0].display;
+
             //simulate click event for default value
             this.props.clicked(this.state.value);
         }

@@ -27,6 +27,7 @@ const preview = ({ questions, onEdit, onDelete }) => {
                         description={question.description}
                         validation={parsedValidation}
                         options={question.options}
+                        dateType={question.dateType}
                     />
                 </PreviewEditor>
             );
