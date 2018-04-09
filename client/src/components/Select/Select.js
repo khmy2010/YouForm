@@ -10,9 +10,14 @@ class Select extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            value: '',
-            selectedIndex: null
+            value: this.props.default ? this.props.options[0].display : '',
+            selectedIndex: this.props.default ? 0 : null
         };
+
+        if (this.props.default) {
+            //simulate click event for default value
+            this.props.clicked(this.state.value);
+        }
 
         this.handleMouseClose = this.handleMouseClose.bind(this);
     }

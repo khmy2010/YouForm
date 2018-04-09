@@ -65,7 +65,11 @@ const eleComp = props => {
             return (
                 <div className="EleField">
                     <label>{props.displayName}</label>
-                    <Select options={props.options} clicked={props.onChange} />
+                    <Select
+                        options={props.options}
+                        clicked={props.onChange}
+                        default={true}
+                    />
                 </div>
             );
         default:

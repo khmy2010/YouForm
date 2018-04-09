@@ -13,7 +13,7 @@ class Field extends Component {
         this.state = {
             value: '',
             touched: false,
-            error: false,
+            error: null,
             validation: this.props.validation,
             validationResults: [],
             selected: []
@@ -152,6 +152,27 @@ class Field extends Component {
         });
     };
 
+    validateHook = (status, message) => {
+        this.setState(({ validationResults }, props) => {
+            let error = null;
+
+            const filtered = validationResults.filter(res => {
+                return res.message !== message;
+            });
+
+            const newResults = filtered.concat([{ status, message }]);
+
+            if (!status) {
+                error = { status, message };
+            }
+
+            return {
+                error,
+                validationResults: newResults
+            };
+        });
+    };
+
     renderField(type) {
         const { title } = this.props;
 
@@ -188,7 +209,12 @@ class Field extends Component {
                     />
                 );
             case CONSTS.TYPE.DATE:
-                return <Date dateType={this.props.dateType} />;
+                return (
+                    <Date
+                        dateType={this.props.dateType}
+                        hook={this.validateHook}
+                    />
+                );
             default:
                 return null;
         }

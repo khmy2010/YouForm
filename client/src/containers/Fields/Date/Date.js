@@ -16,6 +16,7 @@ class DateInput extends Component {
             month: '',
             year: '',
             valid: false,
+            touched: false,
             errorMsg: ''
         };
 
@@ -103,6 +104,19 @@ class DateInput extends Component {
 
             if (month === 2) valid = day <= maxFeb;
             else valid = day <= maxDay;
+
+            //only consider it is touched when year is fully filled.
+            if (obj.year.length === 4) {
+                this.setState({ touched: true });
+            }
+        }
+
+        //if hook props is passed, call the hook
+        if (this.props.hook) {
+            //only consider error if all field are touched
+            const passedValid = this.state.touched ? valid : true;
+
+            this.props.hook(passedValid, "This date doesn't appear valid");
         }
 
         //reset validation if it is not performed, otherwise pass it.
@@ -118,6 +132,7 @@ class DateInput extends Component {
     };
 
     renderInputs() {
+        console.log(this.props.dateType);
         const dateType = this.props.dateType || CONSTS.DATE_TYPE.LONG_DMY;
 
         let fields;
