@@ -11,3 +11,11 @@
 .Builder__Element {
     padding: 5px;
 }
+
+.Elements__Stencils {
+    grid-column-start: span 2;
+}
+
+.Element__Context {
+    grid-column-start: span 2;
+}
