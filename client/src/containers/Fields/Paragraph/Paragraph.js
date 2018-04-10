@@ -7,23 +7,23 @@ const paragraph = props => {
     let steps = 50;
 
     if (window.innerWidth > 1000) {
-        steps = 70;
+        steps = 60;
     }
 
     if (window.innerWidth < 1000) {
-        steps = 50;
+        steps = 40;
     }
 
     if (window.innerWidth < 900) {
-        steps = 45;
-    }
-
-    if (window.innerWidth < 700) {
         steps = 35;
     }
 
-    if (window.innerWidth < 500) {
+    if (window.innerWidth < 700) {
         steps = 30;
+    }
+
+    if (window.innerWidth < 500) {
+        steps = 25;
     }
 
     const rows = Math.ceil(props.value.trim().length / steps);

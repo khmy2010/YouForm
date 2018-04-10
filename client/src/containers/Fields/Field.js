@@ -97,6 +97,22 @@ class Field extends Component {
             });
         }
 
+        if (rules.minCharCount) {
+            const parsed = parseInt(rules.minCharCount, 10);
+            validationResults.push({
+                status: checker.minLength(value, parsed),
+                message: `This field requires minimum ${parsed} characters.`
+            });
+        }
+
+        if (rules.maxCharCount) {
+            const parsed = parseInt(rules.maxCharCount, 10);
+            validationResults.push({
+                status: checker.maxLength(value, parsed),
+                message: `Too much! This field requires maximum ${parsed} characters.`
+            });
+        }
+
         if (component === TYPE.EMAIL) {
             validationResults.push({
                 status: checker.email(value),

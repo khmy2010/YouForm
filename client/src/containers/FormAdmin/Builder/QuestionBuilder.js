@@ -103,6 +103,9 @@ class QuestionBuilder extends Component {
             );
         }
 
+        /* Scenario 1: the field requires vbuild and it passed and it is not vfield
+           Scenario 2: the field does not require vbuild and it is not vfield
+        */
         if ((vbuild && vbuildResult && !vfield) || (!vbuild && !vfield)) {
             this.setState({
                 [target.name]: target.value
