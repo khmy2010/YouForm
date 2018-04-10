@@ -62,20 +62,24 @@ export const validateBuild = (vbuild, value, payload) => {
         }
 
         if (rule === VBUILD.MAX_CHAR && !handleEmpty(rule)) {
-            //todo: handle multiple digit cases
-            console.log(payload);
-            console.log(VBUILD.MAX_CHAR);
-            let parsedMinCharCount = parseInt(payload[VBUILD.MAX_CHAR], 10);
+            //only check when both rules are of the same length
+            if (value.length < payload[VBUILD.MAX_CHAR].length) {
+                results.push({
+                    rule,
+                    status: true
+                });
+            } else {
+                let parsedMinCharCount = parseInt(payload[VBUILD.MAX_CHAR], 10);
 
-            console.log(parsedMinCharCount);
-            if (isNaN(parsedMinCharCount)) {
-                parsedMinCharCount = 0;
+                if (isNaN(parsedMinCharCount)) {
+                    parsedMinCharCount = 0;
+                }
+
+                results.push({
+                    rule,
+                    status: parsed > parsedMinCharCount
+                });
             }
-
-            results.push({
-                rule,
-                status: parsed > parsedMinCharCount
-            });
         }
     });
 
