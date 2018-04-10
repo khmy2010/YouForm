@@ -1,0 +1,45 @@
+.Context {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 80%;
+    max-width: 850px;
+    min-width: 700px;
+    height: 70%;
+    left: 15%;
+    top: 15%;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.4);
+    display: grid;
+    grid-template-rows: 34px auto 55px;
+}
+
+.Context__Tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e0e0e0;
+}
+
+.Context__Tabs > img {
+    padding: 7px;
+    margin-left: 100px;
+}
+
+.Context__Buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid silver;
+}
+
+.Context__Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3px;
+}
+
+.Context__Controls {
+    border-right: 1px solid silver;
+    padding-left: 10px;
+}

@@ -71,10 +71,6 @@ const elements = props => {
     return (
         <div className="Builder__Elements">
             {renderedElements}
-            <Button className="Elements__Stencils">Import from Stencils</Button>
-            <Button className="Element__Context">
-                Form Welcome / Thank Screen
-            </Button>
             {props.children}
         </div>
     );

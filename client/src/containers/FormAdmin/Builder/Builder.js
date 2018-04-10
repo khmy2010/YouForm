@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 //import redux actions
 import * as actions from '../../../actions/form';
 
+import Button from '../../../components/Button/Button';
 import Elements from '../../../components/FormAdmin/BuilderElement/Elements';
 
 //import form components
 import QuestionBuilder from './QuestionBuilder';
 import QuestionsPreview from './Preview/Preview';
+
+//import context components
+import Context from '../../ContextDialog/Context';
 
 const CREATING = 'CREATING';
 const EDITING = 'EDITING';
@@ -19,7 +23,8 @@ class Builder extends Component {
         showBuilder: false,
         buildingStatus: null,
         buildingType: null,
-        buildingData: null
+        buildingData: null,
+        showContext: false
     };
 
     renderQuestions() {
@@ -110,6 +115,24 @@ class Builder extends Component {
         this.props.deleteQuestion(this.props.fid, _id);
     };
 
+    toggleContext = () => {
+        console.log('alo');
+        this.setState((prevState, props) => {
+            return { showContext: !prevState.showContext };
+        });
+    };
+
+    renderContext() {
+        let context = null;
+
+        if (this.state.showContext) {
+            console.log('miw miaw miaw');
+            context = <Context onBackdropClick={this.toggleContext} />;
+        }
+
+        return context;
+    }
+
     renderQuestionBuilder() {
         let questionBuilder = null;
 
@@ -151,7 +174,17 @@ class Builder extends Component {
                     {questionBuilder}
                 </div> */}
                 <Elements onEleClicked={this.createQuestion}>
+                    <Button className="Elements__Stencils">
+                        Import from Stencils
+                    </Button>
+                    <Button
+                        className="Element__Context"
+                        clicked={this.toggleContext}
+                    >
+                        Form Welcome / Thank Screen
+                    </Button>
                     {this.renderQuestionBuilder()}
+                    {this.renderContext()}
                 </Elements>
                 <QuestionsPreview
                     onEdit={this.editQuestion}

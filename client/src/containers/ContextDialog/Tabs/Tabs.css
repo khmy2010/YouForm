@@ -1,0 +1,26 @@
+.Tabs__Menu {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.Tab {
+    font-weight: 700;
+    padding: 6px 10px;
+    border-bottom: 1px solid silver;
+    cursor: pointer;
+}
+
+.Tab.Tab__Active {
+    background: white;
+    border-bottom: 2px solid #037ef3;
+}
+
+.Tab:not(:first-of-type) {
+    /* margin-left: 5px; */
+    border-left: 1px solid silver;
+}
+
+.Tab:last-of-type {
+    border-right: 1px solid silver;
+}
