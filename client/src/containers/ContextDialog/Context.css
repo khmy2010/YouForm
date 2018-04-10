@@ -5,9 +5,9 @@
     width: 80%;
     max-width: 850px;
     min-width: 700px;
-    height: 70%;
+    height: 75%;
     left: 15%;
-    top: 15%;
+    top: 10%;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.4);
     display: grid;

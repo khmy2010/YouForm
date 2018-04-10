@@ -37,10 +37,15 @@ class Context extends Component {
             case 'Welcome Screen':
                 content = (
                     <React.Fragment>
+                        <EleComp type="bigHelp">
+                            Welcome page shows up whenever someone visits your
+                            form.
+                        </EleComp>
                         <EleComp
                             type="input"
                             displayName="Title"
                             name="welcometitle"
+                            helpText="This is the form title saw by your visitor. Leave blank if you want to use the document title."
                             value={this.state.welcomeTitle}
                             onInputChange={this.handleChange}
                         />
@@ -48,6 +53,7 @@ class Context extends Component {
                             type="input"
                             displayName="Description"
                             name="welcomeDescription"
+                            helpText="Let your visitor knows more about your form before they start!"
                             value={this.state.welcomeDescription}
                             onInputChange={this.handleChange}
                         />
@@ -55,6 +61,7 @@ class Context extends Component {
                             type="input"
                             displayName="Button Text"
                             name="welcomeButtonText"
+                            helpText="Customise your button text to your need."
                             value={this.state.welcomeButtonText}
                             onInputChange={this.handleChange}
                         />
@@ -64,10 +71,15 @@ class Context extends Component {
             case 'Thanks Screen':
                 content = (
                     <React.Fragment>
+                        <EleComp type="bigHelp">
+                            Thanks page shows up whenever someone finished
+                            filling your form.
+                        </EleComp>
                         <EleComp
                             type="input"
                             displayName="Title"
                             name="thanksTitle"
+                            helpText="Show them your big appreciation after they finished filling your form."
                             value={this.state.thanksTitle}
                             onInputChange={this.handleChange}
                         />
@@ -75,6 +87,7 @@ class Context extends Component {
                             type="input"
                             displayName="Description"
                             name="thanksDescription"
+                            helpText="Encourage people to share your form or visit another webpage with a custom thank you message."
                             value={this.state.thanksDescription}
                             onInputChange={this.handleChange}
                         />
@@ -82,6 +95,7 @@ class Context extends Component {
                             type="input"
                             displayName="Button Text"
                             name="thanksButtonText"
+                            helpText="Customise your button text to your need."
                             value={this.state.thanksButtonText}
                             onInputChange={this.handleChange}
                         />

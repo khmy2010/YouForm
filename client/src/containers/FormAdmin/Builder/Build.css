@@ -155,3 +155,21 @@
 .EleField__Remove__Hide {
     display: none;
 }
+
+.EleBigHelp {
+    background-color: #fff3cd;
+    margin: 5px 5px 3px 0;
+    padding: 10px;
+    border: 1px solid #ffeeba;
+    font-size: 18px;
+}
+
+.EleField__Help {
+    font-size: 12px;
+    letter-spacing: 0.1px;
+    font-style: italic;
+    color: #666666;
+    display: block;
+    padding: 1px;
+    margin-top: 2px;
+}

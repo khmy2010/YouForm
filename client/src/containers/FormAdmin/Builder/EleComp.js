@@ -5,6 +5,8 @@ import Select from '../../../components/Select/Select';
 
 const eleComp = props => {
     switch (props.type) {
+        case 'bigHelp':
+            return <div className="EleBigHelp">{props.children}</div>;
         case 'checkbox':
             return (
                 <div className="EleCheck">
@@ -33,6 +35,9 @@ const eleComp = props => {
                             props.onInputChange(event, props.vbuild)
                         }
                     />
+                    <small className="EleField__Help">
+                        {props.helpText ? props.helpText : null}
+                    </small>
                 </div>
             );
         case 'flexInput':
