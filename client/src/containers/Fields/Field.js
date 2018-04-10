@@ -120,6 +120,13 @@ class Field extends Component {
             });
         }
 
+        if (component === TYPE.LINK) {
+            validationResults.push({
+                status: checker.isValidUrl(value),
+                message: 'This is an invalid linkxz.'
+            });
+        }
+
         if (component === TYPE.NUMBER || component === TYPE.CURRENCY) {
             validationResults.push({
                 status: checker.numeric(value),
@@ -202,6 +209,7 @@ class Field extends Component {
             case CONSTS.TYPE.EMAIL:
             case CONSTS.TYPE.NUMBER:
             case CONSTS.TYPE.CURRENCY:
+            case CONSTS.TYPE.LINK:
                 return (
                     <InputText
                         value={this.state.value}

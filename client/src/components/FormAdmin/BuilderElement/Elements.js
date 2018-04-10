@@ -22,9 +22,9 @@ const ELEMENTS = [
         className: 'Element__Email'
     },
     {
-        type: CONSTS.TYPE.DATE,
-        display: 'Date',
-        className: 'Element__Date'
+        type: CONSTS.TYPE.LINK,
+        display: 'Link',
+        className: 'Element__Link'
     },
     {
         type: CONSTS.TYPE.SINGLE_CHOICE,
@@ -50,6 +50,11 @@ const ELEMENTS = [
         type: CONSTS.TYPE.CURRENCY,
         display: 'Currency',
         className: 'Element__Currency'
+    },
+    {
+        type: CONSTS.TYPE.DATE,
+        display: 'Date',
+        className: 'Element__Date'
     }
 ];
 

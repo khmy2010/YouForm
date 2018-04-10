@@ -37,6 +37,9 @@ const eleTitle = ({ type, sequence }) => {
         case CONSTS.TYPE.DATE:
             rendered = `${sequence}. New Date Question`;
             break;
+        case CONSTS.TYPE.LINK:
+            rendered = `${sequence}. New Link Question`;
+            break;
         case 'EDITING':
             rendered = 'Edit Question';
             break;

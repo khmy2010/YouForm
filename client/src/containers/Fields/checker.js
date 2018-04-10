@@ -7,11 +7,19 @@
 export const required = value => value.trim().length !== 0;
 
 export const email = email => {
-    //ignore Unncessary escape character warning
+    //ignore Unnecessary escape character warning
     //eslint-disable-next-line
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     return regex.test(email);
+};
+
+export const isValidUrl = url => {
+    //ignore Unnecessary escape character warning
+    //eslint-disable-next-line
+    const regex = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+
+    return regex.test(url);
 };
 
 export const minLength = (value, minLength) => value.trim().length >= minLength;

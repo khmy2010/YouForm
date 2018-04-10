@@ -9,7 +9,8 @@ export const CONSTS = {
         YES_NO: 'YES_NO',
         DATE: 'DATE',
         NUMBER: 'NUMBER',
-        CURRENCY: 'CURRENCY'
+        CURRENCY: 'CURRENCY',
+        LINK: 'LINK'
     },
     DATE_TYPE: {
         LONG_MDY: 'MM/DD/YYYY',
