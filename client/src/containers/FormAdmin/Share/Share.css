@@ -65,3 +65,18 @@
 .Share__ChangedAction > span {
     color: red;
 }
+
+.Share__Error {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(213, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+.Share__Error > span {
+    font-size: 16px;
+    padding-left: 15px;
+}

@@ -6,10 +6,18 @@ import * as actions from '../../../actions/form';
 import Select from '../../../components/Select/Select';
 import ContextButton from '../../../components/ContextButton/CButton';
 import Date from '../../Fields/Date/Date';
+import Error from '../../../assets/images/error__red.svg';
 
 import * as utils from '../../../utils';
 
 import './Share.css';
+
+/*
+    To-Do (11Apr)
+    1. I have changed Form model at mongodb
+    2. I need to make sure the reducer will get / initialise the value
+    3. Need to make sure to be able to update the dates correctly
+*/
 
 class Share extends Component {
     constructor(props) {
@@ -21,7 +29,8 @@ class Share extends Component {
             endingDate: null,
             statusChanged: false,
             startingDateChanged: false,
-            endingDateChanged: false
+            endingDateChanged: false,
+            dateError: false
         };
 
         this.linkField = null;
@@ -48,8 +57,14 @@ class Share extends Component {
     };
 
     onDateChange = (data, type) => {
-        if (data.valid && data.touched) {
-        }
+        /*
+            Check for:
+            1. Valid Date
+            2. Make sure it is not at the past
+            3. If ED, make sure it is later than SD if any
+
+            probably need to do strict validation
+        */
     };
 
     save = () => {
@@ -91,6 +106,20 @@ class Share extends Component {
                 init={initValue}
                 clicked={this.handleStatusChange}
             />
+        );
+    }
+
+    renderError() {
+        if (!this.state.dateError) return null;
+
+        return (
+            <div className="Share__Error">
+                <img src={Error} alt="Error" />
+                <span>
+                    This appears invalid to us. It will not saved together with
+                    other settings.
+                </span>
+            </div>
         );
     }
 
@@ -140,6 +169,7 @@ class Share extends Component {
                             this.onDateChange(data, 'startingDate')
                         }
                     />
+                    {this.renderError()}
                 </div>
                 <div className="Share__EndDate">
                     <label>Ending Date: </label>
@@ -148,6 +178,7 @@ class Share extends Component {
                             this.onDateChange(data, 'endingDate')
                         }
                     />
+                    {this.renderError()}
                 </div>
                 <div className="Share__Social">FB</div>
                 <div className="Share__Social">Twitter</div>
