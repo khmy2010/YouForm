@@ -8,8 +8,8 @@ const errors = require('../errors');
 
 const formSchema = new Schema({
     name: String,
-    startTime: Date,
-    endTime: Date,
+    startDate: Number,
+    endDate: Number,
     status: { type: Boolean, default: true },
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
     collabs: [CollabsSchema],

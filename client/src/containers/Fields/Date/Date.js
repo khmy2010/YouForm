@@ -96,6 +96,7 @@ class DateInput extends Component {
         const year = parseInt(obj.year, 10);
 
         let valid = false;
+        let touched = false;
 
         //only perform validation when all field is filled.
         if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
@@ -107,7 +108,8 @@ class DateInput extends Component {
 
             //only consider it is touched when year is fully filled.
             if (obj.year.length === 4) {
-                this.setState({ touched: true });
+                touched = true;
+                this.setState({ touched });
             }
         }
 
@@ -117,6 +119,37 @@ class DateInput extends Component {
             const passedValid = this.state.touched ? valid : true;
 
             this.props.hook(passedValid, "This date doesn't appear valid");
+        }
+
+        //if value hook is attached, call the hook, pass the Date
+        //and validation information
+        if (this.props.valueHook) {
+            const payload = {
+                valid,
+                touched,
+                year,
+                month,
+                day
+            };
+
+            //pass date object to the caller if there is year & month & [day]
+            //The argument month is 0-based.
+            //This means that January = 0 and December = 11.
+            if (this.state.valid) {
+                if (year && month && day) {
+                    payload.date = new Date(year, month - 1, day);
+                } else if (year && month) {
+                    payload.date = new Date(year, month - 1);
+                }
+
+                if (payload.date) {
+                    const dateString = payload.date.toDateString();
+                    payload.timeStamp = Date.parse(dateString);
+                    payload.past = Date.now() - payload.timeStamp > 1;
+                    payload.future = Date.now() - payload.timeStamp < 0;
+                }
+            }
+            this.props.valueHook(payload);
         }
 
         //reset validation if it is not performed, otherwise pass it.

@@ -44,8 +44,6 @@ export const typeCheck = {
 export const isDev = () => window.location.host === 'localhost:3000';
 
 export const getBase = () => {
-    console.log('Dev: ', isDev());
-    console.log('protocol: ', window.location.protocol);
     if (isDev()) return window.location.host;
-    else return window.location.protocol + window.location.host;
+    else return window.location.protocol + '//' + window.location.host;
 };

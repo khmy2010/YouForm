@@ -29,3 +29,11 @@
 .ContextButton.CButton__Red:hover {
     background-color: #dd2222;
 }
+
+.ContextButton.CButton__Green {
+    background-color: #00a98f;
+}
+
+.ContextButton.CButton__Green:hover {
+    background-color: #00d1b2;
+}
