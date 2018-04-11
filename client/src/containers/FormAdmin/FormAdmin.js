@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/form';
 import './FormAdmin.css';
 
+import Loading from '../../components/Preloading/Preloading';
 import Header from '../../components/FormAdmin/Header/Header';
 import Builder from './Builder/Builder';
 import Preview from './Preview/Preview';
@@ -21,8 +22,26 @@ class FormAdmin extends Component {
     componentDidMount() {
         const url = window.location.pathname.split('/');
         const fid = url.slice(3).shift();
+        const state = url.slice(4).shift();
 
-        this.props.fetchFormAdmin(fid, this.props.history);
+        let validRedirect = false;
+        switch (state) {
+            case 'build':
+            case 'preview':
+            case 'responses':
+            case 'feedbacks':
+            case 'share':
+                validRedirect = true;
+                break;
+            default:
+                break;
+        }
+        this.props.fetchFormAdmin(
+            fid,
+            this.props.history,
+            state,
+            validRedirect
+        );
     }
 
     componentWillReceiveProps(nextProps) {
@@ -62,6 +81,7 @@ class FormAdmin extends Component {
     render() {
         return (
             <div className="FormAdmin">
+                <Loading show={this.props.formData.loading ? true : false} />
                 <Header
                     fileName={this.state.fileName}
                     onChange={this.handleFileNameChange}

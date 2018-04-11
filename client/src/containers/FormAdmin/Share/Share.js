@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
+import './Share.css';
+
 class Share extends Component {
     render() {
-        return <h3>Alo Share</h3>;
+        return <div className="Share">Alo Share</div>;
     }
 }
 

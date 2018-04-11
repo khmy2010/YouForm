@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
     dataLoaded: false,
-    loading: false
+    loading: true
 };
 
 const formAdminReducer = (state = initialState, action) => {
