@@ -31,6 +31,10 @@ class Share extends Component {
         // this.status =
     }
 
+    handleStatusChange = event => {
+        console.log(event);
+    };
+
     renderReceivingSelect() {
         if (this.props.status === undefined) return null;
 
@@ -42,6 +46,7 @@ class Share extends Component {
                     { value: 'Closed', display: 'Closed' }
                 ]}
                 init={initValue}
+                clicked={this.handleStatusChange}
             />
         );
     }
