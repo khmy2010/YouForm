@@ -43,3 +43,9 @@
     border-right: 1px solid silver;
     padding-left: 10px;
 }
+
+.Context__Preview {
+    padding: 10px;
+    max-width: 410px;
+    overflow: auto;
+}

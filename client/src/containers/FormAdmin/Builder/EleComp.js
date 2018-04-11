@@ -34,6 +34,7 @@ const eleComp = props => {
                         onChange={event =>
                             props.onInputChange(event, props.vbuild)
                         }
+                        disabled={props.disabled ? true : false}
                     />
                     <small className="EleField__Help">
                         {props.helpText ? props.helpText : null}

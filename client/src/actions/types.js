@@ -21,3 +21,6 @@ export const MODIFY_FORM_PROPERTIES = 'MODIFY_FORM_PROPERTIES';
 //public form related
 export const FETCH_FORM_SUCCESS = 'FETCH_FORM_SUCCESS';
 export const FETCH_FORM_FAILED = 'FETCH_FORM_FAILED';
+
+//context related
+export const UPDATE_CONTEXT = 'UPDATE_CONTEXT';

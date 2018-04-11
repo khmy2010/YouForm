@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const QuestionSchema = require('./Question');
 const CollabsSchema = require('./Collabs');
+const ContextSchema = require('./Context');
 const errors = require('../errors');
 
 const formSchema = new Schema({
@@ -14,7 +15,8 @@ const formSchema = new Schema({
     collabs: [CollabsSchema],
     questions: [QuestionSchema],
     updated: Date,
-    online: [Schema.Types.ObjectId]
+    online: [Schema.Types.ObjectId],
+    context: [ContextSchema]
 });
 
 formSchema.statics.requireAuth = async function(fid, user) {

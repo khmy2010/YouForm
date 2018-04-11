@@ -11,11 +11,17 @@ module.exports = app => {
     app.post('/api/forms/new', requireLogin, async (req, res) => {
         const body = req.body;
 
+        const welcomeContext = { type: 'Welcome' };
+        const thanksContext = { type: 'Thanks' };
+
         const form = new Form({
             name: body.name,
             owner: req.user.id,
             updated: body.updated
         });
+
+        form.context.push(welcomeContext);
+        form.context.push(thanksContext);
 
         try {
             await form.save();
@@ -148,4 +154,30 @@ module.exports = app => {
             res.status(code).send(msg);
         }
     });
+
+    //update form context
+    app.post(
+        '/api/forms/:fid/context',
+        requireLogin,
+        validOID,
+        async (req, res) => {
+            const body = req.body;
+            const type = body.type;
+            const fid = req.params.fid;
+
+            await Form.findOneAndUpdate(
+                { _id: fid, 'context.type': type },
+                {
+                    $set: {
+                        'context.$.title': body.title,
+                        'context.$.description': body.description,
+                        'context.$.promoteSharing': body.promoteSharing,
+                        'context.$.buttonText': body.buttonText
+                    }
+                }
+            );
+
+            res.send();
+        }
+    );
 };

@@ -71,6 +71,10 @@
     outline: none;
 }
 
+.EleField > input:disabled {
+    border: 1px solid #666666;
+}
+
 .EleInline {
     display: flex;
     justify-content: space-between;

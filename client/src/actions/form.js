@@ -50,3 +50,10 @@ export const fetchForm = fid => async dispatch => {
         dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
     }
 };
+
+export const updateContext = (fid, context) => async dispatch => {
+    try {
+        await axios.post(`/api/forms/${fid}/context`, context);
+        dispatch({ type: actionTypes.UPDATE_CONTEXT, context });
+    } catch (error) {}
+};
