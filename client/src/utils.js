@@ -40,3 +40,10 @@ export const typeCheck = {
     isLongText: props => props === CONSTS.TYPE.LONG_TEXT,
     isText: props => typeCheck.isShortText(props) || typeCheck.isLongText(props)
 };
+
+export const isDev = () => window.location.host === 'localhost:3000';
+
+export const getBase = () => {
+    if (isDev) return window.location.host;
+    else return window.location.protocol + window.location.host;
+};
