@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "jest": {
-        "setupTestFrameworkScriptFile": "./tests/setup.js"
+        "setupTestFrameworkScriptFile": "./tests/setup.js",
+        "testPathIgnorePatterns": ["/node_modules/", "/client"]
     },
     "engine": {
         "npm": "5.8.0"
