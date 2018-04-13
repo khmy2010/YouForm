@@ -44,13 +44,23 @@ class FormAdmin extends Component {
         );
     }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
+    //     const fileName = nextProps.formData.name;
+
+    //     if (fileName && this.state.fileName !== fileName) {
+    //         this.setState({
+    //             fileName
+    //         });
+    //     }
+    // }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
         const fileName = nextProps.formData.name;
 
-        if (fileName && this.state.fileName !== fileName) {
-            this.setState({
-                fileName
-            });
+        if (fileName && prevState.fileName !== fileName) {
+            return { fileName };
+        } else {
+            return null;
         }
     }
 

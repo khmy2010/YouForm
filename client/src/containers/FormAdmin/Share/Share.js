@@ -57,14 +57,36 @@ class Share extends Component {
     };
 
     onDateChange = (data, type) => {
-        /*
-            Check for:
-            1. Valid Date
-            2. Make sure it is not at the past
-            3. If ED, make sure it is later than SD if any
+        const end = this.state.endingDate || this.props.endingDate;
+        const begin = this.state.startingDate || this.props.startingDate;
+        const value = data.timeStamp;
 
-            probably need to do strict validation
-        */
+        if (data.touched && data.valid) {
+            if (type === 'startingDate') {
+                //if there is changes in end date already, prioritise first.
+                if ((end && utils.isFresh(value, end)) || !end) {
+                    this.setState({
+                        [type]: data.timeStamp,
+                        startingDateChanged: true
+                    });
+                }
+            } else {
+                if ((begin && utils.isFresh(begin, value)) || !begin) {
+                    this.setState({
+                        [type]: data.timeStamp,
+                        endingDateChanged: true
+                    });
+                }
+            }
+        } else {
+            //reset the value
+            this.setState({
+                [type]: null,
+                [type === 'startingDate'
+                    ? 'startingDateChanged'
+                    : 'endingDateChanged']: false
+            });
+        }
     };
 
     save = () => {
@@ -167,6 +189,11 @@ class Share extends Component {
                     <Date
                         valueHook={data =>
                             this.onDateChange(data, 'startingDate')
+                        }
+                        init={
+                            this.props.startingDate
+                                ? this.props.startingDate
+                                : null
                         }
                     />
                     {this.renderError()}

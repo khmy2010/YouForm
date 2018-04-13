@@ -47,3 +47,6 @@ export const getBase = () => {
     if (isDev()) return window.location.host;
     else return window.location.protocol + '//' + window.location.host;
 };
+
+//returns true if later is "later" then earlier date.
+export const isFresh = (earlier, later) => later - earlier > 0;

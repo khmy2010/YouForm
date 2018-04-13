@@ -21,24 +21,43 @@ class Field extends Component {
         };
     }
 
-    componentWillReceiveProps({ validation, options }) {
+    // componentWillReceiveProps({ validation, options }) {
+    //     if (validation) {
+    //         Object.keys(validation).forEach(rule => {
+    //             if (this.state.validation[rule] !== validation[rule]) {
+    //                 this.setState({
+    //                     validation
+    //                 });
+    //             }
+    //         });
+    //     }
+
+    //     //reset selected state once the component got rendered
+    //     //todo: ability to parse back options for local storage
+    //     if (options) {
+    //         this.setState({
+    //             selected: []
+    //         });
+    //     }
+    // }
+
+    static getDerivedStateFromProps({ validation, options }, prevState) {
+        const updateObj = {};
+
         if (validation) {
             Object.keys(validation).forEach(rule => {
-                if (this.state.validation[rule] !== validation[rule]) {
-                    this.setState({
-                        validation
-                    });
+                if (prevState.validation[rule] !== validation[rule]) {
+                    updateObj.validation = validation;
                 }
             });
         }
 
         //reset selected state once the component got rendered
         //todo: ability to parse back options for local storage
-        if (options) {
-            this.setState({
-                selected: []
-            });
-        }
+        if (options) updateObj.selected = [];
+
+        if (Object.keys(updateObj).length === 0) return null;
+        return updateObj;
     }
 
     handleInputChange = value => {

@@ -17,6 +17,7 @@ class DateInput extends Component {
             year: '',
             valid: false,
             touched: false,
+            pristine: true, //true = the field hasn't modified yet
             errorMsg: ''
         };
 
@@ -27,6 +28,21 @@ class DateInput extends Component {
         this.SMALL_M = ['04', '06', '09', '11'];
         this.BIG_M = ['01', '03', '05', '07', '08', '10', '12'];
         this.FEB = '02';
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.init && prevState.pristine) {
+            const date = new Date(nextProps.init);
+            let parsedMonth = date.getMonth() + 1;
+
+            if (parsedMonth < 10) parsedMonth = '0' + parsedMonth;
+
+            return {
+                day: date.getDate().toString(),
+                month: parsedMonth.toString(),
+                year: date.getFullYear().toString()
+            };
+        } else return null;
     }
 
     handleChange = ({ target }) => {
@@ -97,6 +113,7 @@ class DateInput extends Component {
 
         let valid = false;
         let touched = false;
+        let pristine = true;
 
         //only perform validation when all field is filled.
         if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
@@ -113,6 +130,8 @@ class DateInput extends Component {
             }
         }
 
+        if (!isNaN(day) || !isNaN(month) || !isNaN(year)) pristine = false;
+
         //if hook props is passed, call the hook
         if (this.props.hook) {
             //only consider error if all field are touched
@@ -127,6 +146,7 @@ class DateInput extends Component {
             const payload = {
                 valid,
                 touched,
+                pristine,
                 year,
                 month,
                 day
@@ -153,7 +173,7 @@ class DateInput extends Component {
         }
 
         //reset validation if it is not performed, otherwise pass it.
-        this.setState({ valid });
+        this.setState({ valid, pristine });
     };
 
     isLeapYear = year => year % 4 === 0;
