@@ -29,6 +29,7 @@
         "heroku-postbuild": "npm run build",
         "start": "node index.js",
         "test": "jest --forceExit --verbose --resetModules",
+        "fullTest": "npm test --prefix client && npm run test",
         "clearTestCache": "jest --clearCache"
     },
     "keywords": [],
