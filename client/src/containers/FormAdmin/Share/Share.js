@@ -30,7 +30,8 @@ class Share extends Component {
             statusChanged: false,
             startingDateChanged: false,
             endingDateChanged: false,
-            dateError: false
+            startingDateError: false,
+            endingDateError: false
         };
 
         this.linkField = null;
@@ -67,14 +68,16 @@ class Share extends Component {
                 if ((end && utils.isFresh(value, end)) || !end) {
                     this.setState({
                         [type]: data.timeStamp,
-                        startingDateChanged: true
+                        startingDateChanged: true,
+                        startingDateError: false
                     });
                 }
             } else {
                 if ((begin && utils.isFresh(begin, value)) || !begin) {
                     this.setState({
                         [type]: data.timeStamp,
-                        endingDateChanged: true
+                        endingDateChanged: true,
+                        endingDateError: false
                     });
                 }
             }
@@ -84,7 +87,10 @@ class Share extends Component {
                 [type]: null,
                 [type === 'startingDate'
                     ? 'startingDateChanged'
-                    : 'endingDateChanged']: false
+                    : 'endingDateChanged']: false,
+                [type === 'startingDate'
+                    ? 'startingDateError'
+                    : 'endingDateError']: true
             });
         }
     };
@@ -131,8 +137,8 @@ class Share extends Component {
         );
     }
 
-    renderError() {
-        if (!this.state.dateError) return null;
+    renderError(type) {
+        if (this.state[type] === false) return null;
 
         return (
             <div className="Share__Error">
@@ -196,7 +202,7 @@ class Share extends Component {
                                 : null
                         }
                     />
-                    {this.renderError()}
+                    {this.renderError('startingDateError')}
                 </div>
                 <div className="Share__EndDate">
                     <label>Ending Date: </label>
@@ -204,8 +210,11 @@ class Share extends Component {
                         valueHook={data =>
                             this.onDateChange(data, 'endingDate')
                         }
+                        init={
+                            this.props.endingDate ? this.props.endingDate : null
+                        }
                     />
-                    {this.renderError()}
+                    {this.renderError('endingDateError')}
                 </div>
                 <div className="Share__Social">FB</div>
                 <div className="Share__Social">Twitter</div>

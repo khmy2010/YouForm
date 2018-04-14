@@ -71,7 +71,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: rgba(213, 0, 0, 0.4);
+    background: rgba(213, 0, 0, 0.2);
     padding: 10px;
     border-radius: 7px 7px 7px 7px;
 }

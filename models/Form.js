@@ -14,9 +14,16 @@ const formSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
     collabs: [CollabsSchema],
     questions: [QuestionSchema],
-    updated: Date,
+    updated: Number,
     online: [Schema.Types.ObjectId],
     context: [ContextSchema]
+});
+
+//update timestamp prior save
+formSchema.pre('save', function(next) {
+    var form = this;
+    form.updated = Date.now();
+    next();
 });
 
 formSchema.statics.requireAuth = async function(fid, user) {
@@ -52,16 +59,29 @@ formSchema.statics.getPublicForm = async function(fid) {
 
     res = await form
         .findById(fid)
-        .select('startTime endTime status')
+        .select('startingDate endingDate status')
         .exec();
 
-    //TODO: check for starting and ending time too
     if (res === null) {
         return Promise.reject(errors.ERR_FILE_NOT_EXIST);
     }
 
     if (res.status === false) {
         return Promise.reject(errors.ERR_FORM_CLOSED);
+    }
+
+    if (res.startingDate) {
+        const now = Date.now();
+        if (now - res.startingDate < 0) {
+            return Promise.reject(errors.ERR_FORM_NOTSTART);
+        }
+    }
+
+    if (res.endingDate) {
+        const now = Date.now();
+        if (now - res.endingDate > 0) {
+            return Promise.reject(errors.ERR_FORM_CLOSED);
+        }
     }
 
     //pass all checks, this form is ready to return
