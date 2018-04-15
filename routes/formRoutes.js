@@ -75,7 +75,6 @@ module.exports = app => {
             const questions = form.questions;
 
             const question = {
-                sequence: 1,
                 ...body
             };
 
