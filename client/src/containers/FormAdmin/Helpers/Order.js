@@ -2,24 +2,29 @@ import React from 'react';
 
 import EleComp from '../Builder/EleComp';
 
-const order = ({ questions, onChange }) => {
-    if (questions.length === 0) return null;
+//mode and seq will be undefined in CREATING mode
+const order = ({ questions, onChange, mode, seq }) => {
+    //no need to reorder when there is no question yet / 1 question
+    if (questions.length <= 1) return null;
 
-    //"after" convention
-    const options = questions.map((question, index) => {
-        //last question
-        if (index === questions.length - 1) {
-            return {
-                value: 999,
-                display: 'Last Question'
-            };
-        } else {
-            return {
-                value: index,
-                display: `Place after: ${question.title}`
-            };
-        }
+    let filtered;
+
+    if (mode !== 'EDITING') filtered = questions;
+    else if (mode === 'EDITING' && seq) {
+        filtered = questions.filter((question, index) => {
+            return index !== seq - 1;
+        });
+    }
+
+    const options = filtered.map((question, index) => {
+        return {
+            value: index,
+            display: `Place after: ${question.title}`
+        };
     });
+
+    const firstOption = { value: -1, display: 'Place at first' };
+    options.splice(0, 0, firstOption);
 
     const handleSelectionChange = (display, index, value) => {
         onChange(value);
@@ -29,7 +34,7 @@ const order = ({ questions, onChange }) => {
         <EleComp
             type="select"
             name="order"
-            displayName="Placement:"
+            displayName="Reorder placement:"
             options={options}
             onChange={handleSelectionChange}
         />

@@ -32,7 +32,9 @@ class QuestionBuilder extends Component {
                 description: '',
                 validation: {
                     isRequired: false
-                }
+                },
+                sequence: this.props.questions.length + 1,
+                isSequenceChanged: false
             };
 
             if (typeCheck.isText(type)) {
@@ -64,9 +66,6 @@ class QuestionBuilder extends Component {
             if (typeCheck.isDate(type)) {
                 this.state.dateType = '';
             }
-
-            this.state.sequence = this.props.questions.length + 1;
-            this.state.isSequenceChanged = false;
         } else {
             //populate with existing data
             const data = this.props.data;
@@ -225,6 +224,7 @@ class QuestionBuilder extends Component {
         } else {
             //restore question's object ID because we will override everything.
             question._id = this.props.data._id;
+            //todo: add some touch
             this.props.onUpdate(question, this.props.fid, this.props.data._id);
         }
     };
@@ -234,18 +234,19 @@ class QuestionBuilder extends Component {
         //Check 2: creating: if it is default value (last question)
         //Check 3: editing: if it is the same with previous value
 
-        if (this.props.mode === CREATING) {
-            //do not process if default value is selected
-            if (sequence === 999) {
-                this.setState({ isSequenceChanged: false });
-                return;
-            }
-
-            this.setState({
-                sequence: sequence + 2,
-                isSequenceChanged: true
-            });
+        //do not process if value is the same
+        //need to +1 because sequence is not zero indexed.
+        if (this.state.sequence === sequence + 1) {
+            this.setState({ isSequenceChanged: false });
+            return;
         }
+
+        //+1 for not zero indexed
+        //+1 for inserting AFTER the question
+        this.setState({
+            sequence: sequence + 2,
+            isSequenceChanged: true
+        });
     };
 
     render() {
@@ -314,6 +315,8 @@ class QuestionBuilder extends Component {
                             <Order
                                 questions={this.props.questions}
                                 onChange={this.changeOrder}
+                                mode={this.props.mode}
+                                seq={this.state.sequence}
                             />
                         </div>
                         <div className="EleFooter">
