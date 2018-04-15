@@ -9,7 +9,9 @@ import './Splash.css';
     2. Tell user this form has been closed.
 */
 
-const splash = ({ error, history }) => {
+const splash = ({ show, error, history }) => {
+    if (!show) return null;
+
     let errorMessage = null;
     let errorTips = null;
     let buttonCTA = null;

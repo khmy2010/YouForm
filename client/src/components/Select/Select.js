@@ -33,8 +33,10 @@ class Select extends Component {
     }
 
     handleMouseClose(event) {
+        //todo: fix this shit -.-
         //Select is a "hack" namespace, since vanila namespace is convoluted
         //detect any clicks apart from Select field
+        //IT APPEARS TO BE MESSING AROUND WITH OTHER COMPONENTS!!
         if (!event.target.className.includes('Select')) {
             this.setState({
                 isOpen: false
@@ -103,7 +105,7 @@ class Select extends Component {
             value,
             selectedIndex: index
         });
-        this.props.clicked(value);
+        this.props.clicked(value, index, this.props.options[index].value);
         this.toggle();
     };
 

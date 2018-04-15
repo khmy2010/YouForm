@@ -177,3 +177,36 @@
     padding: 1px;
     margin-top: 2px;
 }
+
+.Logic__Space {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.Logic__Space > .Y__Select {
+    min-width: 330px;
+    margin: 0 10px;
+}
+
+.Logic__Space > span,
+.Logic__GoTo > span {
+    font-weight: 700;
+    font-size: 18.5px;
+}
+
+.Logic__GoTo > span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.Logic {
+    padding: 4px;
+    border-bottom: 1px solid black;
+}
+
+.Logic > small {
+    display: block;
+    margin-bottom: 5px;
+}

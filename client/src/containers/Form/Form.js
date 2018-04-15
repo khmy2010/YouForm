@@ -66,7 +66,16 @@ class Form extends Component {
     }
 
     render() {
-        return this.renderContent();
+        return (
+            <div className="Form">
+                <Preloading show={this.props.loading} />
+                <Splash
+                    show={this.props.error}
+                    error={this.props.errorMsg}
+                    history={this.props.history}
+                />
+            </div>
+        );
     }
 }
 

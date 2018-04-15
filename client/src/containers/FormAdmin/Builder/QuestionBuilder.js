@@ -9,6 +9,12 @@ import ElePreview from './ElePreview';
 import { CONSTS, typeCheck } from '../../../utils';
 import { VBUILD, validateBuild } from './Validate';
 
+//Helper functions
+import Order from '../Helpers/Order';
+import Date from '../Helpers/Date';
+import Character from '../Helpers/Character';
+import Choices from '../Helpers/Choices';
+
 import './Build.css';
 
 const CREATING = 'CREATING';
@@ -48,6 +54,7 @@ class QuestionBuilder extends Component {
 
             if (typeCheck.isSingleChoice(type)) {
                 this.state.options = [''];
+                this.state.connect = [];
             }
 
             if (typeCheck.isYesNo(type)) {
@@ -57,13 +64,16 @@ class QuestionBuilder extends Component {
             if (typeCheck.isDate(type)) {
                 this.state.dateType = '';
             }
+
+            this.state.sequence = this.props.questions.length + 1;
         } else {
             //populate with existing data
             const data = this.props.data;
             this.state = {
                 title: data.title,
                 description: data.description || '',
-                validation: JSON.parse(data.validation)
+                validation: JSON.parse(data.validation),
+                sequence: data.sequence
             };
 
             if (typeCheck.isExtendedChoice(this.props.type)) {
@@ -208,106 +218,6 @@ class QuestionBuilder extends Component {
         }
     };
 
-    renderCharacterCount = () => {
-        if (!typeCheck.isText(this.props.type)) {
-            return null;
-        }
-        return (
-            <React.Fragment>
-                <EleComp
-                    type="inlineInput"
-                    name="minCharCount"
-                    displayName="Minimum Character Count:"
-                    onInputChange={this.handleInputChange}
-                    value={this.state.validation.minCharCount}
-                    vbuild={[VBUILD.MIN_CHAR, VBUILD.NUM].join(' ')}
-                    vfield
-                />
-                <EleComp
-                    type="inlineInput"
-                    name="maxCharCount"
-                    displayName="Maximum Character Count:"
-                    onInputChange={this.handleInputChange}
-                    value={this.state.validation.maxCharCount}
-                    vbuild={[VBUILD.MAX_CHAR, VBUILD.NUM].join(' ')}
-                    vfield
-                />
-            </React.Fragment>
-        );
-    };
-
-    renderChoices = () => {
-        if (!typeCheck.isExtendedChoice(this.props.type)) {
-            return null;
-        }
-
-        let minMaxValidation = null;
-
-        if (typeCheck.isMultipleChoice(this.props.type)) {
-            minMaxValidation = (
-                <React.Fragment>
-                    <EleComp
-                        type="inlineInput"
-                        name="minChoice"
-                        displayName="Minimum Choices:"
-                        onInputChange={this.handleInputChange}
-                        value={this.state.validation.minChoice}
-                        vbuild={[VBUILD.MIN, VBUILD.NUM].join(' ')}
-                        vfield
-                    />
-                    <EleComp
-                        type="inlineInput"
-                        name="maxChoice"
-                        displayName="Maximum Choices:"
-                        onInputChange={this.handleInputChange}
-                        value={this.state.validation.maxChoice}
-                        vbuild={[VBUILD.MAX, VBUILD.NUM].join(' ')}
-                        vfield
-                    />
-                </React.Fragment>
-            );
-        }
-        return (
-            <React.Fragment>
-                <EleComp
-                    type="flexInput"
-                    name="options"
-                    displayName="Options"
-                    options={this.state.options}
-                    onAdd={this.addFlexInput}
-                    onRemove={this.removeFlexInput}
-                    onChange={this.changeFlexInput}
-                    latestFlex={latestFlex}
-                    editable={typeCheck.isYesNo(this.props.type) ? false : true}
-                />
-                {minMaxValidation}
-            </React.Fragment>
-        );
-    };
-
-    renderDate = () => {
-        if (!typeCheck.isDate(this.props.type)) {
-            return null;
-        }
-        const selectOptions = Object.keys(CONSTS.DATE_TYPE).map(key => {
-            return {
-                value: key,
-                display: CONSTS.DATE_TYPE[key]
-            };
-        });
-
-        return (
-            <EleComp
-                type="select"
-                name="format"
-                displayName="Date Format"
-                options={selectOptions}
-                onChange={this.handleSelectionChange}
-                init={this.state.dateType === '' ? null : this.state.dateType}
-            />
-        );
-    };
-
     render() {
         return (
             <React.Fragment>
@@ -341,9 +251,28 @@ class QuestionBuilder extends Component {
                                 value={this.state.description}
                                 onInputChange={this.handleInputChange}
                             />
-                            {this.renderChoices()}
-                            {this.renderDate()}
-                            {this.renderCharacterCount()}
+                            <Choices
+                                type={this.props.type}
+                                inputChanged={this.handleInputChange}
+                                minChoice={this.state.validation.minChoice}
+                                maxChoice={this.state.validation.maxChoice}
+                                options={this.state.options}
+                                addFlexInput={this.addFlexInput}
+                                removeFlexInput={this.removeFlexInput}
+                                changeFlexInput={this.changeFlexInput}
+                                latestFlex={latestFlex}
+                            />
+                            <Date
+                                type={this.props.type}
+                                changed={this.handleSelectionChange}
+                                dateType={this.state.dateType}
+                            />
+                            <Character
+                                type={this.props.type}
+                                changed={this.handleInputChange}
+                                min={this.state.validation.minCharCount}
+                                max={this.state.validation.maxCharCount}
+                            />
                             <EleComp
                                 type="checkbox"
                                 id="required"
@@ -351,6 +280,12 @@ class QuestionBuilder extends Component {
                                 displayName="Required"
                                 value={this.state.validation.isRequired}
                                 onCheckboxChange={this.handleCheckboxChange}
+                            />
+                            <Order
+                                questions={this.props.questions}
+                                onChange={seq =>
+                                    this.setState({ sequence: seq })
+                                }
                             />
                         </div>
                         <div className="EleFooter">

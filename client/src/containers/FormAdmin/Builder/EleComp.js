@@ -74,9 +74,20 @@ const eleComp = props => {
                     <Select
                         options={props.options}
                         clicked={props.onChange}
-                        default={true}
+                        default={props.default}
                         init={props.init}
                     />
+                </div>
+            );
+        case 'skippingSelect':
+            return (
+                <div className="EleField">
+                    <label>Skipping Logic:</label>
+                    <small>LOGIC #1</small>
+                    <div className="Flex__SpaceBetween">
+                        <span>IF</span>
+                        <Select options={props.options} />
+                    </div>
                 </div>
             );
         default:

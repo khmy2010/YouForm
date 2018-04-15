@@ -8,7 +8,8 @@ const questionSchema = new Schema({
     description: String,
     options: [],
     dateType: String,
-    validation: String
+    validation: String,
+    connect: String
 });
 
 module.exports = questionSchema;

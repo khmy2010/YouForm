@@ -116,7 +116,6 @@ class Builder extends Component {
     };
 
     toggleContext = () => {
-        console.log('alo');
         this.setState((prevState, props) => {
             return { showContext: !prevState.showContext };
         });
@@ -126,7 +125,6 @@ class Builder extends Component {
         let context = null;
 
         if (this.state.showContext) {
-            console.log('miw miaw miaw');
             context = <Context onBackdropClick={this.toggleContext} />;
         }
 
@@ -146,6 +144,7 @@ class Builder extends Component {
                     type={this.state.buildingType}
                     mode={this.state.buildingStatus}
                     data={this.state.buildingData}
+                    questions={this.props.questions}
                 />
             );
         }
@@ -189,6 +188,7 @@ class Builder extends Component {
                 <QuestionsPreview
                     onEdit={this.editQuestion}
                     onDelete={this.deleteQuestion}
+                    questions={this.props.questions}
                 />
             </div>
         );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import PreviewEditor from './PreviewEditor';
 import Field from '../../../Fields/Field';
@@ -37,10 +36,4 @@ const preview = ({ questions, onEdit, onDelete }) => {
     return <div className="Builder__Preview">{transformedQuestions}</div>;
 };
 
-const mapStateToProps = ({ form }) => {
-    return {
-        questions: form.questions
-    };
-};
-
-export default connect(mapStateToProps)(preview);
+export default preview;

@@ -85,7 +85,7 @@ formSchema.statics.getPublicForm = async function(fid) {
     }
 
     //pass all checks, this form is ready to return
-    return await form.findById(fid).select('name questions');
+    return await form.findById(fid).select('name questions context');
 };
 
 mongoose.model('form', formSchema);
