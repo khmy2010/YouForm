@@ -50,3 +50,22 @@ export const getBase = () => {
 
 //returns true if later is "later" then earlier date.
 export const isFresh = (earlier, later) => later - earlier > 0;
+
+export const redoSequence = (questions, seq) => {
+    //find affected questions that have later sequence
+    const affected = questions.findIndex(({ sequence }) => {
+        return sequence >= seq;
+    });
+
+    //update affected questions's sequence
+    const updated = questions.map((question, index) => {
+        if (index >= affected && index !== questions.length - 1)
+            question.sequence += 1;
+        return question;
+    });
+
+    //after updating, sort the array according to the new sequence
+    const sorted = updated.sort((a, b) => a.sequence - b.sequence);
+
+    return sorted;
+};

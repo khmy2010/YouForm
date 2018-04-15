@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 
-const requireLogin = require('../middlewares/requireLogin');
+const login = require('../middlewares/login');
 const validOID = require('../middlewares/valid');
 
 const Form = mongoose.model('form');
 
 module.exports = app => {
     //user creates a new form
-    app.post('/api/forms/new', requireLogin, async (req, res) => {
+    app.post('/api/forms/new', login, async (req, res) => {
         const body = req.body;
 
         const welcomeContext = { type: 'Welcome' };
@@ -32,26 +32,21 @@ module.exports = app => {
     });
 
     //fetch form admin interface
-    app.get(
-        '/api/forms/admin/:fid',
-        requireLogin,
-        validOID,
-        async (req, res) => {
-            const fid = req.params.fid;
+    app.get('/api/forms/admin/:fid', login, validOID, async (req, res) => {
+        const fid = req.params.fid;
 
-            //find form by id
-            try {
-                const form = await Form.requireAuth(fid, req.user.id);
-                // const form = await Form.findById(fid);
-                res.send(form);
-            } catch (err) {
-                res.status(403).send(err);
-            }
+        //find form by id
+        try {
+            const form = await Form.requireAuth(fid, req.user.id);
+            // const form = await Form.findById(fid);
+            res.send(form);
+        } catch (err) {
+            res.status(403).send(err);
         }
-    );
+    });
 
     //fetch list of forms own by user
-    app.get('/api/forms', requireLogin, async (req, res) => {
+    app.get('/api/forms', login, async (req, res) => {
         try {
             const forms = await Form.find({ owner: req.user._id })
                 .limit(10)
@@ -66,7 +61,7 @@ module.exports = app => {
     });
 
     //add a new question to the form
-    app.post('/api/forms/:fid/questions', requireLogin, async (req, res) => {
+    app.post('/api/forms/:fid/questions', login, async (req, res) => {
         const body = req.body;
         const fid = req.params.fid;
 
@@ -88,7 +83,7 @@ module.exports = app => {
     //delete question from the form
     app.delete(
         '/api/forms/:fid/questions/:qid',
-        requireLogin,
+        login,
         validOID,
         async (req, res) => {
             const fid = req.params.fid;
@@ -111,7 +106,7 @@ module.exports = app => {
     //modify question from the form
     app.put(
         '/api/forms/:fid/questions/:qid',
-        requireLogin,
+        login,
         validOID,
         async (req, res) => {
             const fid = req.params.fid;
@@ -133,7 +128,7 @@ module.exports = app => {
     );
 
     //changing form properties
-    app.patch('/api/forms/:fid', requireLogin, async (req, res) => {
+    app.patch('/api/forms/:fid', login, async (req, res) => {
         const body = req.body;
         const fid = req.params.fid;
 
@@ -155,42 +150,69 @@ module.exports = app => {
     });
 
     //update form context
-    app.post(
-        '/api/forms/:fid/context',
-        requireLogin,
-        validOID,
-        async (req, res) => {
-            const body = req.body;
-            const type = body.type;
-            const fid = req.params.fid;
-
-            await Form.findOneAndUpdate(
-                { _id: fid, 'context.type': type },
-                {
-                    $set: {
-                        'context.$.title': body.title,
-                        'context.$.description': body.description,
-                        'context.$.promoteSharing': body.promoteSharing,
-                        'context.$.buttonText': body.buttonText
-                    }
-                }
-            );
-
-            res.send();
-        }
-    );
-
-    app.post('/api/test/:fid', async (req, res) => {
-        console.log('lo');
+    app.post('/api/forms/:fid/context', login, validOID, async (req, res) => {
         const body = req.body;
+        const type = body.type;
         const fid = req.params.fid;
 
-        const form = await Form.findById(fid);
-        const tests = form.tests;
-        console.log(body);
-        form.tests = body;
+        await Form.findOneAndUpdate(
+            { _id: fid, 'context.type': type },
+            {
+                $set: {
+                    'context.$.title': body.title,
+                    'context.$.description': body.description,
+                    'context.$.promoteSharing': body.promoteSharing,
+                    'context.$.buttonText': body.buttonText
+                }
+            }
+        );
 
-        await form.save();
-        res.send(form);
+        res.send();
+    });
+
+    app.get('/api/forms/:fid/questions', login, validOID, async (req, res) => {
+        const form = await Form.findById(req.params.fid);
+        res.send(form.questions);
+    });
+
+    //modify array of questions
+    app.put('/api/forms/:fid/questions', login, validOID, async (req, res) => {
+        //to avoid it wipe entire questions array and causes content to be corrupted.
+        if (req.body.length > 0) {
+            await Form.findOneAndUpdate(
+                { _id: req.params.fid },
+                { $set: { questions: req.body } }
+            );
+            res.send();
+        } else res.status(400).send();
+    });
+
+    app.post('/api/fuck/test/:fid', async (req, res) => {
+        await Form.findOneAndUpdate(
+            { _id: req.params.fid },
+            { $set: { tests: req.body } }
+        );
+
+        res.send();
+    });
+
+    app.post('/api/test/:fid', async (req, res) => {
+        const body = req.body;
+        const fid = req.params.fid;
+        console.log(fid);
+
+        if (ObjectID.isValid(fid)) {
+            const form = await Form.findById(fid);
+            const tests = form.tests;
+
+            const question = {
+                ...body
+            };
+
+            tests.push(question);
+            const subdoc = tests[tests.length - 1];
+            await form.save();
+            res.send(subdoc);
+        }
     });
 };

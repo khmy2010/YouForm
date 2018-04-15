@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './types';
+import { redoSequence } from '../utils';
 
 export const fetchFormAdmin = (
     fid,
@@ -72,7 +73,15 @@ export const addQuestionUpdateSeq = (
     sequence
 ) => async dispatch => {
     await dispatch(addQuestion(question, fid));
-    console.log('finish adding liao boi?');
     dispatch({ type: actionTypes.UPDATE_SEQUENCE, sequence });
-    console.log('#kthxbye');
+    await dispatch(editDBSequence(fid, sequence));
+};
+
+export const editDBSequence = (fid, sequence) => async dispatch => {
+    const res = await axios.get(`/api/forms/${fid}/questions`);
+    const processed = redoSequence(res.data, sequence);
+
+    try {
+        await axios.put(`/api/forms/${fid}/questions`, processed);
+    } catch (error) {}
 };
