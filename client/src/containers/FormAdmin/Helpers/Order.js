@@ -11,6 +11,7 @@ const order = ({ questions, onChange, mode, seq }) => {
 
     if (mode !== 'EDITING') filtered = questions;
     else if (mode === 'EDITING' && seq) {
+        //remove the question itself from selection.
         filtered = questions.filter((question, index) => {
             return index !== seq - 1;
         });
