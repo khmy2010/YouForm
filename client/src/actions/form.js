@@ -22,6 +22,7 @@ export const fetchFormAdmin = (
 };
 
 export const addQuestion = (question, fid) => async dispatch => {
+    console.log('I am adding question, wait lah aiyo');
     try {
         const res = await axios.post(`/api/forms/${fid}/questions`, question);
         dispatch({ type: actionTypes.ADD_QUESTION, question, res });
@@ -63,4 +64,15 @@ export const updateContext = (fid, context) => async dispatch => {
         await axios.post(`/api/forms/${fid}/context`, context);
         dispatch({ type: actionTypes.UPDATE_CONTEXT, context });
     } catch (error) {}
+};
+
+export const addQuestionUpdateSeq = (
+    question,
+    fid,
+    sequence
+) => async dispatch => {
+    await dispatch(addQuestion(question, fid));
+    console.log('finish adding liao boi?');
+    dispatch({ type: actionTypes.UPDATE_SEQUENCE, sequence });
+    console.log('#kthxbye');
 };

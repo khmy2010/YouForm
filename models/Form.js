@@ -14,6 +14,7 @@ const formSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
     collabs: [CollabsSchema],
     questions: [QuestionSchema],
+    tests: [QuestionSchema],
     updated: Number,
     online: [Schema.Types.ObjectId],
     context: [ContextSchema]

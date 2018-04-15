@@ -66,6 +66,7 @@ class QuestionBuilder extends Component {
             }
 
             this.state.sequence = this.props.questions.length + 1;
+            this.state.isSequenceChanged = false;
         } else {
             //populate with existing data
             const data = this.props.data;
@@ -204,17 +205,46 @@ class QuestionBuilder extends Component {
             }
         }
 
+        //remove unnecessarily property before saving
+        delete question.isSequenceChanged;
+
         //stringify the validation after it has been sanitised.
         question.validation = JSON.stringify(this.state.validation);
 
         this.props.onBackdropClick();
 
         if (this.props.mode === CREATING) {
-            this.props.onSave(question, this.props.fid);
+            if (this.state.isSequenceChanged) {
+                console.log('My sequence is: ', this.state.sequence);
+                this.props.onAddAndUpdateSeq(
+                    question,
+                    this.props.fid,
+                    this.state.sequence
+                );
+            } else this.props.onSave(question, this.props.fid);
         } else {
             //restore question's object ID because we will override everything.
             question._id = this.props.data._id;
             this.props.onUpdate(question, this.props.fid, this.props.data._id);
+        }
+    };
+
+    changeOrder = sequence => {
+        //Check 1: if this is creating / edit mode
+        //Check 2: creating: if it is default value (last question)
+        //Check 3: editing: if it is the same with previous value
+
+        if (this.props.mode === CREATING) {
+            //do not process if default value is selected
+            if (sequence === 999) {
+                this.setState({ isSequenceChanged: false });
+                return;
+            }
+
+            this.setState({
+                sequence: sequence + 2,
+                isSequenceChanged: true
+            });
         }
     };
 
@@ -283,9 +313,7 @@ class QuestionBuilder extends Component {
                             />
                             <Order
                                 questions={this.props.questions}
-                                onChange={seq =>
-                                    this.setState({ sequence: seq })
-                                }
+                                onChange={this.changeOrder}
                             />
                         </div>
                         <div className="EleFooter">

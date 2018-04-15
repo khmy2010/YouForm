@@ -13,12 +13,17 @@ const initialState = {
 const formReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.INIT_FORM:
+            const fetchedQuestions = action.res.data.questions;
+            const sortedQuestions = fetchedQuestions.sort(
+                (a, b) => a.sequence - b.sequence
+            );
+
             return {
                 ...state,
                 loading: false,
                 fid: action.res.data._id,
                 name: action.res.data.name,
-                questions: action.res.data.questions,
+                questions: sortedQuestions,
                 context: action.res.data.context
             };
         case actionTypes.ADD_QUESTION:
@@ -66,6 +71,29 @@ const formReducer = (state = initialState, action) => {
             return {
                 ...state,
                 context: updatedContext
+            };
+        case actionTypes.UPDATE_SEQUENCE:
+            const sequence = action.sequence;
+
+            //find affected questions that have later sequence
+            const affectedIndex = state.questions.findIndex(question => {
+                return question.sequence >= sequence;
+            });
+
+            const updated = state.questions.map((question, index) => {
+                if (
+                    index >= affectedIndex &&
+                    index !== state.questions.length - 1
+                )
+                    question.sequence += 1;
+                return question;
+            });
+
+            const sorted = updated.sort((a, b) => a.sequence - b.sequence);
+
+            return {
+                ...state,
+                questions: sorted
             };
         default:
             return state;

@@ -179,4 +179,18 @@ module.exports = app => {
             res.send();
         }
     );
+
+    app.post('/api/test/:fid', async (req, res) => {
+        console.log('lo');
+        const body = req.body;
+        const fid = req.params.fid;
+
+        const form = await Form.findById(fid);
+        const tests = form.tests;
+        console.log(body);
+        form.tests = body;
+
+        await form.save();
+        res.send(form);
+    });
 };

@@ -145,6 +145,7 @@ class Builder extends Component {
                     mode={this.state.buildingStatus}
                     data={this.state.buildingData}
                     questions={this.props.questions}
+                    onAddAndUpdateSeq={this.props.addQuestionUpdateSeq}
                 />
             );
         }
