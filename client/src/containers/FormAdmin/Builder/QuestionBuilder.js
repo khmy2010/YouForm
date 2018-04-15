@@ -214,7 +214,6 @@ class QuestionBuilder extends Component {
 
         if (this.props.mode === CREATING) {
             if (this.state.isSequenceChanged) {
-                console.log('My sequence is: ', this.state.sequence);
                 this.props.onAddAndUpdateSeq(
                     question,
                     this.props.fid,
@@ -224,8 +223,19 @@ class QuestionBuilder extends Component {
         } else {
             //restore question's object ID because we will override everything.
             question._id = this.props.data._id;
-            //todo: add some touch
-            this.props.onUpdate(question, this.props.fid, this.props.data._id);
+            if (this.state.isSequenceChanged) {
+                this.props.onEditAndDeleteSeq(
+                    question,
+                    this.props.fid,
+                    this.props.data._id,
+                    this.state.sequence
+                );
+            } else
+                this.props.onUpdate(
+                    question,
+                    this.props.fid,
+                    this.props.data._id
+                );
         }
     };
 

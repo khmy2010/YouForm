@@ -77,6 +77,17 @@ export const addQuestionUpdateSeq = (
     await dispatch(editDBSequence(fid, sequence));
 };
 
+export const editQuestionUpdateSeq = (
+    question,
+    fid,
+    qid,
+    sequence
+) => async dispatch => {
+    await dispatch(editQuestion(question, fid, qid));
+    dispatch({ type: actionTypes.UPDATE_SEQUENCE, sequence });
+    await dispatch(editDBSequence(fid, sequence));
+};
+
 export const editDBSequence = (fid, sequence) => async dispatch => {
     const res = await axios.get(`/api/forms/${fid}/questions`);
     const processed = redoSequence(res.data, sequence);
