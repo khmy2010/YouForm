@@ -30,6 +30,8 @@ class Select extends Component {
         }
 
         this.handleMouseClose = this.handleMouseClose.bind(this);
+        this.query = '#root :not(.Y__Select) :not(button) div';
+        this.all = document.querySelectorAll(this.query);
     }
 
     handleMouseClose(event) {
@@ -37,7 +39,7 @@ class Select extends Component {
         //Select is a "hack" namespace, since vanila namespace is convoluted
         //detect any clicks apart from Select field
         //IT APPEARS TO BE MESSING AROUND WITH OTHER COMPONENTS!!
-        if (!event.target.className.includes('Select')) {
+        if (this.state.isOpen) {
             this.setState({
                 isOpen: false
             });
@@ -46,11 +48,24 @@ class Select extends Component {
 
     componentDidMount() {
         //to make it reusable, we need to listen to document clicks and filter
-        document.addEventListener('click', this.handleMouseClose);
+        // document
+        //     .querySelectorAll(
+        //         ':not(.Y__Select) :not(style) :not(head) :not(meta) :not(noscript) :not(svg) :not(path)'
+        //     )
+        //     .addEventListener('click', this.handleMouseClose);
+        // this.customEvent.listen('click.Select', this.handleMouseClose);
+
+        this.all.forEach(element => {
+            element.addEventListener('click', this.handleMouseClose);
+        });
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.handleMouseClose);
+        console.log('I am suppose to unmount the listeners.');
+
+        this.all.forEach(element => {
+            element.removeEventListener('click', this.handleMouseClose);
+        });
     }
 
     renderOldSelect() {

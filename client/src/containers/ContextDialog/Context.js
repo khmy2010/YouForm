@@ -14,7 +14,7 @@ import ContextButton from '../../components/ContextButton/CButton';
 import Welcome from '../../components/Context/Welcome/Welcome';
 import Thanks from '../../components/Context/Thanks/Thanks';
 
-class Context extends Component {
+export class Context extends Component {
     constructor(props) {
         super(props);
         const welcomeButtonText = this.props.welcome.buttonText;
