@@ -30,24 +30,22 @@ class Select extends Component {
         }
 
         this.handleMouseClose = this.handleMouseClose.bind(this);
-        this.query = '#root :not(.Y__Select) :not(button) div';
-        this.all = document.querySelectorAll(this.query);
     }
 
-    handleMouseClose() {
-        if (this.state.isOpen) this.setState({ isOpen: false });
+    handleMouseClose(event) {
+        if (
+            event.target.nodeName !== 'svg' &&
+            !event.target.className.includes('Select')
+        )
+            this.setState({ isOpen: false });
     }
 
     componentDidMount() {
-        this.all.forEach(element => {
-            element.addEventListener('click', this.handleMouseClose);
-        });
+        document.addEventListener('click', this.handleMouseClose);
     }
 
     componentWillUnmount() {
-        this.all.forEach(element => {
-            element.removeEventListener('click', this.handleMouseClose);
-        });
+        document.removeEventListener('click', this.handleMouseClose);
     }
 
     renderOldSelect() {
@@ -130,6 +128,7 @@ class Select extends Component {
     }
 
     toggle = () => {
+        console.log('toggle?');
         this.setState((prevState, props) => ({
             isOpen: !prevState.isOpen
         }));
