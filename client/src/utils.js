@@ -52,12 +52,6 @@ export const getBase = () => {
 export const isFresh = (earlier, later) => later - earlier > 0;
 
 export const redoSequence = (questions, seq, ori) => {
-    const mutated = questions.findIndex(({ sequence }) => {
-        return seq - ori > 0 ? sequence <= seq : sequence >= seq;
-    });
-
-    console.log('mutated: ', mutated);
-
     const updated = questions.map((question, index) => {
         if (seq - ori > 0) {
             if (index >= seq - 1) return question;

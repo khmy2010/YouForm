@@ -323,8 +323,6 @@ class QuestionBuilder extends Component {
                             <Order
                                 questions={this.props.questions}
                                 onChange={this.changeOrder}
-                                mode={this.props.mode}
-                                seq={this.state.sequence}
                                 ori={this.state.originalSequence}
                             />
                         </div>
