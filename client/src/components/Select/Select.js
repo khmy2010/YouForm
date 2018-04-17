@@ -35,16 +35,19 @@ class Select extends Component {
     handleMouseClose(event) {
         if (
             event.target.nodeName !== 'svg' &&
-            !event.target.className.includes('Select')
+            !event.target.className.includes('Select') &&
+            this.state.isOpen
         )
             this.setState({ isOpen: false });
     }
 
     componentDidMount() {
+        // window.colorLog('SELECT: Mount already');
         document.addEventListener('click', this.handleMouseClose);
     }
 
     componentWillUnmount() {
+        // window.colorLog('SELECT: Unmount already', 'red');
         document.removeEventListener('click', this.handleMouseClose);
     }
 
@@ -128,7 +131,6 @@ class Select extends Component {
     }
 
     toggle = () => {
-        console.log('toggle?');
         this.setState((prevState, props) => ({
             isOpen: !prevState.isOpen
         }));

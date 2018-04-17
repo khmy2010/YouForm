@@ -34,6 +34,7 @@ class QuestionBuilder extends Component {
                     isRequired: false
                 },
                 sequence: this.props.questions.length + 1,
+                originalSequence: this.props.questions.length + 1,
                 isSequenceChanged: false
             };
 
@@ -73,7 +74,7 @@ class QuestionBuilder extends Component {
                 title: data.title,
                 description: data.description || '',
                 validation: JSON.parse(data.validation),
-                sequence: data.sequence
+                originalSequence: data.sequence
             };
 
             if (typeCheck.isExtendedChoice(this.props.type)) {
@@ -206,6 +207,7 @@ class QuestionBuilder extends Component {
 
         //remove unnecessarily property before saving
         delete question.isSequenceChanged;
+        delete question.originalSequence;
 
         //stringify the validation after it has been sanitised.
         question.validation = JSON.stringify(this.state.validation);
@@ -228,7 +230,8 @@ class QuestionBuilder extends Component {
                     question,
                     this.props.fid,
                     this.props.data._id,
-                    this.state.sequence
+                    this.state.sequence,
+                    this.state.originalSequence
                 );
             } else
                 this.props.onUpdate(
@@ -239,22 +242,17 @@ class QuestionBuilder extends Component {
         }
     };
 
-    changeOrder = sequence => {
-        //Check 1: if this is creating / edit mode
-        //Check 2: creating: if it is default value (last question)
-        //Check 3: editing: if it is the same with previous value
-
+    changeOrder = index => {
         //do not process if value is the same
-        //need to +1 because sequence is not zero indexed.
-        if (this.state.sequence === sequence + 1) {
+        if (this.state.originalSequence === index + 2) {
             this.setState({ isSequenceChanged: false });
             return;
         }
 
         //+1 for not zero indexed
-        //+1 for inserting AFTER the question
+        const situation = this.state.originalSequence - index;
         this.setState({
-            sequence: sequence + 2,
+            sequence: situation > 0 ? index + 1 : index + 2,
             isSequenceChanged: true
         });
     };
@@ -327,6 +325,7 @@ class QuestionBuilder extends Component {
                                 onChange={this.changeOrder}
                                 mode={this.props.mode}
                                 seq={this.state.sequence}
+                                ori={this.state.originalSequence}
                             />
                         </div>
                         <div className="EleFooter">

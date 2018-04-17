@@ -3,29 +3,21 @@ import React from 'react';
 import EleComp from '../Builder/EleComp';
 
 //mode and seq will be undefined in CREATING mode
-const order = ({ questions, onChange, mode, seq }) => {
+const order = ({ questions, onChange, mode, seq, ori }) => {
     //no need to reorder when there is no question yet / 1 question
     if (questions.length <= 1) return null;
 
-    let filtered;
+    const copiedQuestions = [...questions];
 
-    if (mode !== 'EDITING') filtered = questions;
-    else if (mode === 'EDITING' && seq) {
-        //remove the question itself from selection.
-        filtered = questions.filter((question, index) => {
-            return index !== seq - 1;
-        });
-    }
-
-    const options = filtered.map((question, index) => {
+    const options = copiedQuestions.map((question, index) => {
         return {
             value: index,
             display: `Place after: ${question.title}`
         };
     });
 
-    const firstOption = { value: -1, display: 'Place at first' };
-    options.splice(0, 0, firstOption);
+    options.splice(mode === 'EDITING' ? ori - 1 : seq - 1, 1);
+    options.splice(0, 0, { value: -1, display: 'Place at first' });
 
     const handleSelectionChange = (display, index, value) => {
         onChange(value);

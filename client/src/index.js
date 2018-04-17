@@ -25,6 +25,12 @@ if (process.env.NODE_ENV === 'production') {
         const res = await axios.get(`/api/forms/${fid}/questions`);
         return res;
     };
+
+    const log = (msg, warna) => {
+        const color = warna || 'green';
+        console.log('%c ' + msg, 'color: ' + color);
+    };
+    window.colorLog = log;
 }
 
 const store = createStore(

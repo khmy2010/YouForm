@@ -72,7 +72,11 @@ const formReducer = (state = initialState, action) => {
         case actionTypes.UPDATE_SEQUENCE:
             return {
                 ...state,
-                questions: redoSequence(state.questions, action.sequence)
+                questions: redoSequence(
+                    state.questions,
+                    action.sequence,
+                    action.ori
+                )
             };
         default:
             return state;
