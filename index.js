@@ -32,6 +32,9 @@ app.use(passport.session());
 //routes handler
 require('./routes/authRoutes')(app);
 require('./routes/formRoutes')(app);
+if (process.env.NODE_ENV === undefined) {
+    require('./routes/testRoutes')(app);
+}
 
 //only in production
 if (['production', 'ci'].includes(process.env.NODE_ENV)) {

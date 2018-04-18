@@ -1,0 +1,52 @@
+.Dev {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 960px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+section {
+    margin-left: 50px;
+}
+
+.Dev > h1 {
+    font-size: 40px;
+    text-align: center;
+}
+
+.fid > input {
+    height: 40px;
+    width: 80%;
+    font-size: 25px;
+    outline: none;
+    border: 1px solid#666666;
+    padding: 10px 0;
+}
+
+.Dev__Outputs > textarea {
+    width: 80%;
+    font-size: 18px;
+    color: #3f46ad;
+    padding: 15px 5px;
+    border: 1px solid #0a8ea0;
+    outline: none;
+    resize: none;
+}
+
+.Dev__Buttons > button {
+    background-color: #3f46ad;
+    color: white;
+    outline: none;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.Dev__Buttons > button:not(:first-child) {
+    margin-left: 20px;
+}
+
+.Dev__Buttons > button:hover {
+    background-color: #303584;
+}

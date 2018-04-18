@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
 import Test from './components/Test';
 import Form from './containers/Form/Form';
+import DevTools from './components/DevTools/DevTools';
 
 const Discovery = () => <h1>Discovery Page</h1>;
 
@@ -26,6 +27,7 @@ const siteRoutes = props => {
             <Route path="/app/login" exact component={Login} />
             <Route path="/app/test" exact component={Test} />
             <Route path="/app/admin/:fid" component={FormAdmin} />
+            <Route path="/app/controls" component={DevTools} />
             <Route component={NotFound} />
         </Switch>
     );
