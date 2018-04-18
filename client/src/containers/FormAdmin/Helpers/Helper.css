@@ -1,0 +1,47 @@
+.Logic {
+    border-radius: 3px;
+    background-color: #fff;
+    padding: 5px 2px;
+}
+
+.Logic__Label {
+    color: #333333;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Logic__Label > span {
+    cursor: pointer;
+}
+
+.Logic__Panel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.Logic > div:nth-child(3) {
+    margin-top: 20px;
+}
+
+.Logic__Panel > span {
+    font-weight: 700;
+    font-size: 19px;
+    padding-left: 2px;
+    margin-right: 20px;
+    color: #191919;
+}
+
+.Logic .Y__Select {
+    width: 310px;
+}
+
+.Logic .Y__Select > .Select__Selected {
+    border: none;
+}
+
+#Logic__Remove:hover {
+    stroke: red;
+    fill: red;
+}

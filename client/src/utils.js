@@ -54,10 +54,10 @@ export const isFresh = (earlier, later) => later - earlier > 0;
 export const redoSequence = (questions, seq, ori) => {
     const updated = questions.map((question, index) => {
         if (seq - ori > 0) {
-            if (index >= seq - 1) return question;
+            if (index === ori - 1 || index > seq - 1) return question;
             question.sequence -= 1;
         } else {
-            if (index <= seq - 1) return question;
+            if (index === ori - 1 || index < seq - 1) return question;
             question.sequence += 1;
         }
         return question;

@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><style>.a{fill-opacity:0.6;fill:none;stroke-width:4;stroke:#3d3d3d;}</style><style>  svg{stroke:#000;stroke-linecap:round;stroke-linejoin:round;fill:#fff;fill-rule:evenodd;font-family:Roboto;font-size:14px;text-anchor:middle} svg text{stroke:none}</style><path d="M3.8 3.5L17.5 17.8" class="a"/><path d="M3.5 17.8L17.5 3.5" class="a"/></svg>
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:v="http://vecta.io" width="20" height="20" viewBox="0 0 20 20" >
+	<style>
+		<![CDATA[svg{stroke:#000;stroke-linecap:round;stroke-linejoin:round;fill:#fff;fill-rule:evenodd;font-family:Roboto;font-size:14px;text-anchor:middle}svg text{stroke:none}]]>
+	</style>
+	<g transform="translate(3.75 3.5)">
+		<path d="M 1e-13 1e-13 L 13.75 14.25" fill="none" fill-opacity="0.61" stroke="#3d3d3d" stroke-width="4"/>
+	</g>
+	<g transform="translate(3.5 3.5)">
+		<path d="M 0 14.25 L 14 0" fill="none" fill-opacity="0.61" stroke="#3d3d3d" stroke-width="4"/>
+	</g>
+</svg>

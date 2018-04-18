@@ -14,6 +14,7 @@ import Order from '../Helpers/Order';
 import Date from '../Helpers/Date';
 import Character from '../Helpers/Character';
 import Choices from '../Helpers/Choices';
+import Logic from '../Helpers/Logic';
 
 import './Build.css';
 
@@ -35,7 +36,8 @@ class QuestionBuilder extends Component {
                 },
                 sequence: this.props.questions.length + 1,
                 originalSequence: this.props.questions.length + 1,
-                isSequenceChanged: false
+                isSequenceChanged: false,
+                connect: []
             };
 
             if (typeCheck.isText(type)) {
@@ -153,13 +155,9 @@ class QuestionBuilder extends Component {
         latestFlex = false;
         const newOptions = this.state.options.slice();
 
-        if (index > -1) {
-            newOptions.splice(index, 1);
-        }
+        if (index > -1) newOptions.splice(index, 1);
 
-        this.setState({
-            options: newOptions
-        });
+        this.setState({ options: newOptions });
     };
 
     changeFlexInput = (event, index) => {
@@ -250,9 +248,11 @@ class QuestionBuilder extends Component {
         }
 
         //+1 for not zero indexed
-        const situation = this.state.originalSequence - index;
+        //(1-1+1)
+        const situation = this.state.originalSequence - (index + 1);
+
         this.setState({
-            sequence: situation > 0 ? index + 1 : index + 2,
+            sequence: situation > 0 ? index + 2 : index + 1,
             isSequenceChanged: true
         });
     };
@@ -324,6 +324,13 @@ class QuestionBuilder extends Component {
                                 questions={this.props.questions}
                                 onChange={this.changeOrder}
                                 ori={this.state.originalSequence}
+                            />
+                            <Logic
+                                type={this.props.type}
+                                questions={this.props.questions}
+                                options={this.state.options}
+                                connect={this.state.connect}
+                                sequence={this.state.sequence}
                             />
                         </div>
                         <div className="EleFooter">

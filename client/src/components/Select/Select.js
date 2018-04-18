@@ -35,6 +35,7 @@ class Select extends Component {
     handleMouseClose(event) {
         if (
             event.target.nodeName !== 'svg' &&
+            event.target.nodeName !== 'path' &&
             !event.target.className.includes('Select') &&
             this.state.isOpen
         )
