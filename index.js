@@ -32,6 +32,8 @@ app.use(passport.session());
 //routes handler
 require('./routes/authRoutes')(app);
 require('./routes/formRoutes')(app);
+
+//load testing API only in development environment
 if (process.env.NODE_ENV === undefined) {
     require('./routes/testRoutes')(app);
 }
