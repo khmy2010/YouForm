@@ -11,7 +11,9 @@ class Select extends Component {
         this.state = {
             isOpen: false,
             value: '',
-            selectedIndex: this.props.default ? 0 : null
+            selectedIndex: this.props.default ? 0 : null,
+            options: [],
+            dynamic: this.props.dynamic ? true : false
         };
         //if there is init value, prioritise that first
         if (this.props.default && this.props.init) {
@@ -30,6 +32,54 @@ class Select extends Component {
         }
 
         this.handleMouseClose = this.handleMouseClose.bind(this);
+    }
+
+    /*
+        Note:
+        1. For now, this.state.options will be used to keep track of dynamic
+        select field.
+
+        2. For other use cases, this.props.options will be preferred.
+    */
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const updatedState = { options: nextProps.options };
+
+        //1. IF it is not dynamic, return immediately
+        if (!prevState.dynamic) return updatedState;
+
+        //2. IF the selected index is NULL, then return immediately
+        if (prevState.selectedIndex === null) return updatedState;
+
+        //3. Check for edited value
+        const selectedIndex = prevState.selectedIndex;
+        const latestOptions = nextProps.options;
+        const oldOptions = prevState.options;
+
+        if (latestOptions.length === oldOptions.length) {
+            const oldDisplay = oldOptions[selectedIndex].display;
+            const latestDisplay = latestOptions[selectedIndex].display;
+
+            if (latestDisplay !== oldDisplay) {
+                updatedState.value = latestDisplay;
+            }
+        }
+
+        //4. Check for deleted value
+        if (latestOptions.length < oldOptions.length) {
+            const index = latestOptions.findIndex(({ display }) => {
+                return display === prevState.value;
+            });
+
+            //cannot find the element => it is deleted
+            if (index < 0) {
+                updatedState.value = '';
+                updatedState.selectedIndex = null;
+            }
+            //find the element, it is not deleted, updated selectedIndex.
+            else updatedState.selectedIndex = index;
+        }
+
+        return updatedState;
     }
 
     handleMouseClose(event) {
@@ -69,7 +119,7 @@ class Select extends Component {
             let optionStyle = ['Select__Item'];
             const selectedIndex = this.state.selectedIndex;
 
-            if (selectedIndex && selectedIndex === index) {
+            if (selectedIndex !== null && selectedIndex === index) {
                 optionStyle.push('Select__Item__Selected');
             }
 

@@ -54,7 +54,7 @@ module.exports = app => {
                     '{"isRequired":false,"minCharCount":"","maxCharCount":""}',
                 sequence: 3,
                 connect: '',
-                type: 'LONG_TEXT'
+                type: 'SINGLE_CHOICE'
             },
             {
                 options: ['Satu Lipa', 'Dua Lipa', 'Three Lipa'],
@@ -65,13 +65,14 @@ module.exports = app => {
                     '{"isRequired":false,"minCharCount":"","maxCharCount":""}',
                 sequence: 4,
                 connect: '',
-                type: 'LONG_TEXT'
+                type: 'SINGLE_CHOICE'
             }
         ];
 
         const form = await Form.findOneAndUpdate(
             { _id: req.params.fid },
-            { $set: { questions: dummy } }
+            { $set: { questions: dummy } },
+            { new: true }
         );
 
         res.send(form);
@@ -92,7 +93,3 @@ module.exports = app => {
         res.send(form.questions);
     });
 };
-
-/*
-    function 1: add questions
-*/

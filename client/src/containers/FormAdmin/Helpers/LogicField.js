@@ -28,7 +28,6 @@ const transformQuestions = questions =>
     });
 
 const logicField = props => {
-    console.log(transformQuestions(props.questions));
     return (
         <div className="Logic">
             <div className="Logic__Label">
@@ -48,11 +47,18 @@ const logicField = props => {
             </div>
             <div className="Logic__Panel">
                 <span>IF</span>
-                <Select options={transformOptions(props.options)} />
+                <Select
+                    options={transformOptions(props.options)}
+                    clicked={props.onOptionChange}
+                    dynamic
+                />
             </div>
             <div className="Logic__Panel">
                 <span>THEN</span>
-                <Select options={transformQuestions(props.questions)} />
+                <Select
+                    options={transformQuestions(props.questions)}
+                    clicked={props.onQuestionChange}
+                />
             </div>
         </div>
     );

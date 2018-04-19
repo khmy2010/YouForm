@@ -19,6 +19,7 @@ class Logic extends Component {
         if (!this.state.creating) return null;
         const options = this.props.options;
         const connect = this.props.connect;
+        const questions = this.props.questions;
 
         //check for available options
         let filteredOptions;
@@ -29,12 +30,28 @@ class Logic extends Component {
             });
         }
 
-        //check for available questions
-        console.log(this.props.sequence);
+        //check for available questions (which is later than this)
+        const filteredQuestions = questions.filter(({ sequence }) => {
+            return sequence - this.props.sequence > 0;
+        });
+
         return (
-            <Field options={filteredOptions} questions={this.props.questions} />
+            <Field
+                options={filteredOptions}
+                questions={filteredQuestions}
+                onOptionChange={this.handleOptions}
+                onQuestionChange={this.handleQuestions}
+            />
         );
     }
+
+    handleOptions = (display, index, value) => {
+        this.setState({
+            if: index
+        });
+    };
+
+    handleQuestions = () => {};
 
     renderFields() {
         const connect = this.props.connect;

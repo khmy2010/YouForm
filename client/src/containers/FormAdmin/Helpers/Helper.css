@@ -2,6 +2,7 @@
     border-radius: 3px;
     background-color: #fff;
     padding: 5px 2px;
+    max-width: 400px;
 }
 
 .Logic__Label {
@@ -34,7 +35,7 @@
 }
 
 .Logic .Y__Select {
-    width: 310px;
+    width: 270px;
 }
 
 .Logic .Y__Select > .Select__Selected {
