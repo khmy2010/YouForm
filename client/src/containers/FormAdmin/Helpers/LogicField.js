@@ -20,16 +20,16 @@ const transformOptions = arr =>
     });
 
 const transformQuestions = questions =>
-    questions.map(({ title, sequence }, index) => {
+    questions.map(({ title, sequence, _id }) => {
         return {
-            value: index,
+            value: _id,
             display: `${sequence}: ${title}`
         };
     });
 
 const logicField = props => {
     return (
-        <div className="Logic">
+        <div className="Logic" onClick={() => console.log('alo')}>
             <div className="Logic__Label">
                 <label>Logic {props.seq}</label>
                 <span>
@@ -59,6 +59,11 @@ const logicField = props => {
                     options={transformQuestions(props.questions)}
                     clicked={props.onQuestionChange}
                 />
+            </div>
+            <div className="Logic__Buttons">
+                <button disabled={!props.save}>
+                    {props.edit ? 'Update' : 'Save'}
+                </button>
             </div>
         </div>
     );

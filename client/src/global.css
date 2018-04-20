@@ -44,6 +44,8 @@ html * {
 button {
     outline: none;
     text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 html,

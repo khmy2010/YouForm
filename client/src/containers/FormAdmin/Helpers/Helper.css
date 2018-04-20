@@ -46,3 +46,32 @@
     stroke: red;
     fill: red;
 }
+
+.Logic__Buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5px;
+}
+
+.Logic__Buttons > button {
+    outline: none;
+    /* border: 1px solid blue; */
+    border-radius: 6px;
+    background-color: #0088ff;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 6px;
+    width: 80px;
+    height: 33px;
+    cursor: pointer;
+}
+
+.Logic__Buttons > button:hover {
+    background-color: #0061d5;
+}
+
+.Logic__Buttons > button:disabled {
+    background-color: #59626a;
+    cursor: not-allowed;
+}

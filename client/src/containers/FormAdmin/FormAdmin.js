@@ -12,6 +12,8 @@ import Preview from './Preview/Preview';
 import Responses from './Responses/Responses';
 import Share from './Share/Share';
 
+import ErrorBoundary from '../../hocs/ErrorBoundary/ErrorBoundary';
+
 const MODE = ['build', 'preview', 'responses', 'feedbacks', 'share'];
 
 class FormAdmin extends Component {
@@ -90,37 +92,41 @@ class FormAdmin extends Component {
 
     render() {
         return (
-            <div className="FormAdmin">
-                <Loading show={this.props.formData.loading ? true : false} />
-                <Header
-                    fileName={this.state.fileName}
-                    onChange={this.handleFileNameChange}
-                    onSaveFileName={this.saveFileName}
-                />
-                <ul className="Bar">{this.renderNavigation()}</ul>
-                <Switch>
-                    <Route
-                        path={`${this.props.match.url}/build`}
-                        exact
-                        component={Builder}
+            <ErrorBoundary>
+                <div className="FormAdmin">
+                    <Loading
+                        show={this.props.formData.loading ? true : false}
                     />
-                    <Route
-                        path={`${this.props.match.url}/preview`}
-                        exact
-                        component={Preview}
+                    <Header
+                        fileName={this.state.fileName}
+                        onChange={this.handleFileNameChange}
+                        onSaveFileName={this.saveFileName}
                     />
-                    <Route
-                        path={`${this.props.match.url}/responses`}
-                        exact
-                        component={Responses}
-                    />
-                    <Route
-                        path={`${this.props.match.url}/share`}
-                        exact
-                        component={Share}
-                    />
-                </Switch>
-            </div>
+                    <ul className="Bar">{this.renderNavigation()}</ul>
+                    <Switch>
+                        <Route
+                            path={`${this.props.match.url}/build`}
+                            exact
+                            component={Builder}
+                        />
+                        <Route
+                            path={`${this.props.match.url}/preview`}
+                            exact
+                            component={Preview}
+                        />
+                        <Route
+                            path={`${this.props.match.url}/responses`}
+                            exact
+                            component={Responses}
+                        />
+                        <Route
+                            path={`${this.props.match.url}/share`}
+                            exact
+                            component={Share}
+                        />
+                    </Switch>
+                </div>
+            </ErrorBoundary>
         );
     }
 }

@@ -35,31 +35,49 @@ class Logic extends Component {
             return sequence - this.props.sequence > 0;
         });
 
+        //check if it is available for save
+        const save = this.state.if !== null && this.state.then !== null;
+
         return (
             <Field
                 options={filteredOptions}
                 questions={filteredQuestions}
                 onOptionChange={this.handleOptions}
                 onQuestionChange={this.handleQuestions}
+                save={save}
             />
         );
     }
 
     handleOptions = (display, index, value) => {
-        this.setState({
-            if: index
-        });
+        this.setState({ if: index });
     };
 
-    handleQuestions = () => {};
+    handleQuestions = (display, index, value) => {
+        this.setState({ then: value });
+    };
+
+    handleChanges() {
+        //call QuestionBuilder to save the logic into state
+        if (this.state.creating) {
+            const key = this.state.if;
+            const qid = this.state.then;
+
+            //save the entry && change to non-creating mode
+            if (key !== null && qid) {
+                this.props.onAdd([{ key: qid }]);
+                this.setState({ creating: false });
+            }
+        }
+    }
 
     renderFields() {
         const connect = this.props.connect;
         if (connect.length === 0) return null;
 
-        return connect.map((logic, index) => {
-            return <Field key={index} />;
-        });
+        // return connect.map((logic, index) => {
+        //     return <Field key={index} />;
+        // });
     }
 
     shouldRender = () => {

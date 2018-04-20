@@ -176,6 +176,11 @@ class QuestionBuilder extends Component {
         });
     };
 
+    addLogic = logic => {
+        const newConnect = this.state.connect.concat(logic);
+        this.setState({ connect: newConnect });
+    };
+
     saveQuestion = () => {
         let question = {
             ...this.state,
@@ -331,6 +336,7 @@ class QuestionBuilder extends Component {
                                 options={this.state.options}
                                 connect={this.state.connect}
                                 sequence={this.state.sequence}
+                                onAdd={this.addLogic}
                             />
                         </div>
                         <div className="EleFooter">
