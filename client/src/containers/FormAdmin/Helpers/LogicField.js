@@ -27,12 +27,30 @@ const transformQuestions = questions =>
         };
     });
 
+const mapIDToQuestion = (questions, qid) => {
+    const { title, sequence } = questions.find(({ _id }) => _id === qid);
+    return `${sequence}: ${title}`;
+};
+
 const logicField = props => {
+    let button = null;
+
+    //creating new logic
+    if (props.save) {
+        button = (
+            <div className="Logic__Buttons">
+                <button disabled={!props.save} onClick={props.onSave}>
+                    Save
+                </button>
+            </div>
+        );
+    }
+
     return (
-        <div className="Logic" onClick={() => console.log('alo')}>
+        <div className="Logic">
             <div className="Logic__Label">
-                <label>Logic {props.seq}</label>
-                <span>
+                <label>Logic {props.seq + 1}: </label>
+                <span onClick={() => props.remove(props.index)}>
                     <svg
                         id="Logic__Remove"
                         xmlns="http://www.w3.org/2000/svg"
@@ -51,6 +69,11 @@ const logicField = props => {
                     options={transformOptions(props.options)}
                     clicked={props.onOptionChange}
                     dynamic
+                    init={
+                        props.selectedOption === undefined
+                            ? null
+                            : props.selectedOption
+                    }
                 />
             </div>
             <div className="Logic__Panel">
@@ -58,13 +81,15 @@ const logicField = props => {
                 <Select
                     options={transformQuestions(props.questions)}
                     clicked={props.onQuestionChange}
+                    dynamic
+                    init={
+                        props.qid
+                            ? mapIDToQuestion(props.questions, props.qid)
+                            : null
+                    }
                 />
             </div>
-            <div className="Logic__Buttons">
-                <button disabled={!props.save}>
-                    {props.edit ? 'Update' : 'Save'}
-                </button>
-            </div>
+            {button}
         </div>
     );
 };

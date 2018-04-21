@@ -29,6 +29,13 @@ class Select extends Component {
 
         if (!this.props.default && this.props.init) {
             this.state.value = this.props.init;
+
+            //assuming all options are different
+            const index = this.props.options.findIndex(
+                ({ display }) => display === this.props.init
+            );
+
+            if (index > -1) this.state.selectedIndex = index;
         }
 
         this.handleMouseClose = this.handleMouseClose.bind(this);

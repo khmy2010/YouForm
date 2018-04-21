@@ -13,27 +13,112 @@ class Logic extends Component {
         then: null
     };
 
+    listenOptionChange = ({ detail: { index } }) => {
+        //option deleted, remove that.
+        if (index === this.state.if) this.setState({ if: null });
+    };
+
+    componentDidMount() {
+        document.addEventListener('optionDeleted', this.listenOptionChange);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('optionDeleted', this.listenOptionChange);
+    }
+
     create = () => this.setState({ creating: true });
+
+    filterOptions = logicKey => {
+        const options = this.props.options;
+        const connect = this.props.connect || [];
+
+        if (connect.length === 0) return options;
+
+        return options.filter((option, index) => {
+            //to include its own option
+            if (logicKey !== undefined && index === logicKey) return true;
+            return connect.find(({ key }) => index === key) === undefined;
+        });
+    };
+
+    filterQuestions = () =>
+        this.props.questions.filter(({ sequence }) => {
+            return sequence - this.props.sequence > 0;
+        });
+
+    remove = removedKey => {
+        if (removedKey === 'new') {
+            this.setState({
+                creating: false,
+                if: null,
+                then: null
+            });
+        }
+        //call QuestionBuilder to remove the option
+        else {
+        }
+    };
+
+    renderFields() {
+        //pre render check for creating && connect length
+        const connect = this.props.connect || [];
+        const creating = this.state.creating;
+
+        if (!creating && connect.length === 0) return null;
+
+        //array of <Field /> elements waiting for rendered
+        const fields = [];
+
+        //should render the field that is creating now if any
+        if (this.state.creating) {
+            //check if it is available for save
+            const save = this.state.if !== null && this.state.then !== null;
+
+            fields.push(
+                <Field
+                    options={this.filterOptions()}
+                    questions={this.filterQuestions()}
+                    onOptionChange={this.handleOptions}
+                    onQuestionChange={this.handleQuestions}
+                    save={save}
+                    onSave={this.handleChanges}
+                    key="new"
+                    index="new"
+                    remove={this.remove}
+                />
+            );
+        }
+
+        //should render the rest of field if any
+        if (connect.length === 0) return fields;
+
+        const connected = connect.map(({ key, qid }, seq) => {
+            console.log('rosmahhhh: ', this.props.options[key]);
+            return (
+                <Field
+                    options={this.filterOptions(key)}
+                    questions={this.filterQuestions()}
+                    key={key}
+                    index={key}
+                    seq={seq}
+                    selectedOption={this.props.options[key]}
+                    qid={qid}
+                    remove={this.remove}
+                />
+            );
+        });
+
+        return fields.concat(connected);
+    }
 
     renderNew() {
         if (!this.state.creating) return null;
-        const options = this.props.options;
-        const connect = this.props.connect;
-        const questions = this.props.questions;
 
         //check for available options
-        let filteredOptions;
-        if (connect.length === 0) filteredOptions = options;
-        else {
-            filteredOptions = options.filter((option, index) => {
-                return connect.find(({ key }) => index === key) === undefined;
-            });
-        }
+        const filteredOptions = this.filterOptions();
 
         //check for available questions (which is later than this)
-        const filteredQuestions = questions.filter(({ sequence }) => {
-            return sequence - this.props.sequence > 0;
-        });
+        const filteredQuestions = this.filterQuestions();
 
         //check if it is available for save
         const save = this.state.if !== null && this.state.then !== null;
@@ -45,6 +130,7 @@ class Logic extends Component {
                 onOptionChange={this.handleOptions}
                 onQuestionChange={this.handleQuestions}
                 save={save}
+                onSave={this.handleChanges}
             />
         );
     }
@@ -57,7 +143,7 @@ class Logic extends Component {
         this.setState({ then: value });
     };
 
-    handleChanges() {
+    handleChanges = () => {
         //call QuestionBuilder to save the logic into state
         if (this.state.creating) {
             const key = this.state.if;
@@ -65,20 +151,11 @@ class Logic extends Component {
 
             //save the entry && change to non-creating mode
             if (key !== null && qid) {
-                this.props.onAdd([{ key: qid }]);
+                this.props.onAdd([{ key, qid }]);
                 this.setState({ creating: false });
             }
         }
-    }
-
-    renderFields() {
-        const connect = this.props.connect;
-        if (connect.length === 0) return null;
-
-        // return connect.map((logic, index) => {
-        //     return <Field key={index} />;
-        // });
-    }
+    };
 
     shouldRender = () => {
         const options = this.props.options;
@@ -98,7 +175,7 @@ class Logic extends Component {
 
     renderNewButton = () => {
         const options = this.props.options;
-        const connect = this.props.connect;
+        const connect = this.props.connect || [];
 
         if (options.length - connect.length <= 0) return null;
         if (this.state.creating) return null;
@@ -112,7 +189,6 @@ class Logic extends Component {
             <div className="EleField">
                 <label>Logic Jump</label>
                 {this.renderNewButton()}
-                {this.renderNew()}
                 {this.renderFields()}
             </div>
         );

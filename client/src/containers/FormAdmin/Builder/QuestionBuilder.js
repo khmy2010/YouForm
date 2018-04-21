@@ -86,6 +86,10 @@ class QuestionBuilder extends Component {
             if (typeCheck.isDate(type)) {
                 this.state.dateType = data.dateType;
             }
+
+            if (typeCheck.isSingleChoice(type) && data.connect) {
+                this.state.connect = JSON.parse(data.connect);
+            }
         }
     }
 
@@ -154,8 +158,19 @@ class QuestionBuilder extends Component {
     removeFlexInput = index => {
         latestFlex = false;
         const newOptions = this.state.options.slice();
+        console.log('removeFlexInput ', index);
 
         if (index > -1) newOptions.splice(index, 1);
+
+        if (typeCheck.isSingleChoice(this.props.type)) {
+            const event = new CustomEvent('optionDeleted', {
+                detail: {
+                    index
+                }
+            });
+
+            document.dispatchEvent(event);
+        }
 
         this.setState({ options: newOptions });
     };
@@ -214,6 +229,10 @@ class QuestionBuilder extends Component {
 
         //stringify the validation after it has been sanitised.
         question.validation = JSON.stringify(this.state.validation);
+
+        if (this.state.connect) {
+            question.connect = JSON.stringify(this.state.connect);
+        }
 
         this.props.onBackdropClick();
 

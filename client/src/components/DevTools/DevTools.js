@@ -86,6 +86,16 @@ class DevTools extends Component {
         }
     };
 
+    viewAPI = () => {
+        const fid = this.state.fid;
+        if (fid) {
+            window.open(
+                `http://localhost:3000/test/${fid}/questions`,
+                '_blank'
+            );
+        } else this.setState({ output: 'fid not found.' });
+    };
+
     render() {
         if (!utils.isDev()) return <NotFound history={this.props.history} />;
         return (
@@ -107,6 +117,7 @@ class DevTools extends Component {
                         <button onClick={this.deleteAll}>
                             Delete Questions
                         </button>
+                        <button onClick={this.viewAPI}>View API Data</button>
                         <button onClick={this.checkSequence}>
                             Validate SEQ
                         </button>
