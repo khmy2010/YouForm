@@ -11,8 +11,12 @@ section {
 }
 
 .Dev > h1 {
-    font-size: 40px;
+    font-size: 35px;
     text-align: center;
+}
+
+.fid {
+    margin-top: 20px;
 }
 
 .fid > input {
@@ -24,14 +28,32 @@ section {
     padding: 10px 0;
 }
 
-.Dev__Outputs > textarea {
-    width: 80%;
-    font-size: 18px;
-    color: #3f46ad;
+.Dev__Outputs {
+    margin-top: 1px;
+}
+
+.Dev__Outputs textarea {
+    width: 100%;
+    font-size: 16px;
     padding: 15px 5px;
-    border: 1px solid #0a8ea0;
     outline: none;
     resize: none;
+    background-color: transparent;
+    color: #fff;
+    font-family: monospace;
+    text-align: left;
+    border: none;
+}
+
+.Dev__Outputs textarea::selection {
+    background: #333333;
+}
+
+.Dev__Outputs > h2 {
+    text-align: center;
+    margin: auto;
+    padding: 15px;
+    font-size: 30px;
 }
 
 .Dev__Buttons > button {
@@ -49,4 +71,72 @@ section {
 
 .Dev__Buttons > button:hover {
     background-color: #303584;
+}
+
+/*Terminal*/
+#head {
+    font-family: monospace;
+    color: #fff;
+    margin: auto;
+    padding: 35px;
+    font-size: 40px;
+    text-align: center;
+}
+#bar {
+    text-align: center;
+    width: 750px;
+    height: 25px;
+    background-color: #dad9d9;
+    margin: 0 auto;
+    font-family: monospace;
+    padding: auto;
+    float: none;
+    border-radius: 5px;
+}
+#red {
+    background-color: #e94b35;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+    margin: 0 auto;
+    left: -47%;
+    bottom: -20%;
+    position: relative;
+}
+#yellow {
+    background-color: #f0f000;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+    margin: 0 auto;
+    left: -44%;
+    bottom: 40%;
+    position: relative;
+    display: block;
+}
+#green {
+    background-color: #1aaf5c;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+    margin: 0 auto;
+    left: -41%;
+    bottom: 99%;
+    position: relative;
+    display: block;
+}
+#screen {
+    background-color: #33485e;
+    width: 750px;
+    height: 450px;
+    border-radius: 2%;
+    margin: 0 auto;
+    padding: 1px;
+}
+.font {
+    color: #fff;
+    font-family: monospace;
+    font-size: 15px;
+    text-align: left;
+    position: static;
 }

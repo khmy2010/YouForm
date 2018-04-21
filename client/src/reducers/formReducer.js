@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/types';
 
-import { redoSequence } from '../utils';
+import { redoSequence, updateConnected } from '../utils';
 
 const initialState = {
     fid: null,
@@ -77,6 +77,11 @@ const formReducer = (state = initialState, action) => {
                     action.sequence,
                     action.ori
                 )
+            };
+        case actionTypes.UPDATE_LOGIC:
+            return {
+                ...state,
+                questions: updateConnected(state.questions, action.qid).updated
             };
         default:
             return state;

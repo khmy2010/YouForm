@@ -33,6 +33,7 @@ export const deleteQuestion = (fid, qid) => async dispatch => {
     try {
         await axios.delete(`/api/forms/${fid}/questions/${qid}`);
         dispatch({ type: actionTypes.DELETE_QUESTION, qid });
+        dispatch({ type: actionTypes.UPDATE_LOGIC, qid });
         await dispatch(updateLogics(fid, qid));
     } catch (error) {}
 };

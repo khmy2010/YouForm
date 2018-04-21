@@ -186,33 +186,4 @@ module.exports = app => {
             res.send();
         } else res.status(400).send();
     });
-
-    app.post('/api/fuck/test/:fid', async (req, res) => {
-        await Form.findOneAndUpdate(
-            { _id: req.params.fid },
-            { $set: { tests: req.body } }
-        );
-
-        res.send();
-    });
-
-    app.post('/api/test/:fid', async (req, res) => {
-        const body = req.body;
-        const fid = req.params.fid;
-        console.log(fid);
-
-        if (ObjectID.isValid(fid)) {
-            const form = await Form.findById(fid);
-            const tests = form.tests;
-
-            const question = {
-                ...body
-            };
-
-            tests.push(question);
-            const subdoc = tests[tests.length - 1];
-            await form.save();
-            res.send(subdoc);
-        }
-    });
 };
