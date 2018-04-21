@@ -87,3 +87,30 @@ export const _redoSequence = (questions, seq, ori) => {
 
     return sorted; //haha
 };
+
+export const updateConnected = (questions, deletedQID) => {
+    let doRequest = false;
+
+    const updated = questions.map(question => {
+        //don't touch question without logics attached
+        if (!typeCheck.isSingleChoice(question.type)) return question;
+
+        const connect = JSON.parse(question.connect);
+        if (connect.length === 0) return question;
+
+        //remove affected QID that is attached to the question
+        question.connect = connect.filter(({ key, qid }) => qid !== deletedQID);
+
+        //some logic is connected
+        if (question.connect.length !== connect.length && !doRequest)
+            doRequest = true;
+
+        question.connect = JSON.stringify(question.connect);
+
+        return question;
+    });
+
+    console.log(doRequest);
+
+    return { updated, doRequest };
+};

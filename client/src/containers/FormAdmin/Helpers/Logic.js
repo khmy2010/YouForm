@@ -93,7 +93,6 @@ class Logic extends Component {
         if (connect.length === 0) return fields;
 
         const connected = connect.map(({ key, qid }, seq) => {
-            console.log('rosmahhhh: ', this.props.options[key]);
             return (
                 <Field
                     options={this.filterOptions(key)}

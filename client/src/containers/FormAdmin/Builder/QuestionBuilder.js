@@ -158,18 +158,17 @@ class QuestionBuilder extends Component {
     removeFlexInput = index => {
         latestFlex = false;
         const newOptions = this.state.options.slice();
-        console.log('removeFlexInput ', index);
 
         if (index > -1) newOptions.splice(index, 1);
 
         if (typeCheck.isSingleChoice(this.props.type)) {
             const event = new CustomEvent('optionDeleted', {
-                detail: {
-                    index
-                }
+                detail: { index }
             });
 
             document.dispatchEvent(event);
+
+            this.removeLogic(index);
         }
 
         this.setState({ options: newOptions });
@@ -183,6 +182,17 @@ class QuestionBuilder extends Component {
         this.setState({
             options: newOptions
         });
+    };
+
+    removeLogic = logicKey => {
+        const connect = this.state.connect.slice();
+
+        //don't proceed if there is no logic attached.
+        if (connect.length === 0) return;
+
+        const filtered = connect.filter(({ key }) => key !== logicKey);
+
+        this.setState({ connect: filtered });
     };
 
     handleSelectionChange = data => {

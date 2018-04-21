@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './types';
-import { redoSequence } from '../utils';
+import { redoSequence, updateConnected } from '../utils';
 
 export const fetchFormAdmin = (
     fid,
@@ -23,7 +23,6 @@ export const fetchFormAdmin = (
 };
 
 export const addQuestion = (question, fid) => async dispatch => {
-    console.log('I am adding question, wait lah aiyo');
     try {
         const res = await axios.post(`/api/forms/${fid}/questions`, question);
         dispatch({ type: actionTypes.ADD_QUESTION, question, res });
@@ -34,7 +33,20 @@ export const deleteQuestion = (fid, qid) => async dispatch => {
     try {
         await axios.delete(`/api/forms/${fid}/questions/${qid}`);
         dispatch({ type: actionTypes.DELETE_QUESTION, qid });
+        await dispatch(updateLogics(fid, qid));
     } catch (error) {}
+};
+
+export const updateLogics = async (fid, qid) => {
+    const questions = await axios.get(`/api/forms/${fid}/questions`);
+    const { updated, doRequest } = updateConnected(questions.data, qid);
+
+    //perform AJAX request to the server if it is needed.
+    if (doRequest) {
+        try {
+            await axios.put(`/api/forms/${fid}/questions`, updated);
+        } catch (error) {}
+    }
 };
 
 export const editQuestion = (question, fid, qid) => async dispatch => {
