@@ -28,6 +28,8 @@ const transformQuestions = questions =>
     });
 
 const mapIDToQuestion = (questions, qid) => {
+    console.log(questions);
+    console.log(qid);
     const { title, sequence } = questions.find(({ _id }) => _id === qid);
     return `${sequence}: ${title}`;
 };

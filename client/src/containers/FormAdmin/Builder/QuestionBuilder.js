@@ -76,7 +76,9 @@ class QuestionBuilder extends Component {
                 title: data.title,
                 description: data.description || '',
                 validation: JSON.parse(data.validation),
-                originalSequence: data.sequence
+                originalSequence: data.sequence,
+                sequence: data.sequence,
+                isSequenceChanged: false
             };
 
             if (typeCheck.isExtendedChoice(this.props.type)) {
@@ -366,6 +368,7 @@ class QuestionBuilder extends Component {
                                 connect={this.state.connect}
                                 sequence={this.state.sequence}
                                 onAdd={this.addLogic}
+                                onRemove={this.removeLogic}
                             />
                         </div>
                         <div className="EleFooter">

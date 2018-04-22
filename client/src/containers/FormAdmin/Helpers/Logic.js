@@ -43,6 +43,8 @@ class Logic extends Component {
 
     filterQuestions = () =>
         this.props.questions.filter(({ sequence }) => {
+            console.log('sequence: ', sequence);
+            console.log('props: ', this.props.sequence);
             return sequence - this.props.sequence > 0;
         });
 
@@ -55,8 +57,7 @@ class Logic extends Component {
             });
         }
         //call QuestionBuilder to remove the option
-        else {
-        }
+        else this.props.onRemove(removedKey);
     };
 
     renderFields() {
@@ -73,7 +74,6 @@ class Logic extends Component {
         if (this.state.creating) {
             //check if it is available for save
             const save = this.state.if !== null && this.state.then !== null;
-
             fields.push(
                 <Field
                     options={this.filterOptions()}
@@ -91,6 +91,8 @@ class Logic extends Component {
 
         //should render the rest of field if any
         if (connect.length === 0) return fields;
+
+        console.log(this.filterQuestions());
 
         const connected = connect.map(({ key, qid }, seq) => {
             return (
@@ -166,7 +168,7 @@ class Logic extends Component {
         if (options.length === 1) return false;
         if (questions.length === 1) return false;
         //don't render if it is the last question
-        if (sequence - questions.length === 1) return false;
+        if (sequence - questions.length === 0) return false;
         if (options.length === 2 && options[1].trim().length === 0)
             return false;
         return true;
