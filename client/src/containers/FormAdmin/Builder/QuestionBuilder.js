@@ -6,7 +6,7 @@ import Button from '../../../components/Button/Button';
 import EleTitle from './EleTitle';
 import EleComp from './EleComp';
 import ElePreview from './ElePreview';
-import { CONSTS, typeCheck } from '../../../utils';
+import { CONSTS, typeCheck, isValidLogic, scanLogic } from '../../../utils';
 import { VBUILD, validateBuild } from './Validate';
 
 //Helper functions
@@ -15,6 +15,7 @@ import Date from '../Helpers/Date';
 import Character from '../Helpers/Character';
 import Choices from '../Helpers/Choices';
 import Logic from '../Helpers/Logic';
+import Warn from '../Helpers/Warn';
 
 import './Build.css';
 
@@ -78,7 +79,9 @@ class QuestionBuilder extends Component {
                 validation: JSON.parse(data.validation),
                 originalSequence: data.sequence,
                 sequence: data.sequence,
-                isSequenceChanged: false
+                isSequenceChanged: false,
+                error: false,
+                errorMessage: ''
             };
 
             if (typeCheck.isExtendedChoice(this.props.type)) {
@@ -279,6 +282,7 @@ class QuestionBuilder extends Component {
     changeOrder = index => {
         //do not process if value is the same
         if (this.state.originalSequence === index + 2) {
+            this.checkLogic();
             this.setState({ isSequenceChanged: false });
             return;
         }
@@ -287,10 +291,57 @@ class QuestionBuilder extends Component {
         //(1-1+1)
         const situation = this.state.originalSequence - (index + 1);
 
-        this.setState({
-            sequence: situation > 0 ? index + 2 : index + 1,
-            isSequenceChanged: true
-        });
+        this.setState(
+            {
+                sequence: situation > 0 ? index + 2 : index + 1,
+                isSequenceChanged: true
+            },
+            this.checkLogic
+        );
+    };
+
+    checkLogic = () => {
+        const res = scanLogic(
+            this.props.questions,
+            this.getValidSequence(),
+            this.state.connect
+        );
+
+        if (this.state.error !== !res)
+            this.setState({
+                error: !res,
+                errorMessage:
+                    'Some logic might be removed upon save due to recent changes.'
+            });
+    };
+
+    //function to get valid sequence for processing
+    getValidSequence = () => {
+        const { isSequenceChanged, sequence, originalSequence } = this.state;
+
+        return isSequenceChanged ? sequence : originalSequence;
+    };
+
+    renderLogic = () => {
+        //get valid sequence
+        const sequence = this.getValidSequence();
+
+        //check if all connects are valid
+        const checked = this.state.connect.filter(({ qid }) =>
+            isValidLogic(sequence, qid, this.props.questions)
+        );
+
+        return (
+            <Logic
+                type={this.props.type}
+                questions={this.props.questions}
+                options={this.state.options}
+                connect={checked}
+                sequence={sequence}
+                onAdd={this.addLogic}
+                onRemove={this.removeLogic}
+            />
+        );
     };
 
     render() {
@@ -361,14 +412,10 @@ class QuestionBuilder extends Component {
                                 onChange={this.changeOrder}
                                 ori={this.state.originalSequence}
                             />
-                            <Logic
-                                type={this.props.type}
-                                questions={this.props.questions}
-                                options={this.state.options}
-                                connect={this.state.connect}
-                                sequence={this.state.sequence}
-                                onAdd={this.addLogic}
-                                onRemove={this.removeLogic}
+                            {this.renderLogic()}
+                            <Warn
+                                show={this.state.error}
+                                msg={this.state.errorMessage}
                             />
                         </div>
                         <div className="EleFooter">

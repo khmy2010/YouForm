@@ -131,3 +131,49 @@ export const updateConnected = (questions, deletedQID) => {
 
     return { updated, doRequest };
 };
+
+//seq: sequence of the question
+//qid: qid of connected logic
+//questions: array of questions at the form
+export const isValidLogic = (originSequence, qid, questions) => {
+    //identify the sequence of QID at the array of questions
+    const { sequence } = questions.find(({ _id }) => _id === qid);
+
+    if (sequence === undefined) return false;
+
+    //if it is identified, make sure it comes AFTER
+    return sequence > originSequence;
+};
+
+export const scanLogic = (questions, sequence, connect) => {
+    let res = true;
+
+    //nothing to check when logic doesn't exist.
+    if (connect.length === 0) return res;
+
+    //check for duplicating keys
+    res = !isDuplicateExist(connect.map(({ key }) => key));
+
+    //check for logic sequence
+    connect.forEach(({ qid }) => {
+        const target = questions.find(({ _id }) => qid === _id);
+
+        if (target && target.sequence <= sequence) res = false;
+    });
+
+    return res;
+};
+
+export const isDuplicateExist = arr =>
+    removeDuplicate(arr).length !== arr.length;
+
+export const removeDuplicate = arr =>
+    arr.reduce((accumulator, current) => {
+        const length = accumulator.length;
+
+        if (length === 0 || accumulator[length - 1] !== current) {
+            accumulator.push(current);
+        }
+
+        return accumulator;
+    }, []);

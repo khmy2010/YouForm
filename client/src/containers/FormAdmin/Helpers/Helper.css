@@ -76,3 +76,11 @@
     background-color: #59626a;
     cursor: not-allowed;
 }
+
+.QuestionBuilder__Warn {
+    border: 1px solid #34675c;
+    padding: 10px 7px;
+    font-weight: 700;
+    color: white;
+    background-color: #021c1e;
+}

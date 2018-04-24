@@ -10,7 +10,8 @@ class Logic extends Component {
     state = {
         creating: false,
         if: null,
-        then: null
+        then: null,
+        warning: false
     };
 
     listenOptionChange = ({ detail: { index } }) => {
@@ -43,8 +44,6 @@ class Logic extends Component {
 
     filterQuestions = () =>
         this.props.questions.filter(({ sequence }) => {
-            console.log('sequence: ', sequence);
-            console.log('props: ', this.props.sequence);
             return sequence - this.props.sequence > 0;
         });
 
@@ -92,7 +91,7 @@ class Logic extends Component {
         //should render the rest of field if any
         if (connect.length === 0) return fields;
 
-        console.log(this.filterQuestions());
+        console.count('how many times it got rendered?');
 
         const connected = connect.map(({ key, qid }, seq) => {
             return (
@@ -171,6 +170,7 @@ class Logic extends Component {
         if (sequence - questions.length === 0) return false;
         if (options.length === 2 && options[1].trim().length === 0)
             return false;
+
         return true;
     };
 
