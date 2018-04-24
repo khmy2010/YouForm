@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/types';
 
-import { redoSequence, updateConnected } from '../utils';
+import { redoSequence, deleteSequence, updateConnected } from '../utils';
 
 const initialState = {
     fid: null,
@@ -77,6 +77,11 @@ const formReducer = (state = initialState, action) => {
                     action.sequence,
                     action.ori
                 )
+            };
+        case actionTypes.DELETE_SEQUENCE:
+            return {
+                ...state,
+                questions: deleteSequence(state.questions).updated
             };
         case actionTypes.UPDATE_LOGIC:
             return {

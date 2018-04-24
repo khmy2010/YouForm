@@ -51,7 +51,7 @@ export const getBase = () => {
 //returns true if later is "later" then earlier date.
 export const isFresh = (earlier, later) => later - earlier > 0;
 
-export const redoSequence = (questions, seq, ori) => {
+export const redoSequence = (questions, seq, ori, qid) => {
     //it always end with duplicating sequence
     const endIndex = questions.findIndex(
         ({ sequence }, index) => sequence === seq && index !== ori - 1
@@ -81,42 +81,29 @@ export const redoSequence = (questions, seq, ori) => {
     return sorted;
 };
 
-export const _redoSequence = (questions, seq, ori) => {
-    const updated = questions.map((question, index) => {
-        if (seq - ori > 0) {
-            if (index === ori - 1 || index > seq - 1) return question;
-            question.sequence -= 1;
-        } else {
-            if (index === ori - 1 || index < seq - 1) return question;
-            question.sequence += 1;
-        }
-        return question;
+export const deleteSequence = questions => {
+    let doRequest = true;
+
+    //given qid, find the end index
+    const deletedIndex = questions.findIndex(({ sequence }, index) => {
+        return sequence !== index + 1;
     });
 
-    //after updating, sort the array according to the new sequence
-    const sorted = updated.sort((a, b) => a.sequence - b.sequence);
+    //not found because deleted question is the last question
+    if (deletedIndex === -1) doRequest = false;
 
-    return sorted;
+    //found, updating sequence (always down case)
+    //if not found, the questions will copied again
+    const updated = questions.map((question, index) => {
+        if (index < deletedIndex) return question;
+        return {
+            ...question,
+            sequence: question.sequence - 1
+        };
+    });
+
+    return { doRequest, updated };
 };
-
-// export const _redoSequence = (questions, seq, ori) => {
-//     //find affected questions that have later sequence
-//     const affected = questions.findIndex(({ sequence }) => {
-//         return sequence >= seq;
-//     });
-
-//     //update affected questions's sequence
-//     const updated = questions.map((question, index) => {
-//         if (index >= affected && index !== questions.length - 1)
-//             question.sequence += 1;
-//         return question;
-//     });
-
-//     //after updating, sort the array according to the new sequence
-//     const sorted = updated.sort((a, b) => a.sequence - b.sequence);
-
-//     return sorted; //haha
-// };
 
 export const updateConnected = (questions, deletedQID) => {
     let doRequest = false;
