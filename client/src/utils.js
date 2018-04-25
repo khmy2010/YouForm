@@ -165,18 +165,14 @@ export const isValidLogic = (originSequence, qid, questions) => {
 };
 
 export const purify = (questions, sequence, connect) => {
-    let unique = null;
-
     //remove all duplicates
-    if (isDuplicateExist(connect.map(({ key }) => key))) {
-        unique = connect.reduce((acc, value) => {
-            const length = acc.length;
+    const unique = connect.reduce((acc, value) => {
+        const length = acc.length;
 
-            if (length === 0 || acc[length - 1] !== value.key) acc.push(value);
+        if (length === 0 || acc[length - 1].key !== value.key) acc.push(value);
 
-            return acc;
-        }, []);
-    } else unique = [...connect];
+        return acc;
+    }, []);
 
     //remove logic that points to latter question
     return unique.filter(
