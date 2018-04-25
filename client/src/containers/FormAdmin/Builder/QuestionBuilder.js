@@ -6,7 +6,13 @@ import Button from '../../../components/Button/Button';
 import EleTitle from './EleTitle';
 import EleComp from './EleComp';
 import ElePreview from './ElePreview';
-import { CONSTS, typeCheck, isValidLogic, scanLogic } from '../../../utils';
+import {
+    CONSTS,
+    typeCheck,
+    isValidLogic,
+    scanLogic,
+    purify
+} from '../../../utils';
 import { VBUILD, validateBuild } from './Validate';
 
 //Helper functions
@@ -241,12 +247,35 @@ class QuestionBuilder extends Component {
         //remove unnecessarily property before saving
         delete question.isSequenceChanged;
         delete question.originalSequence;
+        delete question.error;
+        delete question.errorMessage;
 
         //stringify the validation after it has been sanitised.
         question.validation = JSON.stringify(this.state.validation);
 
         if (this.state.connect) {
             question.connect = JSON.stringify(this.state.connect);
+        }
+
+        //verify logics
+        if (typeCheck.isSingleChoice(this.props.type) && this.state.connect) {
+            if (this.state.isSequenceChanged) {
+                const res = scanLogic(
+                    this.props.questions,
+                    this.getValidSequence(),
+                    this.state.connect
+                );
+
+                if (!res) {
+                    question.connect = JSON.stringify(
+                        purify(
+                            this.props.questions,
+                            this.getValidSequence(),
+                            this.state.connect
+                        )
+                    );
+                }
+            }
         }
 
         this.props.onBackdropClick();

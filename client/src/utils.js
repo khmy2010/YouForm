@@ -132,19 +132,6 @@ export const updateConnected = (questions, deletedQID) => {
     return { updated, doRequest };
 };
 
-//seq: sequence of the question
-//qid: qid of connected logic
-//questions: array of questions at the form
-export const isValidLogic = (originSequence, qid, questions) => {
-    //identify the sequence of QID at the array of questions
-    const { sequence } = questions.find(({ _id }) => _id === qid);
-
-    if (sequence === undefined) return false;
-
-    //if it is identified, make sure it comes AFTER
-    return sequence > originSequence;
-};
-
 export const scanLogic = (questions, sequence, connect) => {
     let res = true;
 
@@ -156,12 +143,45 @@ export const scanLogic = (questions, sequence, connect) => {
 
     //check for logic sequence
     connect.forEach(({ qid }) => {
-        const target = questions.find(({ _id }) => qid === _id);
+        const target = findByQID(questions, qid);
 
         if (target && target.sequence <= sequence) res = false;
     });
 
     return res;
+};
+
+//seq: sequence of the question
+//qid: qid of connected logic
+//questions: array of questions at the form
+export const isValidLogic = (originSequence, qid, questions) => {
+    //identify the sequence of QID at the array of questions
+    const { sequence } = findByQID(questions, qid);
+
+    if (sequence === undefined) return false;
+
+    //if it is identified, make sure it comes AFTER
+    return sequence > originSequence;
+};
+
+export const purify = (questions, sequence, connect) => {
+    let unique = null;
+
+    //remove all duplicates
+    if (isDuplicateExist(connect.map(({ key }) => key))) {
+        unique = connect.reduce((acc, value) => {
+            const length = acc.length;
+
+            if (length === 0 || acc[length - 1] !== value.key) acc.push(value);
+
+            return acc;
+        }, []);
+    } else unique = [...connect];
+
+    //remove logic that points to latter question
+    return unique.filter(
+        ({ qid }) => findByQID(questions, qid).sequence > sequence
+    );
 };
 
 export const isDuplicateExist = arr =>
@@ -177,3 +197,6 @@ export const removeDuplicate = arr =>
 
         return accumulator;
     }, []);
+
+export const findByQID = (questions, qid) =>
+    questions.find(({ _id }) => qid === _id);
