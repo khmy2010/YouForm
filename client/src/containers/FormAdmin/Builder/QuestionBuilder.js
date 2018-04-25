@@ -330,6 +330,8 @@ class QuestionBuilder extends Component {
     };
 
     checkLogic = () => {
+        if (!this.isLogicEnabled()) return;
+
         const res = scanLogic(
             this.props.questions,
             this.getValidSequence(),
@@ -351,7 +353,15 @@ class QuestionBuilder extends Component {
         return isSequenceChanged ? sequence : originalSequence;
     };
 
+    isLogicEnabled = () => {
+        if (!typeCheck.isSingleChoice(this.props.type)) return false;
+        if (this.state.connect === undefined) return false;
+        return true;
+    };
+
     renderLogic = () => {
+        if (!this.isLogicEnabled()) return null;
+
         //get valid sequence
         const sequence = this.getValidSequence();
 
