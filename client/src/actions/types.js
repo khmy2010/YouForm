@@ -21,7 +21,8 @@ export const UPDATE_SEQUENCE = 'UPDATE_SEQUENCE';
 export const UPDATE_LOGIC = 'UPDATE_LOGIC';
 export const DELETE_SEQUENCE = 'DELETE_SEQUENCE';
 
-//public form related
+//public operation related
+export const FETCH_FORM_START = 'FETCH_FORM_START';
 export const FETCH_FORM_SUCCESS = 'FETCH_FORM_SUCCESS';
 export const FETCH_FORM_FAILED = 'FETCH_FORM_FAILED';
 

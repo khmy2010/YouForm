@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 
 import Splash from '../../components/Splash/Splash';
 import Preloading from '../../components/Preloading/Preloading';
+import Welcome from '../../components/Form/Welcome/Welcome';
 import Controls from './Controls/Controls';
 import Change from './Controls/Change/Change';
 
-import * as actions from '../../actions/form';
+import * as actions from '../../actions/public';
 
 import './Form.css';
 
 class Form extends Component {
     state = {
-        currentState: 0
+        current: 0
     };
 
     componentDidMount() {
@@ -74,6 +75,11 @@ class Form extends Component {
                     error={this.props.errorMsg}
                     history={this.props.history}
                 />
+                <Welcome
+                    show={this.state.current}
+                    context={this.props.context}
+                    name={this.props.name}
+                />
             </div>
         );
     }
@@ -81,10 +87,12 @@ class Form extends Component {
 
 const mapStateToProps = state => {
     return {
-        error: state.form.error,
-        errorMsg: state.form.errorMsg,
-        form: state.form,
-        loading: state.form.loading
+        error: state.public.error,
+        errorMsg: state.public.errorMsg,
+        questions: state.public.questions,
+        context: state.public.context,
+        name: state.public.name,
+        loading: state.public.loading
     };
 };
 

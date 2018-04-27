@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const CONSTS = {
     TYPE: {
         SHORT_TEXT: 'SHORT_TEXT',
@@ -41,6 +43,28 @@ export const typeCheck = {
     isText: props => typeCheck.isShortText(props) || typeCheck.isLongText(props)
 };
 
+export const db = {
+    getQuestions: async fid => {
+        if (fid === undefined)
+            return Promise.reject('db.getQuestions() requires FID');
+        try {
+            const res = await axios.get(`/api/forms/${fid}/questions`);
+            return res.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    override: async (fid, questions) => {
+        if (fid === undefined || questions === undefined)
+            return Promise.reject('db.override() requires FID');
+        try {
+            await axios.put(`/api/forms/${fid}/questions`, questions);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+
 export const isDev = () => window.location.host === 'localhost:3000';
 
 export const getBase = () => {
@@ -82,7 +106,7 @@ export const redoSequence = (questions, seq, ori, qid) => {
 };
 
 export const deleteSequence = questions => {
-    let doRequest = true;
+    let doDeleteRequest = true;
 
     //given qid, find the end index
     const deletedIndex = questions.findIndex(({ sequence }, index) => {
@@ -90,7 +114,7 @@ export const deleteSequence = questions => {
     });
 
     //not found because deleted question is the last question
-    if (deletedIndex === -1) doRequest = false;
+    if (deletedIndex === -1) doDeleteRequest = false;
 
     //found, updating sequence (always down case)
     //if not found, the questions will copied again
@@ -102,34 +126,7 @@ export const deleteSequence = questions => {
         };
     });
 
-    return { doRequest, updated };
-};
-
-export const updateConnected = (questions, deletedQID) => {
-    let doRequest = false;
-
-    const updated = questions.map(question => {
-        //don't touch question without logics attached
-        if (!typeCheck.isSingleChoice(question.type)) return question;
-
-        const connect = JSON.parse(question.connect);
-        if (connect.length === 0) return question;
-
-        //remove affected QID that is attached to the question
-        question.connect = connect.filter(({ key, qid }) => qid !== deletedQID);
-
-        //some logic is connected
-        if (question.connect.length !== connect.length && !doRequest)
-            doRequest = true;
-
-        question.connect = JSON.stringify(question.connect);
-
-        return question;
-    });
-
-    console.log(doRequest);
-
-    return { updated, doRequest };
+    return { doDeleteRequest, updated };
 };
 
 export const scanLogic = (questions, sequence, connect) => {
@@ -178,6 +175,89 @@ export const purify = (questions, sequence, connect) => {
     return unique.filter(
         ({ qid }) => findByQID(questions, qid).sequence > sequence
     );
+};
+
+export const purifyAll = questions => {
+    let doRequest = false;
+
+    const purified = questions.map(question => {
+        //don't process if it is not single choice
+        if (!typeCheck.isSingleChoice(question.type)) return question;
+
+        const parsedConnect = JSON.parse(question.connect);
+        //don't process if it don't have any connected field
+        if (parsedConnect.length === 0) return question;
+
+        parsedConnect.forEach(({ _id, qid }) => {
+            if (!isValidLogic(question.sequence, qid, questions))
+                doRequest = true;
+        });
+
+        if (doRequest)
+            question.connect = JSON.stringify(
+                purify(questions, question.sequence, parsedConnect)
+            );
+
+        return question;
+    });
+
+    return {
+        doRequest,
+        questions: purified
+    };
+};
+
+//this function should work without given QID.
+export const updateConnected = questions => {
+    let doUpdateRequest = false;
+
+    if (questions.length === 0) return { doUpdateRequest, filtered: questions };
+
+    //build a map for questions
+    const map = new Map(
+        questions.reduce((acc, { _id, sequence }) => {
+            acc.push([_id, sequence]);
+            return acc;
+        }, [])
+    );
+
+    //1. check for duplicating logic
+    //2. make sure the connected question is placed latter
+    //3. make sure all logics connected to a valid question
+
+    const filtered = questions.map(question => {
+        //don't process if it is not single choice
+        if (!typeCheck.isSingleChoice(question.type)) return question;
+
+        const parsedConnect = JSON.parse(question.connect);
+        //don't process if it don't have any connected field
+        if (parsedConnect.length === 0) return question;
+
+        const filteredConnect = parsedConnect.reduce((acc, logic) => {
+            const sequence = map.get(logic.qid);
+            const length = acc.length;
+
+            //check if connected logic exists
+            //check if it is latter than current question
+            if (sequence && sequence > question.sequence) {
+                if (length === 0 || acc[length - 1].key !== logic.key)
+                    acc.push(logic);
+            }
+
+            return acc;
+        }, []);
+
+        if (parsedConnect.length !== filteredConnect) doUpdateRequest = true;
+
+        question.connect = JSON.stringify(filteredConnect);
+
+        return question;
+    });
+
+    return {
+        doUpdateRequest,
+        filtered
+    };
 };
 
 export const isDuplicateExist = arr =>

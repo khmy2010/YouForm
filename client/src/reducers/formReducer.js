@@ -79,6 +79,7 @@ const formReducer = (state = initialState, action) => {
                 )
             };
         case actionTypes.DELETE_SEQUENCE:
+            console.log('did I get called?');
             return {
                 ...state,
                 questions: deleteSequence(state.questions).updated
@@ -86,7 +87,7 @@ const formReducer = (state = initialState, action) => {
         case actionTypes.UPDATE_LOGIC:
             return {
                 ...state,
-                questions: updateConnected(state.questions, action.qid).updated
+                questions: updateConnected(state.questions).filtered
             };
         default:
             return state;

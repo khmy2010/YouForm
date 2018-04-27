@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './types';
-import { redoSequence, deleteSequence, updateConnected } from '../utils';
+import { redoSequence, deleteSequence, updateConnected, db } from '../utils';
 
 export const fetchFormAdmin = (
     fid,
@@ -33,33 +33,18 @@ export const deleteQuestion = (fid, qid) => async dispatch => {
     try {
         await axios.delete(`/api/forms/${fid}/questions/${qid}`);
         dispatch({ type: actionTypes.DELETE_QUESTION, qid });
+        dispatch({ type: actionTypes.DELETE_SEQUENCE });
         dispatch({ type: actionTypes.UPDATE_LOGIC, qid });
 
-        const res = await axios.get(`/api/forms/${fid}/questions`);
-        await dispatch(updateSequence(fid, res));
-        await dispatch(updateLogics(fid, qid, res));
-    } catch (error) {}
-};
+        const res = await db.getQuestions(fid);
+        const { doDeleteRequest, updated } = deleteSequence(res);
+        const { doUpdateRequest, filtered } = updateConnected(updated);
 
-export const updateSequence = async (fid, questions) => {
-    const { updated, doRequest } = deleteSequence(questions.data);
-
-    //perform AJAX request to the server if it is needed.
-    if (doRequest) {
-        try {
-            await axios.put(`/api/forms/${fid}/questions`, updated);
-        } catch (error) {}
-    }
-};
-
-export const updateLogics = async (fid, qid, questions) => {
-    const { updated, doRequest } = updateConnected(questions.data, qid);
-
-    //perform AJAX request to the server if it is needed.
-    if (doRequest) {
-        try {
-            await axios.put(`/api/forms/${fid}/questions`, updated);
-        } catch (error) {}
+        if (doDeleteRequest || doUpdateRequest) {
+            await db.override(fid, filtered);
+        }
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -75,15 +60,6 @@ export const changeFormProperties = (fid, props) => async dispatch => {
         await axios.patch(`/api/forms/${fid}`, props);
         dispatch({ type: actionTypes.MODIFY_FORM_PROPERTIES, props });
     } catch (error) {}
-};
-
-export const fetchForm = fid => async dispatch => {
-    try {
-        const res = await axios.get(`/api/forms/${fid}`);
-        dispatch({ type: actionTypes.INIT_FORM, res });
-    } catch ({ response }) {
-        dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
-    }
 };
 
 export const updateContext = (fid, context) => async dispatch => {
@@ -113,6 +89,11 @@ export const editQuestionUpdateSeq = (
     await dispatch(editQuestion(question, fid, qid));
     dispatch({ type: actionTypes.UPDATE_SEQUENCE, sequence, ori });
     await dispatch(editDBSequence(fid, sequence, ori));
+    dispatch({ type: actionTypes.UPDATE_LOGIC });
+    const res = await db.getQuestions(fid);
+    const { doUpdateRequest, filtered } = updateConnected(res);
+
+    if (doUpdateRequest) await db.override(fid, filtered);
 };
 
 export const editDBSequence = (fid, sequence, ori) => async dispatch => {
