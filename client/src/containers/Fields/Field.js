@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions/public';
+
 import InputText from './InputText/InputText';
 import Choices from './Choices/Choices';
 import Date from './Date/Date';
@@ -41,7 +44,7 @@ class Field extends Component {
     //     }
     // }
 
-    static getDerivedStateFromProps({ validation, options }, prevState) {
+    static getDerivedStateFromProps({ validation, options, sync }, prevState) {
         const updateObj = {};
 
         if (validation) {
@@ -54,14 +57,16 @@ class Field extends Component {
 
         //reset selected state once the component got rendered
         //todo: ability to parse back options for local storage
-        if (options) updateObj.selected = [];
+        if (options && !sync) {
+            updateObj.selected = [];
+        }
 
         if (Object.keys(updateObj).length === 0) return null;
         return updateObj;
     }
 
     handleInputChange = value => {
-        this.setState({ value });
+        this.setState({ value }, this.sync);
         this.validate(value);
     };
 
@@ -76,6 +81,12 @@ class Field extends Component {
         //do something here
     };
 
+    handleDate = ({ valid, touched, stringDate }) => {
+        if (valid && touched) {
+            this.setState({ value: stringDate }, this.sync);
+        }
+    };
+
     handleSelection = index => {
         let newSelected = this.state.selected.slice();
 
@@ -86,7 +97,6 @@ class Field extends Component {
                 return index === element;
             });
 
-            //if found
             if (foundIndex > -1) newSelected.splice(foundIndex, 1);
             else {
                 if (typeCheck.isAloneChoice(this.props.component)) {
@@ -96,9 +106,7 @@ class Field extends Component {
             }
         }
 
-        this.setState({
-            selected: newSelected
-        });
+        this.setState({ selected: newSelected }, this.sync);
 
         this.validate(this.state.value, newSelected);
     };
@@ -142,7 +150,7 @@ class Field extends Component {
         if (component === TYPE.LINK) {
             validationResults.push({
                 status: checker.isValidUrl(value),
-                message: 'This is an invalid linkxz.'
+                message: 'This is an invalid link.'
             });
         }
 
@@ -187,7 +195,8 @@ class Field extends Component {
 
         //loop through the results and look for ANY failed test
         let error = false;
-        error = validationResults.find(result => !result.status);
+        //TODO: MONITOR THIS AMENDMENT FOR SYNC (280418)
+        error = validationResults.find(result => !result.status) || false;
 
         this.setState({
             error,
@@ -214,6 +223,37 @@ class Field extends Component {
                 validationResults: newResults
             };
         });
+    };
+
+    sync = () => {
+        //only sync when props is passed with qid
+        if (!this.props.sync) return;
+
+        const errorState = this.state.error;
+        const type = this.props.component;
+        const ret = {};
+        let value = null;
+
+        //sync data if it is validated correctly
+        //remember to double check line 194 if the logic here appears wrong
+        if (errorState === null || !errorState) {
+            if (typeCheck.isExtendedChoice(type)) {
+                //this approach might have shortcomings in building mode
+                //because it won't reflect the changes in options correctly.
+                value = this.state.selected
+                    .map(selected => this.props.options[selected])
+                    .join(', ');
+            } else {
+                value = this.state.value;
+            }
+            ret.valid = true;
+        }
+        //otherwise sync error status if it didn't pass validation
+        else ret.valid = false;
+
+        ret.value = value;
+        ret.qid = this.props.sync;
+        this.props.syncState(this.props.sync, ret);
     };
 
     renderField(type) {
@@ -267,6 +307,7 @@ class Field extends Component {
                     <Date
                         dateType={this.props.dateType}
                         hook={this.validateHook}
+                        valueHook={this.handleDate}
                     />
                 );
             default:
@@ -314,4 +355,4 @@ class Field extends Component {
     }
 }
 
-export default Field;
+export default connect(null, actions)(Field);

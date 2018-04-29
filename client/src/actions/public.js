@@ -11,3 +11,7 @@ export const fetchForm = fid => async dispatch => {
         dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
     }
 };
+
+export const syncState = (qid, data) => {
+    return { type: actionTypes.SYNC_STATE, qid, data };
+};

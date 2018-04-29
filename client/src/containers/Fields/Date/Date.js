@@ -164,6 +164,7 @@ class DateInput extends Component {
 
                 if (payload.date) {
                     const dateString = payload.date.toDateString();
+                    payload.stringDate = dateString;
                     payload.timeStamp = Date.parse(dateString);
                     payload.past = Date.now() - payload.timeStamp > 1;
                     payload.future = Date.now() - payload.timeStamp < 0;

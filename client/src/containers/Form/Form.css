@@ -16,3 +16,13 @@
 .Form__Actions {
     margin-top: 70px;
 }
+
+.Form button {
+    color: white;
+    width: 180px;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 18px;
+    outline: none;
+    border: none;
+}

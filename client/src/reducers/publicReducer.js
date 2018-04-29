@@ -6,7 +6,8 @@ const initialState = {
     error: false,
     errorMsg: null,
     context: null,
-    name: null
+    name: null,
+    responses: []
 };
 
 const publicReducer = (state = initialState, action) => {
@@ -30,6 +31,18 @@ const publicReducer = (state = initialState, action) => {
                 loading: false,
                 error: true,
                 errorMsg: action.response
+            };
+        case actionTypes.SYNC_STATE:
+            const responses = state.responses.slice();
+            //check if the response has occured before
+            const target = responses.findIndex(({ qid }) => qid === action.qid);
+
+            if (target > -1) responses[target] = action.data;
+            else responses.push(action.data);
+
+            return {
+                ...state,
+                responses
             };
         default:
             return { ...state };

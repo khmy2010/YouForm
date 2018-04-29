@@ -276,3 +276,6 @@ export const removeDuplicate = arr =>
 
 export const findByQID = (questions, qid) =>
     questions.find(({ _id }) => qid === _id);
+
+export const findBySequence = (questions, targetSequence) =>
+    questions.find(({ sequence }) => targetSequence === sequence);
