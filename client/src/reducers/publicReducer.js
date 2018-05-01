@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/types';
+import { typeCheck, findByQID } from '../utils';
 
 const initialState = {
     questions: [],
@@ -33,7 +34,19 @@ const publicReducer = (state = initialState, action) => {
                 errorMsg: action.response
             };
         case actionTypes.SYNC_STATE:
-            const responses = state.responses.slice();
+            let responses = state.responses.slice();
+
+            //to ensure the behavious is consistent at <Form />
+            if (typeCheck.isSingleChoice(action.data.type)) {
+                const question = findByQID(state.questions, action.qid);
+                const parsedConnect = JSON.parse(question.connect);
+
+                const qids = parsedConnect.map(({ qid }) => qid);
+                responses = responses.filter(
+                    ({ qid }) => qids.indexOf(qid) === -1
+                );
+            }
+
             //check if the response has occured before
             const target = responses.findIndex(({ qid }) => qid === action.qid);
 
