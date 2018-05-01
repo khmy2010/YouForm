@@ -24,26 +24,6 @@ class Field extends Component {
         };
     }
 
-    // componentWillReceiveProps({ validation, options }) {
-    //     if (validation) {
-    //         Object.keys(validation).forEach(rule => {
-    //             if (this.state.validation[rule] !== validation[rule]) {
-    //                 this.setState({
-    //                     validation
-    //                 });
-    //             }
-    //         });
-    //     }
-
-    //     //reset selected state once the component got rendered
-    //     //todo: ability to parse back options for local storage
-    //     if (options) {
-    //         this.setState({
-    //             selected: []
-    //         });
-    //     }
-    // }
-
     static getDerivedStateFromProps({ validation, options, sync }, prevState) {
         const updateObj = {};
 
