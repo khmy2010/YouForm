@@ -70,15 +70,20 @@ class Form extends Component {
 
     shouldPrev = () => this.state.current > 1;
 
-    shouldNext = qid => {
+    shouldNext = (qid, { isRequired }) => {
         //should return a next object that contains:
         //next, review, submit
         const response = helper.findCurrentResponse(qid, this.props.responses);
 
-        //todo: cater to non-required field
+        /*
+            cater to non-required field:
+            second check will pass IF it is not required and no response has been received.
+            if response is received, it should follow the existing validation rule
+        */
         return {
             isQuestion: this.state.current - this.props.questions.length <= 0,
-            nextable: response && response.valid,
+            nextable:
+                (response && response.valid) || (!response && !isRequired),
             submittable: false
         };
     };
@@ -132,7 +137,7 @@ class Form extends Component {
                 />
                 <Controls
                     back={this.shouldPrev()}
-                    next={this.shouldNext(question._id)}
+                    next={this.shouldNext(question._id, parsedValidation)}
                     navPrev={this.prev}
                     navNext={() => this.next(question._id, question.type)}
                 />
