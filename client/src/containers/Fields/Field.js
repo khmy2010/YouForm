@@ -252,7 +252,15 @@ class Field extends Component {
         else ret.valid = false;
 
         ret.value = value;
+        ret.type = this.props.component;
         ret.qid = this.props.sync;
+
+        //sync selected state
+        const selected = this.state.selected;
+
+        //only sync if something is selected
+        ret.selected = selected.length === 0 ? null : selected[0];
+
         this.props.syncState(this.props.sync, ret);
     };
 

@@ -13,14 +13,18 @@ import './Controls.css';
 */
 const button = ({ text, type, clicked, state }) => {
     let className = ['Form__Controls__Button'];
+    let disabled = false;
 
     if (type) className.push(type);
-    if (state === false) className.push('Form__Controls__Disabled');
+    if (state === false) {
+        disabled = true;
+        className.push('Form__Controls__Disabled');
+    }
 
     className = className.join(' ');
 
     return (
-        <button className={className} onClick={clicked} disabled={!state}>
+        <button className={className} onClick={clicked} disabled={disabled}>
             {text}
         </button>
     );

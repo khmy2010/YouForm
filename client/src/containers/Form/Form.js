@@ -16,9 +16,17 @@ import * as actions from '../../actions/public';
 import './Form.css';
 
 class Form extends Component {
-    state = {
-        current: 0
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            current: 0
+        };
+        this.path = new helper.Path();
+    }
+
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     console.log(nextProps);
+    // }
 
     componentDidMount() {
         const url = window.location.pathname.split('/');
@@ -29,15 +37,33 @@ class Form extends Component {
     prev = () => {
         this.setState((prevState, props) => {
             return {
-                current: prevState.current - 1
+                current: this.path.getHistory(prevState.current)
             };
         });
     };
 
-    next = () => {
-        this.setState((prevState, props) => {
+    next = (qid, type) => {
+        this.setState(({ current }, { questions, responses }) => {
+            //might return undefined because it is not required
+            const response = helper.findCurrentResponse(qid, responses);
+            let next = undefined;
+
+            if (response !== undefined) {
+                const { type, selected } = response;
+                const isSingleChoice = utils.typeCheck.isSingleChoice(type);
+
+                if (current !== 0 && isSingleChoice) {
+                    next = helper.getConnected(questions, selected, current);
+                    const { seqs } = helper.getConnectedAll(questions, current);
+                    //remove any potential path before proceed
+                    this.path.delete(seqs);
+                }
+            }
+
+            this.path.add(next ? next : current + 1);
+
             return {
-                current: prevState.current + 1
+                current: next ? next : current + 1
             };
         });
     };
@@ -49,6 +75,7 @@ class Form extends Component {
         //next, review, submit
         const response = helper.findCurrentResponse(qid, this.props.responses);
 
+        //todo: cater to non-required field
         return {
             isQuestion: this.state.current - this.props.questions.length <= 0,
             nextable: response && response.valid,
@@ -107,7 +134,7 @@ class Form extends Component {
                     back={this.shouldPrev()}
                     next={this.shouldNext(question._id)}
                     navPrev={this.prev}
-                    navNext={this.next}
+                    navNext={() => this.next(question._id, question.type)}
                 />
             </React.Fragment>
         );
