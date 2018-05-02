@@ -32,6 +32,7 @@ app.use(passport.session());
 //routes handler
 require('./routes/authRoutes')(app);
 require('./routes/formRoutes')(app);
+require('./routes/responseRoutes')(app);
 require('./routes/publicRoutes')(app);
 
 //load testing API only in development environment
