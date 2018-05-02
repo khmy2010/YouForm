@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const QuestionSchema = require('./Question');
 const CollabsSchema = require('./Collabs');
 const ContextSchema = require('./Context');
+const ResponseSchema = require('./Response');
 const errors = require('../errors');
 
 const formSchema = new Schema({
@@ -17,7 +18,8 @@ const formSchema = new Schema({
     tests: [QuestionSchema],
     updated: Number,
     online: [Schema.Types.ObjectId],
-    context: [ContextSchema]
+    context: [ContextSchema],
+    responses: [ResponseSchema]
 });
 
 //update timestamp prior save

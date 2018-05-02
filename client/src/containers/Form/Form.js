@@ -19,20 +19,34 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: 0
+            current: 0,
+            submitted: false
         };
         this.path = new helper.Path();
     }
-
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log(nextProps);
-    // }
 
     componentDidMount() {
         const url = window.location.pathname.split('/');
         const fid = url.slice(2).shift();
         this.props.fetchForm(fid);
     }
+
+    trigger = (qid, type, { isQuestion, isSubmitNext }) => {
+        const { submittable, responses } = helper.verifySubmission(
+            this.props.questions,
+            this.props.responses
+        );
+
+        if (isQuestion && !isSubmitNext) {
+            this.next(qid, type);
+            return;
+        }
+
+        if (isSubmitNext && submittable && !this.state.submitted) {
+            this.setState({ submitted: true });
+            helper.submit(this.props.fid, responses);
+        }
+    };
 
     prev = () => {
         this.setState((prevState, props) => {
@@ -73,18 +87,22 @@ class Form extends Component {
     shouldNext = (qid, { isRequired }) => {
         //should return a next object that contains:
         //next, review, submit
-        const response = helper.findCurrentResponse(qid, this.props.responses);
+        const { questions, responses } = this.props;
+        const response = helper.findCurrentResponse(qid, responses);
+        const { submittable } = helper.verifySubmission(questions, responses);
 
         /*
             cater to non-required field:
             second check will pass IF it is not required and no response has been received.
             if response is received, it should follow the existing validation rule
         */
+
         return {
-            isQuestion: this.state.current - this.props.questions.length <= 0,
+            isQuestion: this.state.current - questions.length <= 0,
+            isSubmitNext: this.state.current - questions.length === 0,
             nextable:
                 (response && response.valid) || (!response && !isRequired),
-            submittable: false
+            submittable
         };
     };
 
@@ -129,6 +147,8 @@ class Form extends Component {
             this.props.responses
         );
 
+        const shouldNext = this.shouldNext(question._id, parsedValidation);
+
         const init = { populated: false };
 
         if (response && response.valid) {
@@ -152,9 +172,11 @@ class Form extends Component {
                 />
                 <Controls
                     back={this.shouldPrev()}
-                    next={this.shouldNext(question._id, parsedValidation)}
+                    next={shouldNext}
                     navPrev={this.prev}
-                    navNext={() => this.next(question._id, question.type)}
+                    navNext={() =>
+                        this.trigger(question._id, question.type, shouldNext)
+                    }
                 />
             </React.Fragment>
         );
@@ -183,15 +205,7 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        error: state.public.error,
-        errorMsg: state.public.errorMsg,
-        questions: state.public.questions,
-        context: state.public.context,
-        name: state.public.name,
-        loading: state.public.loading,
-        responses: state.public.responses
-    };
+    return { ...state.public };
 };
 
 export default connect(mapStateToProps, actions)(Form);

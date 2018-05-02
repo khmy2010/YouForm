@@ -140,15 +140,6 @@ module.exports = app => {
         }
     });
 
-    //get form
-    app.get('/api/forms/:fid', validOID, async (req, res) => {
-        try {
-            res.send(await Form.getPublicForm(req.params.fid));
-        } catch ({ code, msg }) {
-            res.status(code).send(msg);
-        }
-    });
-
     //update form context
     app.post('/api/forms/:fid/context', login, validOID, async (req, res) => {
         const body = req.body;

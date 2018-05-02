@@ -8,6 +8,7 @@ const initialState = {
     errorMsg: null,
     context: null,
     name: null,
+    fid: null,
     responses: []
 };
 
@@ -24,7 +25,8 @@ const publicReducer = (state = initialState, action) => {
                 loading: false,
                 name: action.res.data.name,
                 questions: action.res.data.questions,
-                context: action.res.data.context
+                context: action.res.data.context,
+                fid: action.fid
             };
         case actionTypes.FETCH_FORM_FAILED:
             return {

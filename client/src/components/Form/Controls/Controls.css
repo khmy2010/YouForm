@@ -18,3 +18,7 @@
     background-color: #808080;
     cursor: not-allowed;
 }
+
+.Form__Controls__Submittable {
+    background-color: #008374;
+}

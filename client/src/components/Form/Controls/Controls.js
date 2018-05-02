@@ -24,8 +24,16 @@ const controls = props => {
         );
 
     if (props.next) {
-        const { isQuestion, nextable, submittable } = props.next;
-        const text = isQuestion ? 'Next' : 'Submit';
+        const { isQuestion, nextable, isSubmitNext, submittable } = props.next;
+        let text;
+        let style = null;
+
+        if (isQuestion) text = 'Next';
+        if (isSubmitNext) {
+            text = 'Submit';
+            style = 'Form__Controls__Submittable';
+        }
+
         let state = false;
 
         if (isQuestion && nextable) state = true;
@@ -37,6 +45,7 @@ const controls = props => {
                 text={text}
                 clicked={props.navNext}
                 state={state}
+                style={style}
             />
         );
     }
