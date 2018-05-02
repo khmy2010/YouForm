@@ -123,6 +123,20 @@ class Form extends Component {
         if (question.validation)
             parsedValidation = JSON.parse(question.validation);
 
+        //this approach uses the fact that it only mount once per question.
+        const response = helper.findCurrentResponse(
+            question._id,
+            this.props.responses
+        );
+
+        const init = { populated: false };
+
+        if (response && response.valid) {
+            init.value = response.value;
+            init.selected = response.selected;
+            init.populated = true;
+        }
+
         return (
             <React.Fragment>
                 <Field
@@ -134,6 +148,7 @@ class Form extends Component {
                     dateType={question.dateType}
                     sync={question._id}
                     key={question._id}
+                    init={init}
                 />
                 <Controls
                     back={this.shouldPrev()}

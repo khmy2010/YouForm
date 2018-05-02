@@ -22,6 +22,16 @@ class Field extends Component {
             validationResults: [],
             selected: []
         };
+
+        if (this.props.init && this.props.init.populated) {
+            const { value, selected } = this.props.init;
+
+            if (selected !== null) {
+                this.state.selected = [selected];
+            }
+
+            this.state.value = value;
+        }
     }
 
     static getDerivedStateFromProps({ validation, options, sync }, prevState) {
