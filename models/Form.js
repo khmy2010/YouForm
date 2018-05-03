@@ -93,7 +93,7 @@ formSchema.statics.getPublicForm = async function(fid) {
 
 formSchema.statics.getResponses = async function(fid) {
     var form = this;
-    return await form.findById(fid).select('responses');
+    return await form.findById(fid).select('name responses questions');
 };
 
 mongoose.model('form', formSchema);
