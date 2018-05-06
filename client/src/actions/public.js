@@ -16,3 +16,7 @@ export const fetchForm = (fid, store) => async dispatch => {
 export const syncState = (qid, data) => {
     return { type: actionTypes.SYNC_STATE, qid, data };
 };
+
+export const resume = () => {
+    return { type: actionTypes.RESUME_STATE };
+};

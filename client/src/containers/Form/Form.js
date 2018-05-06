@@ -24,7 +24,8 @@ class Form extends Component {
         this.state = {
             current: 0,
             submitted: false,
-            resume: false
+            resume: false,
+            prompt: false
         };
         this.path = new helper.Path();
         this.prompted = false;
@@ -32,8 +33,10 @@ class Form extends Component {
 
     componentDidUpdate() {
         //there is pending local storage to be processed
-        if (this.props.usable === null && this.props.stored !== null) {
-            this.syncLocal.sync(this.props.stored, this.props.questions);
+        //only ask for first time, otherwise infinite loop
+        if (!this.prompted && this.props.loadable) {
+            this.prompted = true;
+            this.setState({ prompt: true });
         }
     }
 
@@ -42,12 +45,22 @@ class Form extends Component {
         const fid = url.slice(2).shift();
         this.store = new Store(`_form_${fid}`);
         this.props.fetchForm(fid, this.store);
-        this.syncLocal = new Sync(this.path, fid, this.store);
+        this.syncLocal = new Sync(this.store);
     }
 
-    resume(stored) {
-        console.log(stored);
-    }
+    resume = () => {
+        this.props.resume();
+        this.setState({
+            prompt: false
+        });
+    };
+
+    discard = () => {
+        this.store.remove();
+        this.setState({
+            prompt: false
+        });
+    };
 
     trigger = (qid, type, { isQuestion, isSubmitNext }) => {
         const { submittable, responses } = helper.verifySubmission(
@@ -124,6 +137,22 @@ class Form extends Component {
             submittable
         };
     };
+
+    renderResume() {
+        if (!this.state.prompt) return null;
+        return (
+            <Modal
+                show
+                title="We saw you before..."
+                okayText="Load"
+                cancelText="Discard"
+                okay={this.resume}
+                cancel={this.discard}
+            >
+                Do you want to load the progress you made at blah?
+            </Modal>
+        );
+    }
 
     renderWelcome() {
         if (this.state.current !== 0) return null;
@@ -216,6 +245,7 @@ class Form extends Component {
         }
         return (
             <div className="Form">
+                {this.renderResume()}
                 {this.renderWelcome()}
                 {this.renderField()}
             </div>

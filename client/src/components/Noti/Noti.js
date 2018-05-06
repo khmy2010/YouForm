@@ -33,7 +33,7 @@ class Noti extends PureComponent {
                             clicked={this.props.cancel}
                         >
                             {this.props.cancelText
-                                ? this.props.okayText
+                                ? this.props.cancelText
                                 : 'Cancel'}
                         </Button>
                     </div>

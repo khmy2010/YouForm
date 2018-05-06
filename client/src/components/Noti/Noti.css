@@ -14,11 +14,19 @@
 }
 
 .Modal__Title {
-    text-align: left;
-    padding: 5px;
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
+}
+
+.Modal__Title,
+.Modal__Content {
+    text-align: left;
+    padding: 5px;
+}
+
+.Modal__Content {
+    font-size: 17px;
 }
 
 .Modal__Actions {

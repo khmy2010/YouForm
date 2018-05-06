@@ -68,19 +68,17 @@ const publicReducer = (state = initialState, action) => {
                 //there is data to be loaded
                 const filtered = checkIntegrity(state.questions, action.data);
 
-                if (filtered.length > 0) {
-                    return {
-                        ...state,
-                        stored: filtered,
-                        loadable: true
-                    };
-                } else {
-                    return {
-                        ...state,
-                        loadable: false
-                    };
-                }
+                return {
+                    ...state,
+                    stored: filtered.length > 0 ? filtered : null,
+                    loadable: filtered.length > 0
+                };
             }
+        case actionTypes.RESUME_STATE:
+            return {
+                ...state,
+                responses: state.stored
+            };
         default:
             return { ...state };
     }
