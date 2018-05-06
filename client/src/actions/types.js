@@ -26,6 +26,7 @@ export const FETCH_FORM_START = 'FETCH_FORM_START';
 export const FETCH_FORM_SUCCESS = 'FETCH_FORM_SUCCESS';
 export const FETCH_FORM_FAILED = 'FETCH_FORM_FAILED';
 export const SYNC_STATE = 'SYNC_STATE';
+export const LOAD_STATE = 'LOAD_STATE';
 
 //context related
 export const UPDATE_CONTEXT = 'UPDATE_CONTEXT';

@@ -1,0 +1,39 @@
+.Modal__Noti {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 3px 3px 3px 3px;
+    padding: 15px 10px;
+    padding-bottom: 5px;
+    left: 15%;
+    top: 30%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
+
+.Modal__Title {
+    text-align: left;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.Modal__Actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Modal__Actions > button.ContextButton {
+    width: 100px;
+}
+
+@media (min-width: 600px) {
+    .Modal__Noti {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}

@@ -27,7 +27,7 @@ class Field extends Component {
             const { value, selected } = this.props.init;
 
             if (selected !== null) {
-                this.state.selected = [selected];
+                this.state.selected = selected;
             }
 
             this.state.value = value;
@@ -249,7 +249,7 @@ class Field extends Component {
         const selected = this.state.selected;
 
         //only sync if something is selected
-        ret.selected = selected.length === 0 ? null : selected[0];
+        ret.selected = selected.length === 0 ? null : selected;
 
         this.props.syncState(this.props.sync, ret);
     };

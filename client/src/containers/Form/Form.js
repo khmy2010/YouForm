@@ -7,10 +7,13 @@ import Welcome from '../../components/Form/Welcome/Welcome';
 import Field from '../Fields/Field';
 
 import Button from '../../components/ContextButton/CButton';
+import Modal from '../../components/Noti/Noti';
 import Controls from '../../components/Form/Controls/Controls';
 
 import * as utils from '../../utils';
 import * as helper from './helper';
+import Store from './Store';
+import Sync from './Sync';
 import * as actions from '../../actions/public';
 
 import './Form.css';
@@ -20,15 +23,30 @@ class Form extends Component {
         super(props);
         this.state = {
             current: 0,
-            submitted: false
+            submitted: false,
+            resume: false
         };
         this.path = new helper.Path();
+        this.prompted = false;
+    }
+
+    componentDidUpdate() {
+        //there is pending local storage to be processed
+        if (this.props.usable === null && this.props.stored !== null) {
+            this.syncLocal.sync(this.props.stored, this.props.questions);
+        }
     }
 
     componentDidMount() {
         const url = window.location.pathname.split('/');
         const fid = url.slice(2).shift();
-        this.props.fetchForm(fid);
+        this.store = new Store(`_form_${fid}`);
+        this.props.fetchForm(fid, this.store);
+        this.syncLocal = new Sync(this.path, fid, this.store);
+    }
+
+    resume(stored) {
+        console.log(stored);
     }
 
     trigger = (qid, type, { isQuestion, isSubmitNext }) => {
@@ -75,6 +93,7 @@ class Form extends Component {
             }
 
             this.path.add(next ? next : current + 1);
+            this.syncLocal.save(questions, responses);
 
             return {
                 current: next ? next : current + 1

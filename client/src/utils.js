@@ -279,3 +279,74 @@ export const findByQID = (questions, qid) =>
 
 export const findBySequence = (questions, targetSequence) =>
     questions.find(({ sequence }) => targetSequence === sequence);
+
+/*
+    Source:
+    https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript/5344074#5344074
+*/
+export const deepClone = ori => JSON.parse(JSON.stringify(ori));
+
+export const checkIntegrity = (latest, { map, questions, responses }) => {
+    /*
+        valid(pin): true
+        value(pin): "dfsdfdsfsd"
+        type(pin): "LONG_TEXT"
+        qid(pin): "5ae7d56e174e03033af1b65f"
+        selected(pin): null
+    */
+
+    //check if the questions has changed since saved
+    return deepClone(responses).reduce((acc, response) => {
+        const { value, qid, selected } = response;
+
+        //first check: check if the question still exist
+        const latestQuestion = findByQID(latest, qid);
+        if (latestQuestion === undefined) return acc;
+
+        const savedQuestion = findByQID(questions, qid);
+
+        const latestValidation = JSON.parse(latestQuestion.validation);
+        const savedValidation = JSON.parse(savedQuestion.validation);
+
+        let res = true;
+        let processed = { ...response };
+
+        //do checking for choice question
+        if (typeCheck.isExtendedChoice(savedQuestion.type)) {
+            //check if option name has changed
+            const savedOptions = savedQuestion.options;
+            const latestOptions = latestQuestion.options;
+
+            if (savedOptions.length !== latestOptions.length) res = false;
+            else {
+                //there might be just a change of option name
+                let modified = [];
+                selected.forEach(option => {
+                    modified.push(latestOptions[option]);
+                });
+                modified = modified.join(', ');
+                //replace it with newly changed value if it is not the same
+                if (modified !== value) processed.value = modified;
+            }
+        }
+        //do checking for non-logic attached question
+        else {
+            //check for min char count
+            const latestMinCharCount = latestValidation.minCharCount;
+            const savedMinCharCount = savedValidation.minCharCount;
+            if (latestMinCharCount !== savedMinCharCount) res = false;
+
+            //check for isRequired
+            //if it is not required at latest, then it is fine
+            const latestRequired = latestValidation.isRequired;
+            const savedRequired = savedValidation.isRequired;
+            if (latestRequired !== savedRequired) {
+                if (latestRequired && !savedRequired) res = false;
+            }
+        }
+
+        if (res) acc.push(processed);
+
+        return acc;
+    }, []);
+};

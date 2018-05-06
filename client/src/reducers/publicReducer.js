@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/types';
-import { typeCheck, findByQID } from '../utils';
+import { typeCheck, findByQID, checkIntegrity } from '../utils';
 
 const initialState = {
     questions: [],
@@ -9,6 +9,8 @@ const initialState = {
     context: null,
     name: null,
     fid: null,
+    stored: null,
+    loadable: null,
     responses: []
 };
 
@@ -59,6 +61,26 @@ const publicReducer = (state = initialState, action) => {
                 ...state,
                 responses
             };
+        case actionTypes.LOAD_STATE:
+            //there is no data to be loaded
+            if (action.data === null) return { ...state, loadable: false };
+            else {
+                //there is data to be loaded
+                const filtered = checkIntegrity(state.questions, action.data);
+
+                if (filtered.length > 0) {
+                    return {
+                        ...state,
+                        stored: filtered,
+                        loadable: true
+                    };
+                } else {
+                    return {
+                        ...state,
+                        loadable: false
+                    };
+                }
+            }
         default:
             return { ...state };
     }
