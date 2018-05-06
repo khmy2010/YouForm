@@ -19,8 +19,13 @@ export const getConnected = (questions, selected, current) => {
         return;
     }
 
-    const qid = JSON.parse(connect).find(({ key }) => key === selected).qid;
-    return findByQID(questions, qid).sequence;
+    //it might not be connected afterall
+    const connected = JSON.parse(connect).find(
+        ({ key }) => key === selected[0]
+    );
+
+    //selected is an array because need to ensure it is consistent across single choice and multiple choice
+    return connected ? findByQID(questions, connected.qid).sequence : false;
 };
 
 export const getConnectedAll = (questions, current) => {
