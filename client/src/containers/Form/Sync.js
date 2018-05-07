@@ -18,6 +18,7 @@ class Sync {
             });
 
         this.store.set({
+            timestamp: Date.now(),
             questions: filtered,
             responses
         });

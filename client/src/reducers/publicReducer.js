@@ -11,7 +11,8 @@ const initialState = {
     fid: null,
     stored: null,
     loadable: null,
-    responses: []
+    responses: [],
+    savedAt: null
 };
 
 const publicReducer = (state = initialState, action) => {
@@ -71,7 +72,8 @@ const publicReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     stored: filtered.length > 0 ? filtered : null,
-                    loadable: filtered.length > 0
+                    loadable: filtered.length > 0,
+                    savedAt: action.data.timestamp
                 };
             }
         case actionTypes.RESUME_STATE:

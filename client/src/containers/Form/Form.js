@@ -140,6 +140,8 @@ class Form extends Component {
 
     renderResume() {
         if (!this.state.prompt) return null;
+        const time = new Date(this.props.savedAt);
+
         return (
             <Modal
                 show
@@ -149,7 +151,8 @@ class Form extends Component {
                 okay={this.resume}
                 cancel={this.discard}
             >
-                Do you want to load the progress you made at blah?
+                Do you want to load the progress you made at
+                {' ' + time.toDateString()}, during {time.toTimeString()}?
             </Modal>
         );
     }
