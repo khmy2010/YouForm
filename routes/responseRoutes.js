@@ -104,7 +104,7 @@ module.exports = app => {
     });
 
     app.post('/api/responses/poll', login, validOID, async (req, res) => {
-        const { fid, after } = req.body;
+        const { fid, before, after } = req.body;
         try {
             // const data = await Form.find({
             //     responses: { $elemMatch: { timestamp: { $gte: after } } }
@@ -113,9 +113,9 @@ module.exports = app => {
             const data = await Form.findById(fid).select('responses');
             const { responses } = data.toObject();
 
-            const filtered = responses.filter(
-                ({ timestamp }) => timestamp >= after
-            );
+            const filtered = responses.filter(({ timestamp }, index) => {
+                return timestamp >= before && timestamp <= after;
+            });
 
             res.send(filtered);
         } catch (error) {

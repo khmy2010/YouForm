@@ -24,10 +24,19 @@ class Responses extends Component {
                 responses: data.responses
             });
 
-            this.poll = new Poll(this.fid);
+            this.poll = new Poll(this.fid, this.sync);
             this.poll.start();
         });
     }
+
+    //this function assumes that it is a successful ajax
+    sync = data => {
+        if (data.length === 0) return null;
+
+        this.setState((prevState, props) => {
+            return { responses: prevState.responses.concat(data) };
+        });
+    };
 
     render() {
         return (
