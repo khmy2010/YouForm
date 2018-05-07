@@ -11,14 +11,6 @@ module.exports = app => {
     //user attempt to download responses
     app.get('/api/responses/export/:fid', login, validOID, async (req, res) => {
         try {
-            /*
-            const url = 'http://localhost:3000/api/responses/export/5ad6d6e1512fe80432ab815d';
-            const link = document.createElement('a');
-            link.href = url;
-            document.body.appendChild(link);
-            link.click();
-            */
-
             const workbook = new excel.Workbook({
                 defaultFont: {
                     size: 12,
@@ -100,6 +92,34 @@ module.exports = app => {
         } catch (error) {
             console.error(error);
             res.status(500).send('Unable to generate Spreadsheet.');
+        }
+    });
+
+    app.get('/api/responses/:fid', login, validOID, async (req, res) => {
+        try {
+            res.send(await Form.findById(req.params.fid).select('responses'));
+        } catch (error) {
+            res.status(400).send('Unable to get responses');
+        }
+    });
+
+    app.post('/api/responses/poll', login, validOID, async (req, res) => {
+        const { fid, after } = req.body;
+        try {
+            // const data = await Form.find({
+            //     responses: { $elemMatch: { timestamp: { $gte: after } } }
+            // });
+            // const data = await Form.find({ _id: fid, 'responses' });
+            const data = await Form.findById(fid).select('responses');
+            const { responses } = data.toObject();
+
+            const filtered = responses.filter(
+                ({ timestamp }) => timestamp >= after
+            );
+
+            res.send(filtered);
+        } catch (error) {
+            res.status(500).send(`Unable to get responses: ${error}`);
         }
     });
 };

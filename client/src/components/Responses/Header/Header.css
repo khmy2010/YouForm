@@ -1,0 +1,16 @@
+.Responses__Header > .Title__Mont {
+    font-size: 18px;
+}
+
+.Header__Updated {
+    font-size: 15px;
+    margin-left: 30px;
+    color: #6d6e70;
+    font-style: italic;
+}
+
+.Responses__Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

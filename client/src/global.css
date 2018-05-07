@@ -59,3 +59,8 @@ li {
     margin: 0;
     padding: 0;
 }
+
+.Title__Mont {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
