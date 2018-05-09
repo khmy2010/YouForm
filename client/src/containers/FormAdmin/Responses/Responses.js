@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import { Poll } from './helper';
+import { connect } from 'react-redux';
+import { Poll, diff, mapResponsesToQuestions } from './helper';
 
 import './Responses.css';
 import Stats from '../../../components/Responses/Stats/Stats';
 import Header from '../../../components/Responses/Header/Header';
+import Field from './Field/Field';
 
 class Responses extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: true,
-            responses: []
+            responses: [],
+            updated: Date.now(),
+            updatedText: diff(Date.now())
         };
     }
 
@@ -24,28 +28,63 @@ class Responses extends Component {
                 responses: data.responses
             });
 
-            this.poll = new Poll(this.fid, this.sync);
+            this.poll = new Poll(this.fid, this.sync, this.updateTimestampText);
             this.poll.start();
         });
     }
 
-    //this function assumes that it is a successful ajax
-    sync = data => {
+    componentWillUnmount() {
+        this.poll.end();
+    }
+
+    //this function assumes that it is an ajax with data retrieved
+    sync = (data, timestamp) => {
         if (data.length === 0) return null;
 
         this.setState((prevState, props) => {
-            return { responses: prevState.responses.concat(data) };
+            return {
+                responses: prevState.responses.concat(data),
+                updated: timestamp
+            };
         });
     };
+
+    updateTimestampText = text => {
+        if (this.state.updatedText !== text) {
+            this.setState({ updatedText: text });
+        }
+    };
+
+    renderResponses() {
+        if (this.props.loading) return null;
+        const { questions } = this.props;
+        const map = mapResponsesToQuestions(questions, this.state.responses);
+        console.log('Responses.js: ', map);
+
+        return questions.map(question => (
+            <Field
+                key={question._id}
+                {...question}
+                responses={map[question._id]}
+            />
+        ));
+    }
 
     render() {
         return (
             <div className="Responses">
-                <Stats />
-                <Header />
+                <Stats responses={this.state.responses.length} />
+                <Header updated={diff(this.state.updated)} />
+                <div className="Responses__Summary">
+                    {this.renderResponses()}
+                </div>
             </div>
         );
     }
 }
 
-export default Responses;
+const mapStateToProps = state => {
+    return { questions: state.form.questions, loading: state.form.loading };
+};
+
+export default connect(mapStateToProps)(Responses);
