@@ -7,6 +7,7 @@ import { transformData } from './helper';
 
 import Text from '../Text/Text';
 import Bar from '../Bar/Bar';
+import Type from '../../../../components/Responses/Type/Type';
 
 //this is a wrapper class.
 class Field extends Component {
@@ -39,7 +40,12 @@ class Field extends Component {
             message = `${count} out of ${total} person answered this question.`;
         else if (count === total) message = `Everyone answered this question.`;
 
-        return <div className="RField__Stats">{message}</div>;
+        return (
+            <div className="RField__Stats">
+                {message}
+                <Type type={this.props.type} />
+            </div>
+        );
     }
 
     render() {
@@ -47,7 +53,7 @@ class Field extends Component {
             <section className="Responses__Field">
                 <div className="RField__Sequence">{this.props.sequence}</div>
                 <div className="RField__Wrapper">
-                    <div className="RField__Title">{this.props.title}?</div>
+                    <div className="RField__Title">{this.props.title}</div>
                     {this.renderStats()}
                     <div className="RField__Summary">
                         {typeCheck.isExtendedChoice(this.props.type)

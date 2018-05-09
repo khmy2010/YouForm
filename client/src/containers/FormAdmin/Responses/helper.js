@@ -11,7 +11,7 @@ export class Poll {
         this.fid = fid;
         this.url = '/api/responses';
         this.poll = null;
-        this.interval = 5000; //in ms
+        this.interval = 500000; //in ms
         this.sync = sync;
         this.before = Date.now();
         this.update = update;

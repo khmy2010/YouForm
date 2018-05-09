@@ -77,7 +77,6 @@ class Responses extends Component {
     }
 
     renderCountSummary() {
-        //[{}]
         const { questions } = this.props;
         const { responses } = this.state;
 
