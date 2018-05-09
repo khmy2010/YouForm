@@ -1,0 +1,9 @@
+.Response__Summary__Text {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 0.4px solid rgba(211, 211, 211, 0.5);
+    width: auto;
+    word-wrap: break-word;
+    font-size: 18px;
+    color: #36454f;
+}

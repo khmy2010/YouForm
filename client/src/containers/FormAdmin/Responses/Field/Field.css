@@ -1,0 +1,38 @@
+.Responses__Field {
+    display: grid;
+    border: 1px solid #eee;
+    padding: 20px;
+    margin-bottom: 30px;
+    grid-template-columns: 45px auto;
+    min-height: 250px;
+}
+
+.RField__Wrapper {
+    display: grid;
+    grid-template-rows: 40px 25px auto;
+}
+
+.RField__Title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.RField__Sequence {
+    background-color: #3369e7;
+    color: white;
+    height: 28px;
+    width: 28px;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
+
+.RField__Stats {
+    font-size: 14px;
+    margin-top: -15px;
+    color: gray;
+}
+
+.RField__Summary {
+    overflow-y: scroll;
+}
