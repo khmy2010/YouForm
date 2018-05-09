@@ -8,6 +8,7 @@ import { transformData } from './helper';
 import Text from '../Text/Text';
 import Bar from '../Bar/Bar';
 import Type from '../../../../components/Responses/Type/Type';
+import NoResponse from '../../../../components/Responses/NoResponse/NoResponse';
 
 //this is a wrapper class.
 class Field extends Component {
@@ -48,6 +49,13 @@ class Field extends Component {
         );
     }
 
+    renderContent() {
+        if (this.props.count === 0) return <NoResponse />;
+        return typeCheck.isExtendedChoice(this.props.type)
+            ? this.renderGraph()
+            : this.renderTextResponse();
+    }
+
     render() {
         return (
             <section className="Responses__Field">
@@ -56,9 +64,7 @@ class Field extends Component {
                     <div className="RField__Title">{this.props.title}</div>
                     {this.renderStats()}
                     <div className="RField__Summary">
-                        {typeCheck.isExtendedChoice(this.props.type)
-                            ? this.renderGraph()
-                            : this.renderTextResponse()}
+                        {this.renderContent()}
                     </div>
                 </div>
             </section>

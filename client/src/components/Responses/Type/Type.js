@@ -47,7 +47,7 @@ const type = ({ type }) => {
             break;
         case CONSTS.TYPE.SHORT_TEXT:
             setType('Short Text');
-            setBG('#e8d4a2');
+            setBG('#8e43e7');
             break;
         case CONSTS.TYPE.SINGLE_CHOICE:
             setType('Single Choice');

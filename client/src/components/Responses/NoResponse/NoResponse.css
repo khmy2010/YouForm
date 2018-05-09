@@ -1,0 +1,20 @@
+.RField__NoResponse {
+    color: #434343;
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 30% auto;
+    align-items: center;
+}
+
+.RField__NoResponse h4 {
+    font-size: 18px;
+}
+
+.RField__NoResponse p {
+    color: #666666;
+    margin-top: -8px;
+}
+
+.RField__NoResponse span {
+    font-weight: 700;
+}
