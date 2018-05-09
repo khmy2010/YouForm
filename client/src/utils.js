@@ -350,3 +350,7 @@ export const checkIntegrity = (latest, { map, questions, responses }) => {
         return acc;
     }, []);
 };
+
+export const getOptions = options => {
+    return options.map(({ option }) => option);
+};

@@ -58,14 +58,17 @@ class Responses extends Component {
     renderResponses() {
         if (this.props.loading) return null;
         const { questions } = this.props;
-        const map = mapResponsesToQuestions(questions, this.state.responses);
-        console.log('Responses.js: ', map);
+        const { responses } = this.state;
+
+        const map = mapResponsesToQuestions(questions, responses);
+        console.log(map);
 
         return questions.map(question => (
             <Field
                 key={question._id}
                 {...question}
                 responses={map[question._id]}
+                totalResponses={responses.length}
             />
         ));
     }
