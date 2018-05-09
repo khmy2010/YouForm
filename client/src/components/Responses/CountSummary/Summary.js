@@ -25,7 +25,11 @@ const questionSummary = ({ data, total }) => {
             data={data}
             margin={{ top: 5, right: 30, left: 20, bottom: 10 }}
         >
-            <XAxis dataKey="sequence" tickFormatter={formatXAxis} />
+            <XAxis
+                dataKey="sequence"
+                tickFormatter={formatXAxis}
+                allowDecimals={false}
+            />
             <YAxis />
             <CartesianGrid strokeDasharray="2 2" />
             <Tooltip separator=" received: " formatter={formatTooltip} />
