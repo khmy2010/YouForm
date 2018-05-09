@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shortid from 'shortid';
 
 import Backdrop from '../../../components/Backdrop/Backdrop';
 import Button from '../../../components/Button/Button';
@@ -11,7 +12,8 @@ import {
     typeCheck,
     isValidLogic,
     scanLogic,
-    purify
+    purify,
+    getOptions
 } from '../../../utils';
 import { VBUILD, validateBuild } from './Validate';
 
@@ -56,7 +58,7 @@ class QuestionBuilder extends Component {
             }
 
             if (typeCheck.isMultipleChoice(type)) {
-                this.state.options = [''];
+                this.state.options = [{ oid: shortid.generate(), option: '' }];
                 this.state.validation = {
                     ...this.state.validation,
                     minChoice: '',
@@ -65,12 +67,15 @@ class QuestionBuilder extends Component {
             }
 
             if (typeCheck.isSingleChoice(type)) {
-                this.state.options = [''];
+                this.state.options = [{ oid: shortid.generate(), option: '' }];
                 this.state.connect = [];
             }
 
             if (typeCheck.isYesNo(type)) {
-                this.state.options = ['Yes', 'No'];
+                this.state.options = [
+                    { oid: shortid.generate(), option: 'Yes' },
+                    { oid: shortid.generate(), option: 'No' }
+                ];
             }
 
             if (typeCheck.isDate(type)) {
@@ -91,7 +96,7 @@ class QuestionBuilder extends Component {
             };
 
             if (typeCheck.isExtendedChoice(this.props.type)) {
-                this.state.options = data.options;
+                this.state.options = JSON.parse(data.options);
             }
 
             if (typeCheck.isDate(type)) {
@@ -160,7 +165,7 @@ class QuestionBuilder extends Component {
     addFlexInput = () => {
         latestFlex = true;
         const newOptions = this.state.options.slice();
-        newOptions.push('');
+        newOptions.push({ oid: shortid.generate(), option: '' });
         this.setState({
             options: newOptions
         });
@@ -188,7 +193,7 @@ class QuestionBuilder extends Component {
     changeFlexInput = (event, index) => {
         latestFlex = false;
         const newOptions = this.state.options.slice();
-        newOptions[index] = event.target.value;
+        newOptions[index].option = event.target.value;
 
         this.setState({
             options: newOptions
@@ -227,7 +232,7 @@ class QuestionBuilder extends Component {
         //because there might be empty one
         if (typeCheck.isMultipleChoice(this.props.type)) {
             const options = question.options.filter(
-                option => option.trim().length !== 0
+                ({ option }) => option.trim().length !== 0
             );
             question.options = options;
 
@@ -255,6 +260,10 @@ class QuestionBuilder extends Component {
 
         if (this.state.connect) {
             question.connect = JSON.stringify(this.state.connect);
+        }
+
+        if (question.options) {
+            question.options = JSON.stringify(this.state.options);
         }
 
         //verify logics
@@ -374,7 +383,7 @@ class QuestionBuilder extends Component {
             <Logic
                 type={this.props.type}
                 questions={this.props.questions}
-                options={this.state.options}
+                options={getOptions(this.state.options)}
                 connect={checked}
                 sequence={sequence}
                 onAdd={this.addLogic}
@@ -421,7 +430,7 @@ class QuestionBuilder extends Component {
                                 inputChanged={this.handleInputChange}
                                 minChoice={this.state.validation.minChoice}
                                 maxChoice={this.state.validation.maxChoice}
-                                options={this.state.options}
+                                options={getOptions(this.state.options)}
                                 addFlexInput={this.addFlexInput}
                                 removeFlexInput={this.removeFlexInput}
                                 changeFlexInput={this.changeFlexInput}

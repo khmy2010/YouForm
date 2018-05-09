@@ -6,7 +6,7 @@ const questionSchema = new Schema({
     type: String,
     title: String,
     description: String,
-    options: [],
+    options: String,
     dateType: String,
     validation: String,
     connect: String

@@ -11,7 +11,7 @@ export class Poll {
         this.fid = fid;
         this.url = '/api/responses';
         this.poll = null;
-        this.interval = 500000; //in ms
+        this.interval = 5000; //in ms
         this.sync = sync;
         this.before = Date.now();
         this.update = update;
@@ -84,10 +84,28 @@ export const mapResponsesToQuestions = (questions, responses) => {
     });
 
     responses.forEach(response => {
-        JSON.parse(response.data).forEach(({ qid, value }) => {
+        JSON.parse(response.data).forEach(({ qid, value, selectedOID }) => {
             if (!exist(available, qid)) return false;
-            ret[qid] = ret[qid].concat(value);
+
+            ret[qid] = selectedOID
+                ? ret[qid].concat(selectedOID)
+                : ret[qid].concat(value);
         });
+    });
+
+    return ret;
+};
+
+export const countResponses = (questions, responses) => {
+    const ret = {};
+
+    questions.forEach(({ _id }) => {
+        ret[_id] = responses.reduce((acc, { data }) => {
+            JSON.parse(data).forEach(({ qid }) => {
+                if (qid === _id) acc += 1;
+            });
+            return acc;
+        }, 0);
     });
 
     return ret;

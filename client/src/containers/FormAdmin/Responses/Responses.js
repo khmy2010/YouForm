@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Poll, diff, mapResponsesToQuestions } from './helper';
+import { Poll, diff, mapResponsesToQuestions, countResponses } from './helper';
 
 import './Responses.css';
 import Stats from '../../../components/Responses/Stats/Stats';
 import Header from '../../../components/Responses/Header/Header';
+import CountSummary from '../../../components/Responses/CountSummary/Summary';
 import Field from './Field/Field';
+import { findByQID } from '../../../utils';
 
 class Responses extends Component {
     constructor(props) {
@@ -61,7 +63,7 @@ class Responses extends Component {
         const { responses } = this.state;
 
         const map = mapResponsesToQuestions(questions, responses);
-        console.log(map);
+        const count = countResponses(questions, responses);
 
         return questions.map(question => (
             <Field
@@ -69,14 +71,35 @@ class Responses extends Component {
                 {...question}
                 responses={map[question._id]}
                 totalResponses={responses.length}
+                count={count[question._id]}
             />
         ));
+    }
+
+    renderCountSummary() {
+        //[{}]
+        const { questions } = this.props;
+        const { responses } = this.state;
+
+        const count = countResponses(questions, responses);
+        const data = Object.keys(count).map(qid => {
+            const { sequence } = findByQID(questions, qid);
+            return { sequence, responses: count[qid] };
+        });
+
+        return <CountSummary data={data} total={responses.length} />;
     }
 
     render() {
         return (
             <div className="Responses">
                 <Stats responses={this.state.responses.length} />
+                <div className="Responses__Count__Summary">
+                    <h3 className="Title__Mont">
+                        Responses Count by Questions
+                    </h3>
+                    {this.renderCountSummary()}
+                </div>
                 <Header updated={diff(this.state.updated)} />
                 <div className="Responses__Summary">
                     {this.renderResponses()}

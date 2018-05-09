@@ -9,9 +9,14 @@ const preview = ({ questions, onEdit, onDelete }) => {
     if (questions.length !== 0) {
         transformedQuestions = questions.map((question, index) => {
             let parsedValidation = {};
+            let parsedOptions = {};
 
             if (question.validation) {
                 parsedValidation = JSON.parse(question.validation);
+            }
+
+            if (question.options) {
+                parsedOptions = JSON.parse(question.options);
             }
 
             return (
@@ -25,7 +30,7 @@ const preview = ({ questions, onEdit, onDelete }) => {
                         title={question.title}
                         description={question.description}
                         validation={parsedValidation}
-                        options={question.options}
+                        options={parsedOptions}
                         dateType={question.dateType}
                     />
                 </PreviewEditor>

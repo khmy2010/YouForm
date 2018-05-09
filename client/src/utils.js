@@ -314,8 +314,10 @@ export const checkIntegrity = (latest, { map, questions, responses }) => {
         //do checking for choice question
         if (typeCheck.isExtendedChoice(savedQuestion.type)) {
             //check if option name has changed
-            const savedOptions = savedQuestion.options;
-            const latestOptions = latestQuestion.options;
+            const savedOptions = getOptions(JSON.parse(savedQuestion.options));
+            const latestOptions = getOptions(
+                JSON.parse(latestQuestion.options)
+            );
 
             if (savedOptions.length !== latestOptions.length) res = false;
             else {
@@ -352,5 +354,10 @@ export const checkIntegrity = (latest, { map, questions, responses }) => {
 };
 
 export const getOptions = options => {
-    return options.map(({ option }) => option);
+    return options ? options.map(({ option }) => option) : null;
+};
+
+//given an index, get the OID
+export const getOID = (options, index) => {
+    return options ? options[index].oid : null;
 };

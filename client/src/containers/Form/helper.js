@@ -156,7 +156,7 @@ const reduceResponses = (questions, responses) => {
 
         if (parsed.isRequired && !response) return verified;
 
-        const { qid, value, selected } = response;
+        const { qid, value, selected, selectedOID } = response;
 
         if (parsed.minCharCount) {
             const min = parseInt(parsed.minCharCount, 10);
@@ -204,7 +204,8 @@ const reduceResponses = (questions, responses) => {
             }
         }
 
-        verified.push({ qid, value });
+        if (selectedOID === null) verified.push({ qid, value });
+        else verified.push({ qid, value, selectedOID });
 
         return verified;
     }, []);

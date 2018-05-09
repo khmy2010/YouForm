@@ -8,7 +8,7 @@ import Choices from './Choices/Choices';
 import Date from './Date/Date';
 import Paragraph from './Paragraph/Paragraph';
 import * as checker from './checker';
-import { CONSTS, typeCheck } from '../../utils';
+import { CONSTS, typeCheck, getOptions, getOID } from '../../utils';
 import './Field.css';
 
 class Field extends Component {
@@ -20,7 +20,8 @@ class Field extends Component {
             error: null,
             validation: this.props.validation,
             validationResults: [],
-            selected: []
+            selected: [],
+            selectedOID: []
         };
 
         if (this.props.init && this.props.init.populated) {
@@ -49,6 +50,7 @@ class Field extends Component {
         //todo: ability to parse back options for local storage
         if (options && !sync) {
             updateObj.selected = [];
+            updateObj.selectedOID = [];
         }
 
         if (Object.keys(updateObj).length === 0) return null;
@@ -79,24 +81,34 @@ class Field extends Component {
 
     handleSelection = index => {
         let newSelected = this.state.selected.slice();
+        let newSelectedOID = this.state.selectedOID.slice();
+        const chosenQID = getOID(this.props.options, index);
 
         if (this.state.selected.length === 0) {
             newSelected.push(index);
+            newSelectedOID.push(chosenQID);
         } else {
             const foundIndex = this.state.selected.findIndex(element => {
                 return index === element;
             });
 
-            if (foundIndex > -1) newSelected.splice(foundIndex, 1);
-            else {
+            if (foundIndex > -1) {
+                newSelected.splice(foundIndex, 1);
+                newSelectedOID.splice(foundIndex, 1);
+            } else {
                 if (typeCheck.isAloneChoice(this.props.component)) {
                     newSelected = [];
+                    newSelectedOID = [];
                 }
                 newSelected.push(index);
+                newSelectedOID.push(chosenQID);
             }
         }
 
-        this.setState({ selected: newSelected }, this.sync);
+        this.setState(
+            { selected: newSelected, selectedOID: newSelectedOID },
+            this.sync
+        );
 
         this.validate(this.state.value, newSelected);
     };
@@ -231,7 +243,7 @@ class Field extends Component {
                 //this approach might have shortcomings in building mode
                 //because it won't reflect the changes in options correctly.
                 value = this.state.selected
-                    .map(selected => this.props.options[selected])
+                    .map(selected => this.props.options[selected].option)
                     .join(', ');
             } else {
                 value = this.state.value;
@@ -248,8 +260,12 @@ class Field extends Component {
         //sync selected state
         const selected = this.state.selected;
 
+        //sync OID as well
+        const selectedOID = this.state.selectedOID;
+
         //only sync if something is selected
         ret.selected = selected.length === 0 ? null : selected;
+        ret.selectedOID = selectedOID.length === 0 ? null : selectedOID;
 
         this.props.syncState(this.props.sync, ret);
     };
@@ -293,7 +309,7 @@ class Field extends Component {
                 return (
                     <Choices
                         type={type}
-                        options={this.props.options}
+                        options={getOptions(this.props.options)}
                         clicked={this.handleSelection}
                         keys={this.state.selected}
                         min={this.state.validation.minChoice}

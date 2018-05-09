@@ -192,6 +192,10 @@ class Form extends Component {
         if (question.validation)
             parsedValidation = JSON.parse(question.validation);
 
+        let parsedOptions = {};
+
+        if (question.options) parsedOptions = JSON.parse(question.options);
+
         //this approach uses the fact that it only mount once per question.
         const response = helper.findCurrentResponse(
             question._id,
@@ -215,7 +219,7 @@ class Form extends Component {
                     title={question.title}
                     description={question.description}
                     validation={parsedValidation}
-                    options={question.options}
+                    options={parsedOptions}
                     dateType={question.dateType}
                     sync={question._id}
                     key={question._id}
