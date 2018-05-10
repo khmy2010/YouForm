@@ -10,9 +10,8 @@ import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
 import Test from './components/Test';
 import Form from './containers/Form/Form';
+import Discovery from './containers/Discovery/Discovery';
 import DevTools from './components/DevTools/DevTools';
-
-const Discovery = () => <h1>Discovery Page</h1>;
 
 //should take login out from /app route, since it is not protected route
 const siteRoutes = props => {

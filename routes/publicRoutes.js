@@ -30,4 +30,51 @@ module.exports = app => {
         await form.save();
         res.send(subdoc);
     });
+
+    app.get('/api/discover', async (req, res) => {
+        const forms = await Form.find({ status: true })
+            .populate('owner')
+            .select(
+                'name owner updated questions startingDate endingDate context _id'
+            );
+        // console.log(forms);
+
+        const filtered = forms.reduce((acc, form) => {
+            const {
+                name,
+                owner,
+                updated,
+                questions,
+                startingDate,
+                endingDate,
+                context,
+                _id
+            } = form;
+
+            //check form starting date
+            if (startingDate) {
+                //haven't start yet, don't need to include in discovery.
+                if (Date.now() - startingDate < 0) return acc;
+            }
+
+            if (endingDate) {
+                if (Date.now() - endingDate > 0) return acc;
+            }
+
+            const obj = {
+                name,
+                updated,
+                context,
+                owner: owner.name,
+                length: questions.length,
+                fid: _id
+            };
+
+            acc.push(obj);
+
+            return acc;
+        }, []);
+
+        res.send(filtered);
+    });
 };

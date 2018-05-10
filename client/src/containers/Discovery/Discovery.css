@@ -1,0 +1,61 @@
+.Discovery__Header {
+    background-color: #298fca;
+    width: 100%;
+    height: 300px;
+    color: white;
+}
+
+.Discovery__Header h1 {
+    margin: 0;
+}
+
+.Discover__Nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Discover__Nav div {
+    height: 40px;
+    border: 1px solid white;
+    border-radius: 3px 3px 3px 3px;
+    text-align: center;
+    line-height: 40px;
+    margin: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.Nav__Home {
+    width: 70px;
+}
+
+.Nav__CTA {
+    width: 130px;
+}
+
+.Discovery__Header {
+    display: grid;
+    grid-template-rows: 25% auto;
+}
+
+.Discover__Header__Content {
+    text-align: center;
+    margin: auto 0;
+}
+
+.Discover__Header__Content > h1 {
+    font-size: 40px;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+.Discover__Header__Content > p {
+    font-size: 20px;
+}
+
+.Discover__Forms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* max-width: 1000px; */
+    margin: auto;
+    background-color: #f4f5f8;
+}
