@@ -75,6 +75,7 @@ class Form extends Component {
 
         if (isSubmitNext && submittable && !this.state.submitted) {
             this.setState({ submitted: true });
+            this.store.remove();
             helper.submit(this.props.fid, responses);
         }
     };

@@ -99,7 +99,7 @@ class Responses extends Component {
                     </h3>
                     {this.renderCountSummary()}
                 </div>
-                <Header updated={diff(this.state.updated)} />
+                <Header updated={diff(this.state.updated)} fid={this.fid} />
                 <div className="Responses__Summary">
                     {this.renderResponses()}
                 </div>

@@ -5,9 +5,19 @@ class Store {
     }
 
     get() {
+        //this function might fail because of invalid JSON.
         const item = this.store.getItem(this.key);
 
-        return item === null ? null : JSON.parse(item);
+        if (item === null) return null;
+
+        try {
+            const parsed = JSON.parse(item);
+            return parsed;
+        } catch (error) {
+            //there is an error in JSON, remove that
+            this.remove();
+            return null;
+        }
     }
 
     set(data) {

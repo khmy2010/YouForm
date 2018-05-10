@@ -10,13 +10,14 @@ const header = ({ updated, fid }) => (
             <span className="Title__Mont">Response Summary</span>
             <span className="Header__Updated">Last updated on {updated}</span>
         </div>
-        <Button clicked={download}>Download</Button>
+        <Button clicked={() => download(fid)}>Download</Button>
     </div>
 );
 
-const download = () => {
+const download = fid => {
+    if (typeof fid !== 'string') return;
     window.location.replace(
-        'http://localhost:3000/api/responses/export/5ad6d6e1512fe80432ab815d'
+        `http://localhost:3000/api/responses/export/${fid}`
     );
 };
 
