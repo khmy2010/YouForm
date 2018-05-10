@@ -16,9 +16,11 @@ const splash = ({ show, error, history }) => {
     let errorTips = null;
     let buttonCTA = null;
 
+    const err = error === undefined ? true : error.data;
+
     document.title = 'Sorry!';
 
-    switch (error.data) {
+    switch (err) {
         case CONSTS.ERROR.ERR_FILE_NOT_EXIST:
         // eslint-disable-next-line
         case CONSTS.ERROR.ERR_BAD_FID:
