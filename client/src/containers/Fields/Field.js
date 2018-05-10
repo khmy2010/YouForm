@@ -1,3 +1,8 @@
+/*
+    Note:
+    1. Current Sync is not working well because of the poor implementation of touched and pristine
+    2. Need to be careful of local storage trying to sync
+*/
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';

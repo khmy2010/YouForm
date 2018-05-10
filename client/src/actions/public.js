@@ -8,8 +8,9 @@ export const fetchForm = (fid, store) => async dispatch => {
         const res = await axios.get(`/api/forms/${fid}`);
         dispatch({ type: actionTypes.FETCH_FORM_SUCCESS, res, fid });
         dispatch({ type: actionTypes.LOAD_STATE, data: store.get() });
-    } catch ({ response }) {
-        dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
+    } catch (error) {
+        console.log(error);
+        // dispatch({ type: actionTypes.FETCH_FORM_FAILED, response });
     }
 };
 

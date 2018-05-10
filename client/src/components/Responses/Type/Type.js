@@ -67,8 +67,6 @@ const type = ({ type }) => {
             break;
     }
 
-    console.log(color);
-
     return (
         <span style={color} className="RField__Type">
             {typeIdentifier}

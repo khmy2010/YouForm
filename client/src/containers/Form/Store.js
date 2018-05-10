@@ -15,6 +15,7 @@ class Store {
             return parsed;
         } catch (error) {
             //there is an error in JSON, remove that
+            console.log(error);
             this.remove();
             return null;
         }
