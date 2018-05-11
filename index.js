@@ -35,6 +35,9 @@ require('./routes/formRoutes')(app);
 require('./routes/responseRoutes')(app);
 require('./routes/publicRoutes')(app);
 
+//email handler
+require('./routes/emailRoutes')(app);
+
 //load testing API only in development environment
 if (process.env.NODE_ENV === undefined) {
     require('./routes/testRoutes')(app);
