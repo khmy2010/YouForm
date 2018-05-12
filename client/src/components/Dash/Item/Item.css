@@ -1,0 +1,12 @@
+.Dashboard__Item {
+    padding: 17px 0;
+    padding-left: 12px;
+    color: rgba(0, 0, 0, 0.72);
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.Dashboard__Item.Item__Active {
+    background-color: #e8f0fe;
+    color: #1967d2;
+}

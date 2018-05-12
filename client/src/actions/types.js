@@ -8,7 +8,8 @@ export const FETCH_FORM_ADMIN_SUCCESS = 'FETCH_FORM_ADMIN_SUCCESS';
 export const FETCH_FORM_ADMIN_FAILED = 'FETCH_FORM_ADMIN_FAILED';
 
 //dash related
-export const FETCH_FORMS = 'FETCH_FORMS';
+export const FETCH_FORMS_START = 'FETCH_FORMS_START';
+export const FETCH_FORMS_SUCCESS = 'FETCH_FORMS_SUCCESS';
 export const FETCH_FORMS_FAILED = 'FETCH_FORMS_FAILED';
 
 //form questions related

@@ -1,0 +1,56 @@
+.User {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.User__Info {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 20px 16px;
+    margin-right: 20px;
+    z-index: 1;
+    flex-direction: column;
+    right: -18px;
+    top: 27px;
+}
+
+.User:hover .User__Info {
+    display: flex;
+}
+
+.User__Name {
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.User__Email {
+    color: #434343;
+}
+
+.User__Logout {
+    outline: none;
+    margin-top: 10px;
+    border: none;
+    padding: 5px;
+    background-color: #003666;
+}
+
+.User__Logout:hover {
+    /* background-color:  */
+}
+
+.User__Logout > a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.User img {
+    width: 30px;
+    height: 30px;
+}

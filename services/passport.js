@@ -28,13 +28,16 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             const existedUser = await User.findOne({ googleId: profile.id });
-
             if (existedUser) {
+                //KIV: gonna remove it soon
+                existedUser.email = profile.emails[0].value;
+                await existedUser.save();
                 done(null, existedUser);
             } else {
                 const user = await new User({
                     googleId: profile.id,
-                    name: profile.displayName
+                    name: profile.displayName,
+                    email: profile.emails[0].value
                 }).save();
                 done(null, user);
             }

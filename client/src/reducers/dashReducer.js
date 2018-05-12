@@ -1,19 +1,18 @@
-import { FETCH_FORMS } from '../actions/types';
+import { FETCH_FORMS_SUCCESS } from '../actions/types';
 
 const initialState = {
     forms: null,
-    count: 0
+    loading: true
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case FETCH_FORMS:
+        case FETCH_FORMS_SUCCESS:
             const forms = action.forms.data;
-
             return {
                 ...state,
                 forms,
-                count: state.count + forms.length
+                loading: false
             };
         default:
             return state;

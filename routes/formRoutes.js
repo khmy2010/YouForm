@@ -49,14 +49,32 @@ module.exports = app => {
     app.get('/api/forms', login, async (req, res) => {
         try {
             const forms = await Form.find({ owner: req.user._id })
-                .limit(10)
                 .sort('name')
-                .select('name _id')
+                .select('name _id updated status responses questions')
                 .exec();
 
-            res.send(forms);
+            const processed = forms.map(form => {
+                const obj = { ...form.toObject() };
+                const responses = form.responses;
+                const responsesLength = responses.length;
+                obj.responsesCount = responsesLength;
+                obj.questionsCount = form.questions.length;
+
+                if (responsesLength > 0) {
+                    obj.latest = responses.reduce((latest, current) => {
+                        const timestamp = current.timestamp;
+                        if (timestamp > latest) latest = timestamp;
+                        return latest;
+                    }, 0);
+                }
+                delete obj.responses;
+                delete obj.questions;
+                return obj;
+            });
+
+            res.send(processed);
         } catch (err) {
-            res.status(400).send(err);
+            res.status(500).send(err);
         }
     });
 
@@ -77,6 +95,17 @@ module.exports = app => {
             const subdoc = questions[questions.length - 1];
             await form.save();
             res.send(subdoc);
+        }
+    });
+
+    app.delete('/api/forms/:fid', login, validOID, async (req, res) => {
+        try {
+            console.log(req.params.fid);
+            const form = await Form.deleteOne({ _id: req.params.fid });
+            res.send(form);
+        } catch (error) {
+            console.log(error);
+            res.status(400).send(error);
         }
     });
 
