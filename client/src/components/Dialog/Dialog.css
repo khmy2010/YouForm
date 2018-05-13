@@ -1,0 +1,61 @@
+.Dialog {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 3px 3px 3px 3px;
+    padding: 15px 10px;
+    padding-bottom: 5px;
+    left: 15%;
+    top: 30%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
+
+.Dialog__Title {
+    height: 30px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #136ad5;
+}
+
+.Dialog__Body {
+    margin: 20px 0;
+}
+
+.Dialog__Footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Dialog input[type='text'] {
+    width: 75%;
+    padding: 6px 2px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid #5f6368;
+    border-radius: 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* display: block; */
+    overflow: hidden;
+}
+
+.Dialog input[type='text']:focus:not(:read-only) {
+    border: 1px solid #0389ff;
+}
+
+.Dialog .Dialog__Flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+.Dialog__Desc {
+    display: block;
+    color: #5f6368;
+    margin: 5px 0 1px;
+    font-size: 13px;
+}

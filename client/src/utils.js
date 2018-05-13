@@ -361,3 +361,53 @@ export const getOptions = options => {
 export const getOID = (options, index) => {
     return options ? options[index].oid : null;
 };
+
+export const parseDate = timestamp => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    let month = null;
+    const day = date.getDate();
+
+    switch (date.getMonth()) {
+        case 0:
+            month = 'Jan';
+            break;
+        case 1:
+            month = 'Feb';
+            break;
+        case 2:
+            month = 'Mar';
+            break;
+        case 3:
+            month = 'Apr';
+            break;
+        case 4:
+            month = 'May';
+            break;
+        case 5:
+            month = 'June';
+            break;
+        case 6:
+            month = 'Jul';
+            break;
+        case 7:
+            month = 'Aug';
+            break;
+        case 8:
+            month = 'Sept';
+            break;
+        case 9:
+            month = 'Oct';
+            break;
+        case 10:
+            month = 'Nov';
+            break;
+        case 11:
+            month = 'Dec';
+            break;
+        default:
+            break;
+    }
+
+    return `${day} ${month}, ${year}`;
+};

@@ -37,3 +37,16 @@
 .ContextButton.CButton__Green:hover {
     background-color: #00d1b2;
 }
+
+.ContextButton.CButton__Orange {
+    background-color: #f48924;
+}
+
+.ContextButton.CButton__Orange:hover {
+    background-color: #ea780c;
+}
+
+.ContextButton:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
+}

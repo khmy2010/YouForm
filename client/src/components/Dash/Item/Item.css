@@ -9,4 +9,5 @@
 .Dashboard__Item.Item__Active {
     background-color: #e8f0fe;
     color: #1967d2;
+    font-weight: 700;
 }

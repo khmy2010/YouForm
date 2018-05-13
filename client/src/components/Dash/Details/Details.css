@@ -1,0 +1,35 @@
+.Details__Row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 20px;
+    padding-right: 25px;
+}
+.Details__Row span:nth-child(2) {
+    font-weight: 700;
+}
+
+.Row__ID {
+    color: #5f6368;
+}
+
+.Details__Description {
+    border-bottom: 1px solid #e8eaed;
+    margin-bottom: 30px;
+}
+
+.Dashboard__Title {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #e8eaed;
+    padding: 21px 0;
+}
+
+.Dashboard__Title > span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    margin-left: 25px;
+}

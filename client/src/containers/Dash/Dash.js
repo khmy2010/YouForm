@@ -9,6 +9,8 @@ import User from '../../components/User/User';
 import Item from '../../components/Dash/Item/Item';
 import Details from '../../components/Dash/Details/Details';
 
+import Share from '../../components/Share/Share';
+
 import './Dash.css';
 import * as actions from '../../actions/dash';
 
@@ -17,7 +19,8 @@ class Dash extends Component {
         super(props);
         this.state = {
             name: '',
-            showing: null
+            showing: null,
+            showShare: false
         };
 
         this.cycleSelection = this.cycleSelection.bind(this);
@@ -87,6 +90,12 @@ class Dash extends Component {
         }
     }
 
+    toggleShare = () => {
+        this.setState((prevState, props) => {
+            return { showShare: !prevState.showShare };
+        });
+    };
+
     renderFormItems() {
         if (this.props.forms === null) {
             return null;
@@ -121,30 +130,68 @@ class Dash extends Component {
         return <Details {...data} />;
     }
 
+    renderButtons() {
+        if (this.state.showing === null) return null;
+        return (
+            <div className="Dashboard__Actions">
+                <Button
+                    context="CButton__Green"
+                    clicked={() => this.openForm(this.state.showing)}
+                >
+                    Open
+                </Button>
+                <Button clicked={this.toggleShare}>Share Link</Button>
+                <Button context="CButton__Orange">Rename</Button>
+                <Button context="CButton__Red">Delete</Button>
+            </div>
+        );
+    }
+
+    renderShare() {
+        if (this.state.showShare === false) return null;
+        return (
+            <Share
+                show={this.state.showShare}
+                cancel={this.toggleShare}
+                fid={this.state.showing}
+                formData={this.props.forms.find(
+                    ({ _id }) => _id === this.state.showing
+                )}
+                okay={this.toggleShare}
+            />
+        );
+    }
+
     render() {
         if (this.props.loading) return <Loading show />;
         return (
-            <div className="Dashboard">
-                <div className="Dashboard__Toolbar">
-                    <div className="Toolbar__Buttons">
-                        <Button>New Form</Button>
-                        <Button>Discover</Button>
+            <React.Fragment>
+                <div className="Dashboard">
+                    <div className="Dashboard__Toolbar">
+                        <div className="Toolbar__Buttons">
+                            <Button>New Form</Button>
+                            <Button>Discover</Button>
+                        </div>
+                        <User info={this.props.auth} />
                     </div>
-                    <User info={this.props.auth} />
-                </div>
-                <div className="Dashboard__Header">
-                    <div className="Dashboard__Header__Name">Form Name</div>
-                    <div className="Dashboard__Header__Details">Details</div>
-                </div>
-                <div className="Dashboard__Content">
-                    <div className="Dashboard__Files">
-                        {this.renderFormItems()}
+                    <div className="Dashboard__Header">
+                        <div className="Dashboard__Header__Name">Form Name</div>
+                        <div className="Dashboard__Header__Details">
+                            Details
+                        </div>
                     </div>
-                    <div className="Dashboard__Details">
-                        {this.renderDetails()}
+                    <div className="Dashboard__Content">
+                        <div className="Dashboard__Files">
+                            {this.renderFormItems()}
+                        </div>
+                        <div className="Dashboard__Details">
+                            {this.renderDetails()}
+                            {this.renderButtons()}
+                        </div>
                     </div>
                 </div>
-            </div>
+                {this.renderShare()}
+            </React.Fragment>
         );
     }
 }

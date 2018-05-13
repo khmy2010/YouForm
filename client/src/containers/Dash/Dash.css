@@ -1,6 +1,7 @@
 .Dashboard {
     display: grid;
     grid-template-rows: 60px 25px auto;
+    height: 100vh;
 }
 
 .Dashboard__Content {
@@ -15,10 +16,11 @@
     border-bottom: 1px solid #e8eaed;
 }
 .Dashboard__Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr;
     border-bottom: 1px solid #e8eaed;
+    text-align: center;
+    color: #5f6368;
 }
 
 .Dashboard__Header > div {
@@ -28,5 +30,17 @@
 
 .Dashboard__Files {
     border-right: 1px solid #e8eaed;
+    height: calc(100vh - 60px - 25px);
+    overflow: auto;
+}
+
+.Dashboard__Actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.Dashboard__Actions > button {
+    width: 75%;
+    margin: 10px auto;
 }
 /* #5f6368 */
