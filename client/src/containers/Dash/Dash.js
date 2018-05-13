@@ -8,19 +8,26 @@ import Button from '../../components/ContextButton/CButton';
 import User from '../../components/User/User';
 import Item from '../../components/Dash/Item/Item';
 import Details from '../../components/Dash/Details/Details';
+import Dialog from '../../components/Dialog/Dialog';
+import Message from '../../components/Message/Message';
 
 import Share from '../../components/Share/Share';
 
 import './Dash.css';
 import * as actions from '../../actions/dash';
+import { downloadResponses } from '../../utils';
 
 class Dash extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
+            newName: '',
             showing: null,
-            showShare: false
+            showShare: false,
+            showNew: false,
+            showRename: false,
+            showDelete: false
         };
 
         this.cycleSelection = this.cycleSelection.bind(this);
@@ -96,6 +103,43 @@ class Dash extends Component {
         });
     };
 
+    toggleRename = () => {
+        this.setState((prevState, props) => {
+            return {
+                showRename: !prevState.showRename,
+                newName: ''
+            };
+        });
+    };
+
+    toggleDelete = () => {
+        this.setState((prevState, props) => {
+            return {
+                showDelete: !prevState.showDelete
+            };
+        });
+    };
+
+    renameForm = async () => {
+        await this.props.renameForm(this.state.showing, this.state.newName);
+        this.toggleRename();
+    };
+
+    handleChange = evt => {
+        const { name, value } = evt.target;
+        this.setState({ [name]: value });
+    };
+
+    download = () => {
+        downloadResponses(this.state.showing);
+    };
+
+    deleteForm = async () => {
+        const fid = this.state.showing;
+        this.setState({ showing: null }, this.toggleDelete);
+        await this.props.deleteForm(fid);
+    };
+
     renderFormItems() {
         if (this.props.forms === null) {
             return null;
@@ -141,8 +185,12 @@ class Dash extends Component {
                     Open
                 </Button>
                 <Button clicked={this.toggleShare}>Share Link</Button>
-                <Button context="CButton__Orange">Rename</Button>
-                <Button context="CButton__Red">Delete</Button>
+                <Button context="CButton__Orange" clicked={this.toggleRename}>
+                    Rename
+                </Button>
+                <Button context="CButton__Red" clicked={this.toggleDelete}>
+                    Delete
+                </Button>
             </div>
         );
     }
@@ -162,6 +210,88 @@ class Dash extends Component {
         );
     }
 
+    renderNew() {
+        if (this.state.showNew === false) return null;
+        return (
+            <Dialog
+                title="Create New Form"
+                show={this.state.showNew}
+                okay={this.createNewForm}
+            >
+                <span className="Dialog__Desc">Insert file name here</span>
+                <input
+                    type="text"
+                    className="Dash__NewInput"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    name="name"
+                />
+            </Dialog>
+        );
+    }
+
+    renderRename() {
+        const { showing, showRename } = this.state;
+        if (showRename === false || showing === null) return null;
+
+        const form = this.props.forms.find(({ _id }) => _id === showing);
+        console.log(form);
+        return (
+            <Dialog
+                title={`Rename ${form.name}`}
+                show={this.state.showRename}
+                okay={this.renameForm}
+                cancel={this.toggleRename}
+            >
+                <span className="Dialog__Desc">Insert new form name here</span>
+                <input
+                    type="text"
+                    className="Dash__NewInput"
+                    value={this.state.newName}
+                    onChange={this.handleChange}
+                    name="newName"
+                    placeholder={form.name}
+                />
+            </Dialog>
+        );
+    }
+
+    renderDelete() {
+        const { showing, showDelete } = this.state;
+        if (showDelete === false || showing === null) return null;
+
+        const form = this.props.forms.find(({ _id }) => _id === showing);
+
+        const downloadButton = (
+            <Button key="Download" clicked={this.download}>
+                Export Responses
+            </Button>
+        );
+
+        return (
+            <Dialog
+                title={`Delete ${form.name}?`}
+                show={this.state.showDelete}
+                okay={this.deleteForm}
+                cancel={this.toggleDelete}
+                buttons={downloadButton}
+                otext="Proceed"
+            >
+                <div className="Dash__ConfirmDelete">
+                    <p className="Dash__ConfirmDelete__Desc">
+                        This form is about to be permanently deleted.
+                    </p>
+                    <p className="Dash__ConfirmDelete__Emp">
+                        Warning: You can't undo this action.
+                    </p>
+                    <p className="Dash__ConfirmDelete__Download">
+                        You may download a copy of responses before deleting it.
+                    </p>
+                </div>
+            </Dialog>
+        );
+    }
+
     render() {
         if (this.props.loading) return <Loading show />;
         return (
@@ -169,8 +299,18 @@ class Dash extends Component {
                 <div className="Dashboard">
                     <div className="Dashboard__Toolbar">
                         <div className="Toolbar__Buttons">
-                            <Button>New Form</Button>
-                            <Button>Discover</Button>
+                            <Button
+                                clicked={() => this.setState({ showNew: true })}
+                            >
+                                New Form
+                            </Button>
+                            <Button
+                                clicked={() =>
+                                    this.props.history.push(`/discovery`)
+                                }
+                            >
+                                Discover
+                            </Button>
                         </div>
                         <User info={this.props.auth} />
                     </div>
@@ -191,6 +331,10 @@ class Dash extends Component {
                     </div>
                 </div>
                 {this.renderShare()}
+                {this.renderNew()}
+                {this.renderDelete()}
+                {this.renderRename()}
+                <Message show={this.props.operating ? true : false} />
             </React.Fragment>
         );
     }
@@ -199,8 +343,7 @@ class Dash extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        forms: state.dash.forms,
-        loading: state.dash.loading
+        ...state.dash
     };
 };
 

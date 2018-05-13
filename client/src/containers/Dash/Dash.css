@@ -43,4 +43,16 @@
     width: 75%;
     margin: 10px auto;
 }
+
+input[type='text'].Dash__NewInput {
+    width: 95%;
+}
+
+.Dash__ConfirmDelete__Emp {
+    font-weight: 700;
+}
+
+.Dash__ConfirmDelete__Download {
+    color: #5f6368;
+}
 /* #5f6368 */

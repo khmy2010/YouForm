@@ -34,11 +34,11 @@ class Dialog extends PureComponent {
             </Button>
         );
 
-        let renderedButtons = [];
+        let renderedButtons = buttons.slice();
 
         //remember to set a key for <Button />
-        if (this.props.buttons) renderedButtons.concat(this.props.button);
-        else renderedButtons = buttons.slice();
+        if (this.props.buttons)
+            renderedButtons = renderedButtons.concat(this.props.buttons);
 
         return renderedButtons;
     }

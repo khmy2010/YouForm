@@ -411,3 +411,13 @@ export const parseDate = timestamp => {
 
     return `${day} ${month}, ${year}`;
 };
+
+export const downloadResponses = fid => {
+    if (typeof fid !== 'string') return;
+
+    const baseURL = isDev()
+        ? 'http://localhost:3000'
+        : 'https://youform.herokuapp.com';
+
+    window.location.replace(`${baseURL}/api/responses/export/${fid}`);
+};

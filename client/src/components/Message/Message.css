@@ -1,0 +1,24 @@
+.Message {
+    z-index: 100;
+    position: fixed;
+    top: 45%;
+    left: 42%;
+    width: 160px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 0.5px solid #5f6368;
+    border-radius: 3px 3px 3px 3px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    color: #333333;
+}
+
+.Message > img {
+    margin-right: 20px;
+}
+
+.Message > span {
+    font-size: 18px;
+    font-weight: 500;
+}
