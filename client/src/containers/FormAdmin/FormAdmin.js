@@ -8,13 +8,12 @@ import './FormAdmin.css';
 import Loading from '../../components/Preloading/Preloading';
 import Header from '../../components/FormAdmin/Header/Header';
 import Builder from './Builder/Builder';
-import Preview from './Preview/Preview';
 import Responses from './Responses/Responses';
 import Share from './Share/Share';
 
 import ErrorBoundary from '../../hocs/ErrorBoundary/ErrorBoundary';
 
-const MODE = ['build', 'preview', 'responses', 'feedbacks', 'share'];
+const MODE = ['build', 'responses', 'feedbacks', 'share'];
 
 class FormAdmin extends Component {
     state = {
@@ -29,7 +28,6 @@ class FormAdmin extends Component {
         let validRedirect = false;
         switch (state) {
             case 'build':
-            case 'preview':
             case 'responses':
             case 'feedbacks':
             case 'share':
@@ -98,11 +96,6 @@ class FormAdmin extends Component {
                             path={`${this.props.match.url}/build`}
                             exact
                             component={Builder}
-                        />
-                        <Route
-                            path={`${this.props.match.url}/preview`}
-                            exact
-                            component={Preview}
                         />
                         <Route
                             path={`${this.props.match.url}/responses`}
