@@ -28,6 +28,16 @@ module.exports = app => {
         }
     });
 
+    app.get('/api/responses/:fid/track', login, validOID, async (req, res) => {
+        try {
+            res.send(
+                await Form.findById(req.params.fid).select('desktop mobile')
+            );
+        } catch (error) {
+            res.status(400).send('Unable to get stat');
+        }
+    });
+
     app.post('/api/responses/poll', login, validOID, async (req, res) => {
         const { fid, before, after } = req.body;
         try {
@@ -35,14 +45,16 @@ module.exports = app => {
             //     responses: { $elemMatch: { timestamp: { $gte: after } } }
             // });
             // const data = await Form.find({ _id: fid, 'responses' });
-            const data = await Form.findById(fid).select('responses');
-            const { responses } = data.toObject();
+            const data = await Form.findById(fid).select(
+                'responses desktop mobile'
+            );
+            const { responses, desktop, mobile } = data.toObject();
 
             const filtered = responses.filter(({ timestamp }, index) => {
                 return timestamp >= before && timestamp <= after;
             });
 
-            res.send(filtered);
+            res.send({ responses: filtered, desktop, mobile });
         } catch (error) {
             res.status(500).send(`Unable to get responses: ${error}`);
         }

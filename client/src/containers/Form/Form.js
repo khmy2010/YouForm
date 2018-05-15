@@ -14,6 +14,7 @@ import * as utils from '../../utils';
 import * as helper from './helper';
 import Store from './Store';
 import Sync from './Sync';
+import Track from './Track';
 import * as actions from '../../actions/public';
 
 import './Form.css';
@@ -46,6 +47,7 @@ class Form extends Component {
         this.store = new Store(`_form_${fid}`);
         this.props.fetchForm(fid, this.store);
         this.syncLocal = new Sync(this.store);
+        new Track(fid);
     }
 
     resume = () => {

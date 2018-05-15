@@ -19,7 +19,9 @@ const formSchema = new Schema({
     updated: Number,
     online: [Schema.Types.ObjectId],
     context: [ContextSchema],
-    responses: [ResponseSchema]
+    responses: [ResponseSchema],
+    desktop: { type: Number, default: 0 },
+    mobile: { type: Number, default: 0 }
 });
 
 //update timestamp prior save

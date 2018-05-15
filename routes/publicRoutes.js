@@ -77,4 +77,13 @@ module.exports = app => {
 
         res.send(filtered);
     });
+
+    //data obj: {type: [desktop, mobile]}
+    app.post('/api/forms/:fid/track', validOID, async (req, res) => {
+        const { fid } = req.params;
+        const { type } = req.body;
+
+        await Form.findByIdAndUpdate(req.params.fid, { $inc: { [type]: 1 } });
+        res.send();
+    });
 };

@@ -7,14 +7,15 @@ import axios from 'axios';
 
 ///api/responses/poll {fid, after}
 export class Poll {
-    constructor(fid, sync, update) {
+    constructor(fid, sync, update, visits) {
         this.fid = fid;
         this.url = '/api/responses';
         this.poll = null;
-        this.interval = 500000; //in ms
+        this.interval = 5000; //in ms
         this.sync = sync;
         this.before = Date.now();
         this.update = update;
+        this.visits = visits;
     }
 
     start() {
@@ -30,7 +31,10 @@ export class Poll {
     success(data, timestamp) {
         //if there is a success case, then we change the before
         //only call sync if there is new data
-        if (data.length > 0) {
+
+        this.visits(data);
+
+        if (data.responses.length > 0) {
             this.before = Date.now();
             this.sync(data, timestamp);
         } else {
