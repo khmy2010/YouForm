@@ -154,7 +154,6 @@ class Share extends Component {
     }
 
     renderShare() {
-        console.log(this.state.showShare);
         if (this.state.showShare === false) return null;
         return (
             <Sharing

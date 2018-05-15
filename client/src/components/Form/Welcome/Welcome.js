@@ -18,7 +18,7 @@ const welcome = props => {
         <div className="Form__Welcome">
             <h1>{props.name}</h1>
             <p>{props.context.description}</p>
-            <button>{props.context.buttonText}</button>
+            {/* <button>{props.context.buttonText}</button> */}
         </div>
     );
 };
