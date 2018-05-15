@@ -30,7 +30,6 @@ const header = props => {
             />
 
             <div>
-                <Button>File</Button>
                 <Button>
                     <NavLink to="/app/dashboard">Go to Dashboard</NavLink>
                 </Button>

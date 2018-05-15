@@ -27,3 +27,12 @@
     border: 2px solid #2196f3;
     background-color: #fff;
 }
+
+.FormAdmin__Header > div {
+    margin-right: 15px;
+}
+
+.FormAdmin__Header > div a {
+    text-decoration: none;
+    color: black;
+}
