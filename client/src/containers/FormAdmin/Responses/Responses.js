@@ -48,7 +48,9 @@ class Responses extends Component {
     }
 
     componentWillUnmount() {
-        this.poll.end();
+        //because the production environment is too slow for implementing 2 ajax at once
+        //need a new architecture for this.
+        if (this.poll) this.poll.end();
     }
 
     //this function assumes that it is an ajax with data retrieved
