@@ -17,7 +17,7 @@ class Track {
         //need to check store if we got that before
         // if (this.store.get() !== null) return;
 
-        switch (this.userAgent.getOS()) {
+        switch (this.userAgent.getOS().name) {
             case 'Android':
             case 'iOS':
             case 'Bada':

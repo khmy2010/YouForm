@@ -83,8 +83,6 @@ module.exports = app => {
         const { fid } = req.params;
         const { type } = req.body;
 
-        console.log(type);
-
         await Form.findByIdAndUpdate(req.params.fid, { $inc: { [type]: 1 } });
         res.send();
     });

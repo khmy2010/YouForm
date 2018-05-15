@@ -16,6 +16,7 @@ import Store from './Store';
 import Sync from './Sync';
 import Track from './Track';
 import * as actions from '../../actions/public';
+import uaParser from 'ua-parser-js';
 
 import './Form.css';
 
@@ -170,6 +171,7 @@ class Form extends Component {
                     name={this.props.name}
                 />
                 <Button clicked={this.next}>Next</Button>
+                <p>{new uaParser().getOS().name}</p>
             </React.Fragment>
         );
     }
