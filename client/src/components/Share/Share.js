@@ -71,6 +71,7 @@ class Share extends Component {
 
         return (
             <Dialog {...this.props} title="Share Public Link">
+                <span className="Dialog__Desc">Public link to this form:</span>
                 <div className="Dialog__Flex">
                     <input
                         ref={this.linkField}

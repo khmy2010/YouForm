@@ -7,6 +7,7 @@ import Select from '../../../components/Select/Select';
 import ContextButton from '../../../components/ContextButton/CButton';
 import Date from '../../Fields/Date/Date';
 import Error from '../../../assets/images/error__red.svg';
+import Sharing from '../../../components/Share/Share';
 
 import * as utils from '../../../utils';
 
@@ -31,7 +32,8 @@ class Share extends Component {
             startingDateChanged: false,
             endingDateChanged: false,
             startingDateError: false,
-            endingDateError: false
+            endingDateError: false,
+            showShare: false
         };
 
         this.linkField = null;
@@ -151,6 +153,27 @@ class Share extends Component {
         );
     }
 
+    renderShare() {
+        console.log(this.state.showShare);
+        if (this.state.showShare === false) return null;
+        return (
+            <Sharing
+                show={this.state.showShare}
+                cancel={this.toggleShare}
+                fid={this.props.fid}
+                formData={this.props.formData}
+                okay={this.toggleShare}
+            />
+        );
+    }
+
+    toggleShare = () => {
+        console.log('???');
+        this.setState((prevState, props) => {
+            return { showShare: !prevState.showShare };
+        });
+    };
+
     render() {
         let changeNotifierClasses = [
             'Share__ChangedAction',
@@ -216,10 +239,10 @@ class Share extends Component {
                     />
                     {this.renderError('endingDateError')}
                 </div>
-                <div className="Share__Social">FB</div>
-                <div className="Share__Social">Twitter</div>
-                <div className="Share__Social">Link</div>
-                <div className="Share__Social">Invite</div>
+                <ContextButton clicked={this.toggleShare}>
+                    Share through email
+                </ContextButton>
+                {this.renderShare()}
             </div>
         );
     }
@@ -230,7 +253,8 @@ const mapStateToProps = state => {
         fid: state.form.fid,
         status: state.formAdmin.status,
         startingDate: state.formAdmin.startingDate,
-        endingDate: state.formAdmin.endingDate
+        endingDate: state.formAdmin.endingDate,
+        formData: state.form
     };
 };
 
