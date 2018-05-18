@@ -1,0 +1,32 @@
+.CheckBox input[type='checkbox'] {
+    display: none;
+}
+
+/*
+    2713 is checkbox css code.
+    resources: https://www.toptal.com/designers/htmlarrows/symbols/check-mark/
+*/
+.CheckBox label:before {
+    content: '\2713';
+    border-radius: 3px 3px 3px 3px;
+    border: 1px solid rgba(95, 99, 104, 0.5);
+    font-weight: 700;
+    padding: 1px 3px;
+    color: #fff;
+    margin-right: 15px;
+}
+
+/*
+    Selects all <p> elements that are placed immediately after <div> elements
+*/
+.CheckBox input[type='checkbox']:checked + label:before {
+    color: #2196f3;
+}
+
+.CheckBox label {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+    font-size: 17px;
+}

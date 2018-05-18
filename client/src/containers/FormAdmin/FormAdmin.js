@@ -10,6 +10,7 @@ import Header from '../../components/FormAdmin/Header/Header';
 import Builder from './Builder/Builder';
 import Responses from './Responses/Responses';
 import Share from './Share/Share';
+import Feedbacks from './Feedbacks/Feedbacks';
 
 import ErrorBoundary from '../../hocs/ErrorBoundary/ErrorBoundary';
 
@@ -101,6 +102,11 @@ class FormAdmin extends Component {
                             path={`${this.props.match.url}/responses`}
                             exact
                             component={Responses}
+                        />
+                        <Route
+                            path={`${this.props.match.url}/feedbacks`}
+                            exact
+                            component={Feedbacks}
                         />
                         <Route
                             path={`${this.props.match.url}/share`}
