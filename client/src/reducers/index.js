@@ -5,11 +5,13 @@ import formAdminReducer from './formAdminReducer';
 import dashReducer from './dashReducer';
 import formReducer from './formReducer';
 import publicReducer from './publicReducer';
+import feedbackReducer from './feedbackReducer';
 
 export default combineReducers({
     auth: authReducer,
     formAdmin: formAdminReducer,
     dash: dashReducer,
     form: formReducer,
-    public: publicReducer
+    public: publicReducer,
+    feedback: feedbackReducer
 });

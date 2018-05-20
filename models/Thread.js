@@ -11,4 +11,4 @@ const threadSchema = new Schema({
     isOwner: Boolean
 });
 
-module.exports = responseSchema;
+module.exports = threadSchema;

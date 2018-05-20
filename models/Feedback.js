@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const ThreadSchema = require('./Response');
+const ThreadSchema = require('./Thread');
 
 const feedbackSchema = new Schema({
     fid: { type: Schema.Types.ObjectId, ref: 'form' },
-    posts: [QuestionSchema]
+    posts: [ThreadSchema]
 });
+
+mongoose.model('feedback', feedbackSchema);
 
 module.exports = feedbackSchema;

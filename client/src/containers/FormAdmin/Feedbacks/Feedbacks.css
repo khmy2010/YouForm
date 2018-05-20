@@ -6,3 +6,100 @@
 .Feedbacks__Control {
     margin-bottom: 30px;
 }
+
+.Feedback__Topics {
+    margin-bottom: 100px;
+}
+
+.Feedback__Topics section:last-child {
+    border-bottom: 1px solid rgba(95, 99, 104, 0.4);
+}
+
+.FAI__Title {
+    color: #24292e;
+    text-transform: capitalize;
+}
+
+.FAI__Description {
+    color: #29303b;
+    word-spacing: 1px;
+}
+
+.FAI__Bold {
+    font-weight: 700;
+}
+
+.FAI__Referral {
+    margin-top: 10px;
+}
+
+.FAI__Referral__Question {
+    margin-left: 5px;
+    background-color: rgba(27, 31, 35, 0.05);
+    color: #fb8a2e;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #dedfe0;
+}
+
+.Base__TextArea {
+    border: 1px solid #cacbcc;
+    padding: 5px 8px;
+    resize: none;
+    outline: none;
+    border-radius: 3px;
+    width: 90%;
+    height: auto;
+    font-size: 17px;
+    color: #24292e;
+    background-color: #fff;
+}
+
+.Base__TextArea:read-only {
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.Base__TextArea:focus {
+    border: 1px solid #008374;
+}
+
+.FAI__Action {
+    margin: 30px 0;
+    border-top: 3px solid #d1d5da;
+}
+
+.FAI__Action textarea {
+    width: 100%;
+}
+
+.FAI__Action > button {
+    margin: 0;
+    margin-top: 20px;
+}
+
+.FAI__Action button:nth-of-type(2) {
+    margin-left: 32px;
+}
+
+.FAI__Loading {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.FAI__Loading > img {
+    margin-right: 15px;
+}
+
+.FAI__Loading > span {
+    font-weight: 700;
+}
+
+.Feedback__Admin__Interface > button:first-of-type {
+    margin: 0;
+    width: auto;
+    padding: 15px;
+    line-height: 0;
+    box-shadow: none;
+}

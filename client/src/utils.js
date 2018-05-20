@@ -412,6 +412,35 @@ export const parseDate = timestamp => {
     return `${day} ${month}, ${year}`;
 };
 
+export const dateDiff = timestamp => {
+    const MINUTE = 60;
+    const HOUR = 3600;
+    const DAY = 86400;
+    const WEEK = DAY * 7;
+
+    const diff = Math.floor((Date.now() - timestamp) / 1000); //in seconds
+
+    let text = '';
+
+    if (diff <= 1) text = 'just now';
+    else if (diff <= MINUTE) text = `${checkPlural(diff, 'second')} ago`;
+    else if (diff <= HOUR) {
+        const minutes = Math.floor(diff / MINUTE);
+        text = `${minutes + ' ' + checkPlural(minutes, 'minute')} ago`;
+    } else if (diff <= DAY) {
+        const hours = Math.floor(diff / HOUR);
+        text = `${hours + ' ' + checkPlural(hours, 'hour')} ago`;
+    } else if (diff <= WEEK) {
+        const days = Math.floor(diff / DAY);
+        text = `${days + ' ' + checkPlural(days, 'day')} ago`;
+    } else {
+        const weeks = Math.floor(diff / WEEK);
+        text = `${weeks + ' ' + checkPlural(weeks, 'week')} ago`;
+    }
+
+    return { diff, text };
+};
+
 export const downloadResponses = fid => {
     if (typeof fid !== 'string') return;
 
@@ -421,3 +450,20 @@ export const downloadResponses = fid => {
 
     window.location.replace(`${baseURL}/api/responses/export/${fid}`);
 };
+
+//content need to be in singular form
+export const checkPlural = (number, content) => {
+    if (content.trim().length === 0) return content;
+    return number <= 1 ? content : `${content}s`;
+};
+
+//given posts, need to organise it into topics
+export const organisePosts = posts =>
+    posts.filter(({ parent }) => parent.trim().length === 0).map(topic => {
+        return {
+            ...topic,
+            threads: posts.filter(({ parent }) => parent === topic._id)
+        };
+    });
+//first step: need to find those without parents (it's a topic)
+//second step: organise them accordingly

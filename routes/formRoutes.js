@@ -5,6 +5,7 @@ const login = require('../middlewares/login');
 const validOID = require('../middlewares/valid');
 
 const Form = mongoose.model('form');
+const Feedback = mongoose.model('feedback');
 
 module.exports = app => {
     //user creates a new form
@@ -20,11 +21,16 @@ module.exports = app => {
             updated: body.updated
         });
 
+        const feedback = new Feedback({
+            fid: form._id
+        });
+
         form.context.push(welcomeContext);
         form.context.push(thanksContext);
 
         try {
             await form.save();
+            await feedback.save();
             res.send(form);
         } catch (err) {
             res.status(400).send(err);
@@ -102,6 +108,7 @@ module.exports = app => {
         try {
             console.log(req.params.fid);
             const form = await Form.deleteOne({ _id: req.params.fid });
+            await Feedback.deleteOne({ fid: req.params.fid });
             res.send(form);
         } catch (error) {
             console.log(error);
@@ -125,6 +132,10 @@ module.exports = app => {
             */
 
             const form = await Form.findById(fid);
+            Feedback.update(
+                { fid: fid },
+                { $pull: { posts: { question: qid } } }
+            );
             const questions = form.questions;
             questions.id(qid).remove();
             await form.save();

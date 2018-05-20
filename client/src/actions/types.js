@@ -38,3 +38,9 @@ export const RESUME_STATE = 'RESUME_STATE';
 
 //context related
 export const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
+
+//feedback related
+export const FETCH_ALL_FEEDBACKS = 'FETCH_ALL_FEEDBACKS';
+export const FETCH_ALL_FEEDBACKS_SUCCESS = 'FETCH_ALL_FEEDBACKS_SUCCESS';
+export const FETCH_ALL_FEEDBACKS_FAILED = 'FETCH_ALL_FEEDBACKS_FAILED';
+export const ADD_POST = 'ADD_POST';

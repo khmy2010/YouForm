@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 //load database model before anything else
 require('./models/User');
 require('./models/Form');
+require('./models/Feedback');
 
 //load services after database model
 require('./services/mongoose');
@@ -34,6 +35,7 @@ require('./routes/authRoutes')(app);
 require('./routes/formRoutes')(app);
 require('./routes/responseRoutes')(app);
 require('./routes/publicRoutes')(app);
+require('./routes/feedbackRoutes')(app);
 
 //email handler
 require('./routes/emailRoutes')(app);
