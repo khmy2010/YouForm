@@ -11,11 +11,11 @@ import './Controls.css';
 
     Do I need to be a button?
 */
-const button = ({ text, style, clicked, state }) => {
+const button = ({ text, classes, clicked, state }) => {
     let className = ['Form__Controls__Button'];
     let disabled = false;
 
-    if (style) className.push(style);
+    if (classes) className.push(classes);
     if (state === false) {
         disabled = true;
         className.push('Form__Controls__Disabled');

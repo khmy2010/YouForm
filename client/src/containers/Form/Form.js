@@ -9,6 +9,7 @@ import Field from '../Fields/Field';
 import Button from '../../components/ContextButton/CButton';
 import Modal from '../../components/Noti/Noti';
 import Controls from '../../components/Form/Controls/Controls';
+import Feedback from './Feedback/Feedback';
 
 import * as utils from '../../utils';
 import * as helper from './helper';
@@ -26,7 +27,8 @@ class Form extends Component {
             current: 0,
             submitted: false,
             resume: false,
-            prompt: false
+            prompt: false,
+            showQA: null
         };
         this.path = new helper.Path();
         this.prompted = false;
@@ -48,6 +50,7 @@ class Form extends Component {
         this.props.fetchForm(fid, this.store);
         this.syncLocal = new Sync(this.store);
         new Track(fid);
+        this.fid = fid;
     }
 
     resume = () => {
@@ -80,6 +83,11 @@ class Form extends Component {
             this.store.remove();
             helper.submit(this.props.fid, responses);
         }
+    };
+
+    toggleFeedback = qid => {
+        console.log(qid);
+        this.setState({ showQA: qid ? qid : null });
     };
 
     prev = () => {
@@ -236,8 +244,21 @@ class Form extends Component {
                     navNext={() =>
                         this.trigger(question._id, question.type, shouldNext)
                     }
+                    showFeedback={() => this.toggleFeedback(question._id)}
                 />
             </React.Fragment>
+        );
+    }
+
+    renderQA() {
+        const active = this.state.showQA;
+        if (active === null) return null;
+        return (
+            <Feedback
+                qid={active}
+                fid={this.fid}
+                close={() => this.toggleFeedback()}
+            />
         );
     }
 
@@ -259,6 +280,7 @@ class Form extends Component {
                 {this.renderResume()}
                 {this.renderWelcome()}
                 {this.renderField()}
+                {this.renderQA()}
             </div>
         );
     }

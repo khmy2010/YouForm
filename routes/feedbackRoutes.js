@@ -38,4 +38,17 @@ module.exports = app => {
                 .exec()
         );
     });
+
+    //get threads based on question
+    app.get('/api/feedbacks/:fid/:qid', validOID, async (req, res) => {
+        const fid = req.params.fid;
+        const qid = req.params.qid;
+
+        const result = await Feedback.find({
+            fid: fid,
+            'posts.question': qid
+        }).exec();
+
+        res.send(result);
+    });
 };

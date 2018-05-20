@@ -23,15 +23,24 @@ const controls = props => {
             <Button key="Back" text="Previous" clicked={props.navPrev} />
         );
 
+    buttons.push(
+        <Button
+            key="Feedback"
+            text="In Doubt?"
+            clicked={props.showFeedback}
+            classes="Form__Controls__QA"
+        />
+    );
+
     if (props.next) {
         const { isQuestion, nextable, isSubmitNext, submittable } = props.next;
         let text;
-        let style = null;
+        let classes = null;
 
         if (isQuestion) text = 'Next';
         if (isSubmitNext) {
             text = 'Submit';
-            style = 'Form__Controls__Submittable';
+            classes = 'Form__Controls__Submittable';
         }
 
         let state = false;
@@ -45,7 +54,7 @@ const controls = props => {
                 text={text}
                 clicked={props.navNext}
                 state={state}
-                style={style}
+                classes={classes}
             />
         );
     }
