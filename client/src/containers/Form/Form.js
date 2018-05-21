@@ -86,7 +86,6 @@ class Form extends Component {
     };
 
     toggleFeedback = qid => {
-        console.log(qid);
         this.setState({ showQA: qid ? qid : null });
     };
 

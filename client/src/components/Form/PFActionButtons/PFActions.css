@@ -1,0 +1,16 @@
+.PF__ActionButtons {
+    display: flex;
+    width: 85%;
+    margin: 0 auto;
+    justify-content: flex-end;
+}
+
+.PF__ActionButtons > .ContextButton {
+    width: 100px;
+}
+
+@media (max-width: 768px) {
+    .PF__ActionButtons {
+        justify-content: space-evenly;
+    }
+}

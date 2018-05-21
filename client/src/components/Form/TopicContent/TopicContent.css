@@ -1,0 +1,49 @@
+.PF__Topic__Thread {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid rgba(119, 119, 119, 0.5);
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.PF__Topic__Thread__Header {
+    padding: 15px;
+    background-color: rgba(196, 223, 230, 0.5);
+    border-bottom: 1px solid rgba(196, 223, 230, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.PF__Topic__Thread__Header__ShowOwner {
+    padding: 0 10px;
+    color: #ec5252;
+    font-weight: 700;
+}
+
+.PF__Topic__Thread__Content {
+    padding: 20px;
+    color: #29303b;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.PF__Topic__Thread__Content__IsOwner {
+    background-color: rgba(244, 204, 112, 0.3);
+}
+
+@media (max-width: 760px) {
+    .PF__Topic__Thread__Content {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    .PF__Topic__Thread__Header__ShowOwner {
+        display: none;
+    }
+
+    .PF__Topic__Thread__Header {
+        padding: 8px;
+        font-size: 15px;
+    }
+}

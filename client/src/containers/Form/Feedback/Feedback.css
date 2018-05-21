@@ -2,10 +2,12 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    min-height: 100%;
+    height: auto;
     z-index: 100;
     background-color: #f2f3f5;
+    padding-bottom: 100px;
 }
 
 .PF__AskCTA,
@@ -32,22 +34,8 @@
 .PF__Content {
     width: 85%;
     background-color: white;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
-}
-
-.PF__NotFoundDesc {
-    color: #29303b;
-    margin-top: -15px;
-}
-
-.PF__NotFound {
-    margin-top: 100px;
-}
-
-.PF__NotFound > img {
-    width: 200px;
-    height: 200px;
 }
 
 .PF__NewPost > .Base__TextArea {
@@ -55,5 +43,48 @@
     margin-top: 20px;
 }
 
-.PF__NewPost > .ContextButton {
+.PF__ActionButtons > button:nth-of-type(2) {
+    margin-right: 0;
+}
+
+.PF__TopicContentWrapper {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.PF__TopicContentWrapper > h2 {
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.PF__BackToList {
+    width: 230px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    background-color: #de7a22;
+    padding: 10px;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    justify-content: space-around;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.PF__TopicContent__Reply > .Base__TextArea {
+    width: 100%;
+}
+
+.PF__TopicContent__Reply > textarea:nth-child(3) {
+    margin-top: 25px;
+}
+
+@media (max-width: 760px) {
+    .PF__BackToList {
+        margin: 30px 0;
+        width: auto;
+        font-size: 20px;
+    }
 }

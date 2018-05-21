@@ -44,7 +44,7 @@ module.exports = app => {
         const fid = req.params.fid;
         const qid = req.params.qid;
 
-        const result = await Feedback.find({
+        const result = await Feedback.findOne({
             fid: fid,
             'posts.question': qid
         }).exec();
