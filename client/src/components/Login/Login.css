@@ -44,10 +44,6 @@
     color: #29303b;
 }
 
-.Login > hr {
-    color: rgba(119, 119, 119, 0.1);
-}
-
 .Login__Button:hover {
     color: #4285f4;
 }

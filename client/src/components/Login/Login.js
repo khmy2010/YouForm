@@ -18,7 +18,6 @@ const login = ({ history }) => {
                 <img src={googleSVG} alt="google" />
                 <span>Login with Google</span>
             </div>
-            <hr />
             <div className="Login__Button" onClick={() => history.replace('/')}>
                 <img src={xSVG} alt="no want" />
                 <span>I don't want to login</span>
