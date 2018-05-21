@@ -1,0 +1,20 @@
+.Form__ProgressBar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+}
+
+.Form__Progress {
+    background-color: transparent;
+    width: 100%;
+}
+
+.Form__Progress__Made {
+    background-color: #fc636b;
+}
+
+.Form__ProgressBar__Last .Form__Progress__Made {
+    background-color: #00d1b2;
+}

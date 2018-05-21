@@ -9,6 +9,7 @@ import Field from '../Fields/Field';
 import Button from '../../components/ContextButton/CButton';
 import Modal from '../../components/Noti/Noti';
 import Controls from '../../components/Form/Controls/Controls';
+import Bar from '../../components/Form/Bar/Bar';
 import Feedback from './Feedback/Feedback';
 
 import * as utils from '../../utils';
@@ -224,7 +225,11 @@ class Form extends Component {
         }
 
         return (
-            <React.Fragment>
+            <div className="Form__Field">
+                <div className="Form__Field__Count">
+                    <span>Question {this.state.current} </span>
+                    <span>/ {this.props.questions.length}</span>
+                </div>
                 <Field
                     component={question.type}
                     title={question.title}
@@ -245,7 +250,7 @@ class Form extends Component {
                     }
                     showFeedback={() => this.toggleFeedback(question._id)}
                 />
-            </React.Fragment>
+            </div>
         );
     }
 
@@ -275,12 +280,18 @@ class Form extends Component {
             );
         }
         return (
-            <div className="Form">
-                {this.renderResume()}
-                {this.renderWelcome()}
-                {this.renderField()}
-                {this.renderQA()}
-            </div>
+            <React.Fragment>
+                <div className="Form">
+                    {this.renderResume()}
+                    {this.renderWelcome()}
+                    {this.renderField()}
+                    {this.renderQA()}
+                </div>
+                <Bar
+                    current={this.state.current}
+                    questions={this.props.questions}
+                />
+            </React.Fragment>
         );
     }
 }
