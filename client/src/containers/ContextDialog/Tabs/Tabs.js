@@ -3,7 +3,7 @@ import React from 'react';
 import './Tabs.css';
 import Tab from './Tab';
 
-const TABS = ['Welcome Screen', 'Thanks Screen', 'Error Screen'];
+const TABS = ['Welcome Screen', 'Thanks Screen'];
 
 const tabs = props => {
     const renderedTabs = TABS.map(tab => {

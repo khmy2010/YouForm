@@ -11,8 +11,6 @@ import X from '../../assets/images/x.svg';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import Tabs from './Tabs/Tabs';
 import ContextButton from '../../components/ContextButton/CButton';
-import Welcome from '../../components/Context/Welcome/Welcome';
-import Thanks from '../../components/Context/Thanks/Thanks';
 
 export class Context extends Component {
     constructor(props) {
@@ -133,30 +131,6 @@ export class Context extends Component {
         return <div className="Context__Controls">{content}</div>;
     }
 
-    renderContextPreview() {
-        let currentContext = null;
-
-        switch (this.state.activeTab) {
-            case 'Welcome Screen':
-                currentContext = (
-                    <Welcome
-                        mode="dev"
-                        title={this.props.fileName}
-                        description={this.state.welcomeDescription}
-                        buttonText={this.state.welcomeButtonText}
-                    />
-                );
-                break;
-            case 'Thanks Screen':
-                currentContext = <Thanks />;
-                break;
-            default:
-                break;
-        }
-
-        return <div className="Context__Preview">{currentContext}</div>;
-    }
-
     updateContext = () => {
         const payload = {};
         if (this.state.activeTab === 'Welcome Screen') {
@@ -196,7 +170,6 @@ export class Context extends Component {
                     </div>
                     <div className="Context__Content">
                         {this.renderControls()}
-                        {this.renderContextPreview()}
                     </div>
                     <div className="Context__Buttons">
                         <ContextButton clicked={this.updateContext}>
