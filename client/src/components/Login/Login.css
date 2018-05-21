@@ -1,4 +1,4 @@
-.Login-LoginWithGoogle {
+/* .Login-LoginWithGoogle {
     background-color: #e06257;
     color: #fff;
 }
@@ -6,4 +6,61 @@
 .Login-Redirect {
     margin-bottom: 30px;
     color: #666666;
+} */
+
+.Login > h1 {
+    margin: 0;
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.Login > p {
+    color: #777;
+    font-size: 20px;
+    margin-top: -3px;
+}
+
+.Login {
+    width: 50%;
+    text-align: center;
+    margin: 30vh auto;
+    padding: 30px;
+    border: 1px solid rgba(95, 99, 104, 0.5);
+    border-radius: 10px;
+    user-select: none;
+}
+
+.Login__Button {
+    padding: 10px;
+    border: 1px solid rgba(119, 119, 119, 0.5);
+    width: 230px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    color: #29303b;
+}
+
+.Login__Button:hover {
+    color: #4285f4;
+}
+
+.Login__Button > img {
+    width: 25px;
+    height: 25px;
+}
+
+@media (max-width: 760px) {
+    .Login {
+        width: 100%;
+        border: none;
+    }
+    .Login > h1 {
+        font-size: 32px;
+        margin-bottom: 5px;
+        line-height: 1.5;
+    }
 }
