@@ -8,6 +8,7 @@ import PFNotFound from '../../../components/Form/PFNotFound/PFNotFound';
 import TopicTitle from '../../../components/Form/TopicTitle/TopicTitle';
 import TopicContent from '../../../components/Form/TopicContent/TopicContent';
 import { organisePosts } from '../../../utils';
+import Message from '../../../components/Message/Message';
 
 import './Feedback.css';
 
@@ -234,6 +235,11 @@ class PublicFeedback extends Component {
         );
     }
 
+    renderLoading() {
+        // if (!this.state.loading) return null;
+        // return <Message show />;
+    }
+
     render() {
         const { showNewQuestionInput, showing } = this.state;
 
@@ -252,6 +258,7 @@ class PublicFeedback extends Component {
                 >
                     Ask a new question
                 </div>
+                <Message show={this.state.loading} />
                 {this.renderInput()}
                 {this.renderPromo()}
                 {this.renderTopicsByTitle()}
