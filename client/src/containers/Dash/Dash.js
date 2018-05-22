@@ -217,6 +217,7 @@ class Dash extends Component {
                 title="Create New Form"
                 show={this.state.showNew}
                 okay={this.createNewForm}
+                cancel={() => this.setState({ showNew: false })}
             >
                 <span className="Dialog__Desc">Insert file name here</span>
                 <input
@@ -235,7 +236,7 @@ class Dash extends Component {
         if (showRename === false || showing === null) return null;
 
         const form = this.props.forms.find(({ _id }) => _id === showing);
-        console.log(form);
+
         return (
             <Dialog
                 title={`Rename ${form.name}`}
