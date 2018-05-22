@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Splash from '../../components/Splash/Splash';
 import Preloading from '../../components/Preloading/Preloading';
 import Welcome from '../../components/Form/Welcome/Welcome';
+import Thanks from '../../components/Form/Thanks/Thanks';
 import Field from '../Fields/Field';
 
-import Button from '../../components/ContextButton/CButton';
 import Modal from '../../components/Noti/Noti';
 import Controls from '../../components/Form/Controls/Controls';
 import Bar from '../../components/Form/Bar/Bar';
@@ -169,23 +169,34 @@ class Form extends Component {
     }
 
     renderWelcome() {
-        if (this.state.current !== 0) return null;
+        if (this.state.current > 0) return null;
+
         return (
-            <React.Fragment>
-                <Welcome
-                    show={this.state.current}
-                    context={this.props.context}
-                    name={this.props.name}
-                />
-                <Button clicked={this.next}>Next</Button>
-                <p>8 Questions</p>
-            </React.Fragment>
+            <Welcome
+                show={this.state.current}
+                context={this.props.context}
+                name={this.props.name}
+                length={this.props.questions.length}
+                clicked={this.next}
+            />
+        );
+    }
+
+    renderThanks() {
+        if (!this.state.submitted) return null;
+
+        return (
+            <Thanks
+                show={this.state.submitted}
+                context={this.props.context}
+                fid={this.fid}
+            />
         );
     }
 
     //this function should decide what to render next for fields
     renderField() {
-        if (this.state.current === 0) return null;
+        if (this.state.current === 0 || this.state.submitted) return null;
         //need to have a way to read value from redux
         //need to have a way to initialise the value if needed
         //need to have a way to parse the logic back
@@ -286,6 +297,7 @@ class Form extends Component {
                     {this.renderWelcome()}
                     {this.renderField()}
                     {this.renderQA()}
+                    {this.renderThanks()}
                 </div>
                 <Bar
                     current={this.state.current}

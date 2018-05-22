@@ -1,0 +1,60 @@
+.Form__Thanks__Header > p {
+    margin: 0;
+    color: #777;
+    font-size: 23px;
+}
+
+.Form__Thanks__Header > h1 {
+    margin-bottom: 7px;
+}
+
+.Form__Thanks__Link {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.Form__Thanks__Link > input {
+    font-size: 20px;
+    max-width: 400px;
+    padding: 2px;
+    border: 1px solid #52565e;
+    border-radius: 5px;
+    height: 47px;
+}
+
+.Form__Thanks__Copy {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #52565e;
+    background-color: #f3f4f7;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.Form__Thanks__Copy > img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.Form__Thanks .ContextButton {
+    width: 35%;
+}
+
+@media (max-width: 760px) {
+    .Form__Thanks__Share {
+        display: none;
+    }
+
+    .Form__Thanks .ContextButton {
+        width: 100%;
+        margin: 30px auto;
+    }
+}

@@ -1,0 +1,19 @@
+.Form__Welcome h1 {
+    text-transform: capitalize;
+    font-size: 30px;
+}
+
+.Form__Instructions {
+    color: #777;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.Form__Instructions > p {
+    margin: 0;
+}
+
+.Form__Welcome__Description {
+    font-size: 22px;
+    color: #5f6368;
+}
