@@ -1,0 +1,106 @@
+.Stencils {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: white;
+    overflow-y: hidden;
+}
+
+.Stencils__Close {
+    position: fixed;
+    background-color: #ee4f4f;
+    width: 100%;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 3px solid #ee4f4f;
+}
+
+.Stencils__Header {
+    margin-top: 80px;
+    padding: 10px;
+    font-size: 25px;
+    color: #2754ba;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Stencils__Header > button {
+    margin-right: 20px;
+}
+
+.Stencils__List,
+.Stencils__Preview {
+    border: 1px solid #e8eaed;
+    /* padding: 10px; */
+}
+
+.Stencils__Content {
+    padding: 0 10px;
+}
+
+.Stencils__Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 70%;
+}
+
+.Stencils__Header > div > span {
+    font-size: 16px;
+    color: #777777;
+    font-style: italic;
+    margin-left: 5px;
+}
+
+.Stencil__Item {
+    padding: 15px 10px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.Stencil__Item__Selected {
+    background-color: #cd6a51;
+    color: white;
+    font-weight: 700;
+}
+
+.Stencils__Preview {
+    padding: 10px;
+}
+
+.Stencils__Preview__Prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.Stencils__Control {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    padding: 10px;
+    border: 2px solid #e8eaed;
+}
+
+.Stencils__Message {
+    padding: 10px;
+    background-color: #0c5460;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+}
+
+.Stencils__DeleteAll__Warning {
+    font-weight: 700;
+}

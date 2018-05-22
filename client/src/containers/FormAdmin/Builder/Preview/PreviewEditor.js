@@ -13,8 +13,11 @@ const previewEditor = props => {
                 >
                     Delete
                 </button>
-                <button className="PreviewEditor__Button PreviewEditor__Red">
-                    Duplicate
+                <button
+                    className="PreviewEditor__Button PreviewEditor__Red"
+                    onClick={props.onSaveStencil}
+                >
+                    Save
                 </button>
                 <button
                     className="PreviewEditor__Button PreviewEditor__Green"

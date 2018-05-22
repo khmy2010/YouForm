@@ -467,7 +467,6 @@ class QuestionBuilder extends Component {
                             />
                         </div>
                         <div className="EleFooter">
-                            <Button>Save to stencils</Button>
                             <Button clicked={this.props.onBackdropClick}>
                                 Cancel
                             </Button>

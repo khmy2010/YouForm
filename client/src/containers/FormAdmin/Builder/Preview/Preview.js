@@ -3,7 +3,7 @@ import React from 'react';
 import PreviewEditor from './PreviewEditor';
 import Field from '../../../Fields/Field';
 
-const preview = ({ questions, onEdit, onDelete }) => {
+const preview = ({ questions, onEdit, onDelete, onSaveStencil }) => {
     let transformedQuestions = null;
 
     if (questions.length !== 0) {
@@ -24,6 +24,7 @@ const preview = ({ questions, onEdit, onDelete }) => {
                     key={index}
                     onEditQuestion={() => onEdit(question)}
                     onDeleteQuestion={() => onDelete(question)}
+                    onSaveStencil={() => onSaveStencil(question)}
                 >
                     <Field
                         component={question.type}

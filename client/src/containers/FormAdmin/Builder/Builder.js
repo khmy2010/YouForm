@@ -13,6 +13,13 @@ import QuestionsPreview from './Preview/Preview';
 
 //import context components
 import Context from '../../ContextDialog/Context';
+import Stencils from '../Stencils/Stencils';
+import Dialog from '../../../components/Dialog/Dialog';
+
+//import utils library
+import { typeCheck } from '../../../utils';
+
+import axios from 'axios';
 
 const CREATING = 'CREATING';
 const EDITING = 'EDITING';
@@ -24,7 +31,9 @@ class Builder extends Component {
         buildingStatus: null,
         buildingType: null,
         buildingData: null,
-        showContext: false
+        showContext: false,
+        showConfirmation: false,
+        showStencilExplorer: false
     };
 
     renderQuestions() {
@@ -121,6 +130,40 @@ class Builder extends Component {
         });
     };
 
+    toggleStencilExplorer = () => {
+        this.setState((prevState, props) => {
+            return { showStencilExplorer: !prevState.showStencilExplorer };
+        });
+    };
+
+    toggleSaveStencil = data => {
+        this.saveStencilTarget = data ? data : null;
+
+        this.setState((prevState, props) => {
+            return { showConfirmation: !prevState.showConfirmation };
+        });
+    };
+
+    saveStencil = async () => {
+        if (this.saveStencilTarget === null) return;
+
+        const data = { ...this.saveStencilTarget };
+        delete data.connect;
+        delete data._id;
+        delete data.sequence;
+
+        //need to parse back EMPTY connect so that it will work properly
+        if (typeCheck.isExtendedChoice(data.type))
+            data.connect = JSON.stringify([]);
+
+        console.log('check: ', typeCheck.isExtendedChoice(data.type));
+        console.log(data);
+
+        this.toggleSaveStencil(); //close the dialog
+
+        await axios.post('/api/stencils', data);
+    };
+
     renderContext() {
         let context = null;
 
@@ -154,28 +197,26 @@ class Builder extends Component {
         return questionBuilder;
     }
 
+    renderStencils() {
+        if (!this.state.showStencilExplorer) return null;
+        return (
+            <Stencils
+                show={this.state.showStencilExplorer}
+                closed={this.toggleStencilExplorer}
+                add={data => this.props.addQuestion(data, this.props.fid)}
+                length={this.props.questions.length}
+            />
+        );
+    }
+
     render() {
         return (
             <div className="Builder">
-                {/* <div className="Builder__Elements">
-                    <Button
-                        clicked={() =>
-                            this.toggleQuestionBuilder(CONSTS.TYPE.SHORT_TEXT)
-                        }
-                    >
-                        Create New Short Text
-                    </Button>
-                    <Button
-                        clicked={() =>
-                            this.toggleQuestionBuilder(CONSTS.TYPE.EMAIL)
-                        }
-                    >
-                        Create New Email
-                    </Button>
-                    {questionBuilder}
-                </div> */}
                 <Elements onEleClicked={this.createQuestion}>
-                    <Button className="Elements__Stencils">
+                    <Button
+                        className="Elements__Stencils"
+                        clicked={this.toggleStencilExplorer}
+                    >
                         Import from Stencils
                     </Button>
                     <Button
@@ -191,7 +232,19 @@ class Builder extends Component {
                     onEdit={this.editQuestion}
                     onDelete={this.deleteQuestion}
                     questions={this.props.questions}
+                    onSaveStencil={this.toggleSaveStencil}
                 />
+                <Dialog
+                    show={this.state.showConfirmation}
+                    cancel={() => this.toggleSaveStencil()}
+                    okay={this.saveStencil}
+                    otext="Save"
+                    title="Save this into stencils?"
+                >
+                    This will save the question into your list of stencils. You
+                    can then reuse it in other forms.
+                </Dialog>
+                {this.renderStencils()}
             </div>
         );
     }
