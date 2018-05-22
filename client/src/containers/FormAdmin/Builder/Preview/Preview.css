@@ -17,6 +17,7 @@
     color: white;
     font-size: 15px;
     outline: none;
+    font-weight: 700;
 }
 
 .PreviewEditor__Red {
@@ -26,12 +27,20 @@
     background-color: #009688;
 }
 
+.PreviewEditor__Blue {
+    background-color: #0389ff;
+}
+
 .PreviewEditor__Red:hover {
     background-color: #ce1d10;
 }
 
 .PreviewEditor__Green:hover {
     background-color: #007062;
+}
+
+.PreviewEditor__Blue:hover {
+    background-color: #0077e0;
 }
 
 .PreviewEditor__Sequence {

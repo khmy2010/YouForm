@@ -14,7 +14,7 @@ const previewEditor = props => {
                     Delete
                 </button>
                 <button
-                    className="PreviewEditor__Button PreviewEditor__Red"
+                    className="PreviewEditor__Button PreviewEditor__Blue"
                     onClick={props.onSaveStencil}
                 >
                     Save
