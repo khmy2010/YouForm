@@ -104,6 +104,8 @@ class Logic extends Component {
                     selectedOption={this.props.options[key]}
                     qid={qid}
                     remove={this.remove}
+                    onOptionChange={this.handleOptions}
+                    onQuestionChange={this.handleQuestions}
                 />
             );
         });
@@ -136,10 +138,12 @@ class Logic extends Component {
     }
 
     handleOptions = (display, index, value) => {
+        console.log('handleOptions');
         this.setState({ if: index });
     };
 
     handleQuestions = (display, index, value) => {
+        console.log('handleQuestions');
         this.setState({ then: value });
     };
 
@@ -148,6 +152,7 @@ class Logic extends Component {
         if (this.state.creating) {
             const key = this.state.if;
             const qid = this.state.then;
+            console.log(key);
 
             //save the entry && change to non-creating mode
             if (key !== null && qid) {

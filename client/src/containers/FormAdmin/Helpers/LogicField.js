@@ -49,7 +49,7 @@ const logicField = props => {
     return (
         <div className="Logic">
             <div className="Logic__Label">
-                <label>Logic {props.seq + 1}: </label>
+                <label>Logic {isNaN(props.seq) ? '' : props.seq + 1}:</label>
                 <span onClick={() => props.remove(props.index)}>
                     <svg
                         id="Logic__Remove"
@@ -80,7 +80,9 @@ const logicField = props => {
                 <span>THEN</span>
                 <Select
                     options={transformQuestions(props.questions)}
-                    clicked={props.onQuestionChange}
+                    clicked={(display, index, value) =>
+                        props.onQuestionChange(display, index, value)
+                    }
                     dynamic
                     init={
                         props.qid
