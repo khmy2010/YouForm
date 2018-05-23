@@ -5,12 +5,12 @@ import './Stats.css';
 import Stat from './Stat';
 
 const stats = ({ responses, desktop, mobile }) => {
-    const countCompletionRate = () => {
-        const total = desktop + mobile;
-        if (total === 0 || responses === 0) return 0;
-        const ratio = Math.floor(responses / total);
-        return ratio * 100;
-    };
+    // const countCompletionRate = () => {
+    //     const total = desktop + mobile;
+    //     if (total === 0 || responses === 0) return 0;
+    //     const ratio = Math.floor(responses / total);
+    //     return ratio * 100;
+    // };
 
     return (
         <div className="Responses__Stats">
@@ -19,10 +19,6 @@ const stats = ({ responses, desktop, mobile }) => {
                 <Stat figure={responses}>Responses</Stat>
                 <Stat figure={desktop}>Desktop Visits</Stat>
                 <Stat figure={mobile}>Mobile Visits</Stat>
-                <Stat figure={countCompletionRate() + '%'}>
-                    Completion Rate
-                </Stat>
-                <Stat figure="1:14">Average Time to Complete</Stat>
             </div>
         </div>
     );

@@ -28,10 +28,10 @@ const timeline = props => {
                 </div>
                 <div className="FAI__Timeline__Info">
                     <div className={authorClasses}>{authorText}</div>
-                    <span
+                    {/* <span
                         className="FAI__Timeline__Bin"
                         onClick={() => props.delete()}
-                    />
+                    /> */}
                 </div>
             </div>
             <div className="FAI__Timeline__Body">{props.content}</div>

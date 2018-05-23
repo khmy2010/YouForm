@@ -42,7 +42,6 @@ class Feedbacks extends Component {
     };
 
     send = async topic => {
-        console.log(topic);
         const { question, _id } = topic;
         const { response } = this.state;
         const { name, adminReply } = this.props;
@@ -54,10 +53,6 @@ class Feedbacks extends Component {
             response: ''
         });
     };
-
-    seeLatest(status) {
-        console.log(status);
-    }
 
     renderTopics() {
         const { topics } = this.props;
@@ -84,17 +79,7 @@ class Feedbacks extends Component {
 
     renderPanel() {
         if (this.state.showing !== null) return null;
-        return (
-            <React.Fragment>
-                <div className="Feedbacks__Control">
-                    <CheckBox
-                        label="See feedbacks without responses"
-                        changed={this.seeLatest}
-                    />
-                </div>
-                <div className="Feedback__Topics">{this.renderTopics()}</div>
-            </React.Fragment>
-        );
+        return <div className="Feedback__Topics">{this.renderTopics()}</div>;
     }
 
     renderContent() {
