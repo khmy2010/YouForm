@@ -36,7 +36,7 @@ class Thanks extends Component {
         let header = 'Thank you for completing this form.';
         if (thanksContext && thanksContext.title) header = thanksContext.title;
 
-        let description = 'Your input is very much appreciated';
+        let description = 'Your input is very much appreciated.';
         if (thanksContext && thanksContext.description)
             description = thanksContext.description;
 

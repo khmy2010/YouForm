@@ -20,7 +20,12 @@ const welcome = ({ show, context, name, length, clicked }) => {
 
     let buttonText = 'Next';
 
-    if (welcomeContext && welcomeContext.buttonText.trim().length > 0)
+    //fixed bug: welcomeContext.buttonText.trim() causes error because it is undefined.
+    if (
+        welcomeContext &&
+        welcomeContext.buttonText &&
+        welcomeContext.buttonText.trim().length > 0
+    )
         buttonText = welcomeContext.buttonText;
 
     return (
