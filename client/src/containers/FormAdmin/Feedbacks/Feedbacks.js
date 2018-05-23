@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize';
 
 import './Feedbacks.css';
 
-import CheckBox from '../../../components/CheckBox/CheckBox';
+// import CheckBox from '../../../components/CheckBox/CheckBox';
 import Button from '../../../components/ContextButton/CButton';
 import Topic from '../../../components/Feedbacks/Topic/Topic';
 import TimelineItem from '../../../components/Feedbacks/Timeline/Timeline';
