@@ -165,7 +165,8 @@ class Logic extends Component {
 
         if (!typeCheck.isSingleChoice(type)) return false;
         if (options.length === 1) return false;
-        if (questions.length === 1) return false;
+        //fixed a bug where questions.length === 0 when first question is created
+        if (questions.length <= 1) return false;
         //don't render if it is the last question
         if (sequence - questions.length === 0) return false;
         if (options.length === 2 && options[1].trim().length === 0)
