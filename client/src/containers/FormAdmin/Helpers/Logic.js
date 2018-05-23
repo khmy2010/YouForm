@@ -138,8 +138,9 @@ class Logic extends Component {
     }
 
     handleOptions = (display, index, value) => {
-        console.log('handleOptions');
-        this.setState({ if: index });
+        //fixed a bug where the logic won't display properly.
+        //might not be robust due to the wrong architecture
+        this.setState({ if: index + this.props.connect.length });
     };
 
     handleQuestions = (display, index, value) => {
