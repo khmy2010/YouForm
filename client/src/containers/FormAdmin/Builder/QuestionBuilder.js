@@ -154,9 +154,9 @@ class QuestionBuilder extends Component {
         }
     };
 
-    handleCheckboxChange = ({ target }) => {
+    handleCheckboxChange = changed => {
         const newValidation = { ...this.state.validation };
-        newValidation.isRequired = target.checked;
+        newValidation.isRequired = changed;
         this.setState({
             validation: newValidation
         });

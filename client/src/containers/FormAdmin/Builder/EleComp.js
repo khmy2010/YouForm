@@ -2,6 +2,7 @@ import React from 'react';
 
 import FlexInputs from './FlexInputs';
 import Select from '../../../components/Select/Select';
+import CheckBox from '../../../components/CheckBox/CheckBox';
 
 const eleComp = props => {
     switch (props.type) {
@@ -9,20 +10,27 @@ const eleComp = props => {
             return <div className="EleBigHelp">{props.children}</div>;
         case 'checkbox':
             return (
-                <div className="EleCheck">
-                    <input
-                        id={props.id}
-                        type={props.type}
-                        name={props.name}
-                        value={props.value}
-                        onChange={event => props.onCheckboxChange(event)}
-                    />
-                    <label htmlFor={props.id}>
-                        <span />
-                        {props.displayName}
-                    </label>
-                </div>
+                <CheckBox
+                    label={props.displayName}
+                    changed={props.onCheckboxChange}
+                    init={props.value}
+                />
             );
+        // return (
+        //     <div className="EleCheck">
+        //         <input
+        //             id={props.id}
+        //             type={props.type}
+        //             name={props.name}
+        //             value={props.value}
+        //             onChange={event => props.onCheckboxChange(event)}
+        //         />
+        //         <label htmlFor={props.id}>
+        //             <span />
+        //             {props.displayName}
+        //         </label>
+        //     </div>
+        // );
         case 'input':
             return (
                 <div className="EleField">

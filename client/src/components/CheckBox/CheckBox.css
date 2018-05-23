@@ -12,7 +12,7 @@
     border: 1px solid rgba(95, 99, 104, 0.5);
     font-weight: 700;
     padding: 1px 3px;
-    color: #fff;
+    color: transparent; /* fixed a bug where the white checkbox will appear when it is inactive, but in non-white background */
     margin-right: 15px;
 }
 
