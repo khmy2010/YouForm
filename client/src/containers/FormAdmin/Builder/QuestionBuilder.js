@@ -20,7 +20,6 @@ import { VBUILD, validateBuild } from './Validate';
 //Helper functions
 import Order from '../Helpers/Order';
 import Date from '../Helpers/Date';
-import Character from '../Helpers/Character';
 import Choices from '../Helpers/Choices';
 import Logic from '../Helpers/Logic';
 import Warn from '../Helpers/Warn';
@@ -440,12 +439,6 @@ class QuestionBuilder extends Component {
                                 type={this.props.type}
                                 changed={this.handleSelectionChange}
                                 dateType={this.state.dateType}
-                            />
-                            <Character
-                                type={this.props.type}
-                                changed={this.handleInputChange}
-                                min={this.state.validation.minCharCount}
-                                max={this.state.validation.maxCharCount}
                             />
                             <EleComp
                                 type="checkbox"
