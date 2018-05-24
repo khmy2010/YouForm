@@ -12,10 +12,10 @@ import './Helper.css';
 */
 
 const transformOptions = arr =>
-    arr.map((ele, index) => {
+    arr.map(({ oid, option }) => {
         return {
-            value: index,
-            display: ele
+            value: oid,
+            display: option
         };
     });
 

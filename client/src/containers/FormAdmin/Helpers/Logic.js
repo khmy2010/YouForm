@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { typeCheck } from '../../../utils';
+import { typeCheck, unlock } from '../../../utils';
 import Button from '../../../components/Button/Button';
 
 import Field from './LogicField';
@@ -16,6 +16,7 @@ class Logic extends Component {
 
     listenOptionChange = ({ detail: { index } }) => {
         //option deleted, remove that.
+        console.log(index);
         if (index === this.state.if) this.setState({ if: null });
     };
 
@@ -33,12 +34,20 @@ class Logic extends Component {
         const options = this.props.options;
         const connect = this.props.connect || [];
 
-        if (connect.length === 0) return options;
+        // if (connect.length === 0) return options;
 
-        return options.filter((option, index) => {
-            //to include its own option
-            if (logicKey !== undefined && index === logicKey) return true;
-            return connect.find(({ key }) => index === key) === undefined;
+        // return options.filter((option, index) => {
+        //     //to include its own option
+        //     if (logicKey !== undefined && index === logicKey) return true;
+        //     return connect.find(({ key }) => index === key) === undefined;
+        // });
+
+        return options.filter(({ oid, option }) => {
+            //includes its own option
+            if (logicKey && logicKey === oid) return true;
+
+            //return those not available
+            return connect.find(({ key }) => oid === key) === undefined;
         });
     };
 
@@ -91,8 +100,6 @@ class Logic extends Component {
         //should render the rest of field if any
         if (connect.length === 0) return fields;
 
-        console.count('how many times it got rendered?');
-
         const connected = connect.map(({ key, qid }, seq) => {
             return (
                 <Field
@@ -101,7 +108,7 @@ class Logic extends Component {
                     key={key}
                     index={key}
                     seq={seq}
-                    selectedOption={this.props.options[key]}
+                    selectedOption={unlock(key, this.props.options)}
                     qid={qid}
                     remove={this.remove}
                     onOptionChange={this.handleOptions}
@@ -140,11 +147,10 @@ class Logic extends Component {
     handleOptions = (display, index, value) => {
         //fixed a bug where the logic won't display properly.
         //might not be robust due to the wrong architecture
-        this.setState({ if: index + this.props.connect.length });
+        this.setState({ if: value });
     };
 
     handleQuestions = (display, index, value) => {
-        console.log('handleQuestions');
         this.setState({ then: value });
     };
 
@@ -153,7 +159,6 @@ class Logic extends Component {
         if (this.state.creating) {
             const key = this.state.if;
             const qid = this.state.then;
-            console.log(key);
 
             //save the entry && change to non-creating mode
             if (key !== null && qid) {
@@ -175,7 +180,7 @@ class Logic extends Component {
         if (questions.length <= 1) return false;
         //don't render if it is the last question
         if (sequence - questions.length === 0) return false;
-        if (options.length === 2 && options[1].trim().length === 0)
+        if (options.length === 2 && options[1].option.trim().length === 0)
             return false;
 
         return true;

@@ -173,8 +173,11 @@ class QuestionBuilder extends Component {
     removeFlexInput = index => {
         latestFlex = false;
         const newOptions = this.state.options.slice();
+        let deletedOID = null;
 
-        if (index > -1) newOptions.splice(index, 1);
+        //If only one element is removed, an array of one element is returned.
+        //from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+        if (index > -1) deletedOID = newOptions.splice(index, 1);
 
         if (typeCheck.isSingleChoice(this.props.type)) {
             const event = new CustomEvent('optionDeleted', {
@@ -183,7 +186,7 @@ class QuestionBuilder extends Component {
 
             document.dispatchEvent(event);
 
-            this.removeLogic(index);
+            this.removeLogic(deletedOID[0].oid);
         }
 
         this.setState({ options: newOptions });
@@ -382,7 +385,7 @@ class QuestionBuilder extends Component {
             <Logic
                 type={this.props.type}
                 questions={this.props.questions}
-                options={getOptions(this.state.options)}
+                options={this.state.options}
                 connect={checked}
                 sequence={sequence}
                 onAdd={this.addLogic}

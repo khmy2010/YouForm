@@ -105,23 +105,36 @@ class Form extends Component {
             let next = undefined;
 
             if (response !== undefined) {
-                const { type, selected } = response;
+                const { type, selectedOID } = response;
                 const isSingleChoice = utils.typeCheck.isSingleChoice(type);
 
                 if (current !== 0 && isSingleChoice) {
-                    next = helper.getConnected(questions, selected, current);
+                    next = helper.getConnected(questions, selectedOID, current);
                     const { seqs } = helper.getConnectedAll(questions, current);
                     //remove any potential path before proceed
                     this.path.delete(seqs);
                 }
             }
 
-            this.path.add(next ? next : current + 1);
+            // next = next ? next : current + 1;
+            if (next === undefined) next = current + 1;
+
+            const blacklist = helper.getBlackListed(
+                questions,
+                responses,
+                this.path.trace
+            );
+
+            blacklist.forEach(blackQID => {
+                const question = utils.findBySequence(questions, next);
+                const qid = question._id;
+                if (qid === blackQID) next = next + 1; //advance one more
+            });
+
+            this.path.add(next);
             this.syncLocal.save(questions, responses);
 
-            return {
-                current: next ? next : current + 1
-            };
+            return { current: next };
         });
     };
 
@@ -133,6 +146,16 @@ class Form extends Component {
         const { questions, responses } = this.props;
         const response = helper.findCurrentResponse(qid, responses);
         const { submittable } = helper.verifySubmission(questions, responses);
+        const blacklist = helper.getBlackListed(
+            questions,
+            responses,
+            this.path.trace
+        );
+        const effectiveBlackList = helper.getEffectiveBlackList(
+            blacklist,
+            this.state.current,
+            questions
+        );
 
         /*
             cater to non-required field:
@@ -142,7 +165,12 @@ class Form extends Component {
 
         return {
             isQuestion: this.state.current - questions.length <= 0,
-            isSubmitNext: this.state.current - questions.length === 0,
+            isSubmitNext:
+                this.state.current - questions.length === 0 ||
+                questions.length -
+                    this.state.current -
+                    effectiveBlackList.length ===
+                    0,
             nextable:
                 (response && response.valid) || (!response && !isRequired),
             submittable

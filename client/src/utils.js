@@ -467,3 +467,10 @@ export const organisePosts = posts =>
     });
 //first step: need to find those without parents (it's a topic)
 //second step: organise them accordingly
+
+//given a key, this function should be able to return the option
+export const unlock = (key, options) => {
+    const filtered = options.filter(({ oid }) => key === oid);
+    if (filtered === undefined || filtered.length > 1) return false;
+    return filtered[0].option;
+};

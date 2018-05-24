@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { typeCheck, findByQID, CONSTS } from '../../utils';
+import { typeCheck, findByQID, findBySequence, CONSTS } from '../../utils';
 import * as checker from '../Fields/checker';
 
 export const findCurrentResponse = (target, responses) =>
@@ -10,6 +10,7 @@ export const findCurrentResponse = (target, responses) =>
 //current: current sequence
 export const getConnected = (questions, selected, current) => {
     console.log('current: ', current);
+    // debugger;
     const { type, connect } = questions.find(
         ({ sequence }) => sequence === current
     );
@@ -209,4 +210,63 @@ const reduceResponses = (questions, responses) => {
 
         return verified;
     }, []);
+};
+
+export const getBlackListed = (questions, responses, path) => {
+    return path.reduce((list, trace) => {
+        //step 1: find out current question first
+        const question = findBySequence(questions, trace);
+
+        //step 2: know if it was fill in or not
+        const response = findCurrentResponse(question._id, responses);
+
+        //if it is undefined, means people don't complete the question, ignore.
+        if (response === undefined) return list;
+
+        //step 3: user must have complete the question, check if it is single choice
+        if (!typeCheck.isSingleChoice(question.type)) return list;
+
+        //after all the check, it must be a single choice question
+        //double check if it contains selected value
+        if (response.selectedOID && response.selectedOID.length === 0)
+            return list;
+
+        //it will be null when we unselect
+        if (
+            response.selectedOID === null ||
+            !Array.isArray(response.selectedOID)
+        )
+            return list;
+
+        // need to know if there are any logic attached to the question
+        const connect = JSON.parse(question.connect);
+        if (connect.length <= 1) return list;
+
+        connect.forEach(({ key, qid }) => {
+            //ignore selected element
+            //selectedOID is an array (e.g.: 0: "HkHPvrEJQ")
+            console.log(response);
+            if (response.selectedOID[0] !== key) {
+                //need to know if it is inside the list
+                //it is in the list, need to remove the one at the list also
+                const found = list.indexOf(qid);
+                if (found > -1) list.splice(found, 1);
+                //everything okay, push that into blacklist
+                else list.push(qid);
+            }
+        });
+
+        // console.log('connect: ', connect);
+        return list;
+    }, []);
+};
+
+export const getEffectiveBlackList = (list, current, questions) => {
+    if (list.length === 0) return list;
+
+    return list.filter(blackQID => {
+        const question = findByQID(questions, blackQID);
+        const sequence = question.sequence;
+        return sequence > current;
+    });
 };

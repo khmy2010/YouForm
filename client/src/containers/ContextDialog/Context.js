@@ -24,7 +24,6 @@ export class Context extends Component {
             welcomeDescription: welcomeDescription ? welcomeDescription : '',
             thanksTitle: '',
             thanksDescription: '',
-            thanksButtonText: '',
             promoteSharing: ''
         };
     }
@@ -111,14 +110,6 @@ export class Context extends Component {
                             name="thanksDescription"
                             helpText="Encourage people to share your form or visit another webpage with a custom thank you message."
                             value={this.state.thanksDescription}
-                            onInputChange={this.handleChange}
-                        />
-                        <EleComp
-                            type="input"
-                            displayName="Button Text"
-                            name="thanksButtonText"
-                            helpText="Customise your button text to your need."
-                            value={this.state.thanksButtonText}
                             onInputChange={this.handleChange}
                         />
                     </React.Fragment>
