@@ -15,7 +15,7 @@ class Track {
 
     async track() {
         //need to check store if we got that before
-        // if (this.store.get() !== null) return;
+        if (this.store.get() !== null) return;
 
         switch (this.userAgent.getOS().name) {
             case 'Android':
